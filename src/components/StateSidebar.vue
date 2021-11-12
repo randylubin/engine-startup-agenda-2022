@@ -1,6 +1,15 @@
 <template>
-  <div id="game-state-sidebar">
-    The Sidebar
+  <div id="game-state-sidebar" v-if="currentState">
+    <h2>The Sidebar</h2>
+    <div>
+      💰 : {{currentState.capital}}
+    </div>
+    <div>
+      👥 : {{currentState.users}}
+    </div>
+    <div>
+      🛠 : {{currentState.capabilities}}
+    </div>
   </div>
 </template>
 
@@ -8,6 +17,9 @@
 
   export default {
     name: 'state-sidebar',
+    props: {
+      currentState: Object,
+    },
     components: {
     },
     data () {
