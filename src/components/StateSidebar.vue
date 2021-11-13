@@ -10,6 +10,9 @@
     <div>
       🛠 : {{currentState.capabilities}}
     </div>
+    <div>
+      ⏱ : {{currentState.focus}}
+    </div>
   </div>
 </template>
 

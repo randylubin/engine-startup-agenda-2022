@@ -7,8 +7,9 @@
     <app-dilemma
       :currentState="stateHistory.at(-1)"
       :currentChapterInfo="currentChapterInfo"
-      @update-state="updateState($event)"
+      @next-prompt="nextPrompt()"
       @undo-state-change="undoStateChange()"
+      @update-state="updateState($event)"
     ></app-dilemma>
   </div>
 </template>
@@ -16,6 +17,7 @@
 <script>
   import StateSidebar from './StateSidebar.vue'
   import Dilemma from './Dilemma.vue'
+  import DilemmaCompiler from './DilemmaCompiler.js'
 
   export default {
     name: 'game',
@@ -33,45 +35,28 @@
     mounted () {
       this.stateHistory.push ({
         capital: 20,
-        users: 0,
-        capabilities: 10
+        users: 30,
+        capabilities: 10,
+        focus: 3,
       })
 
       console.log('current history', this.stateHistory.at(-1))
 
-      this.currentChapterInfo = {
-        dilemmaPrompt: "The dilemma for this round is lorem ipsum... what do you do?",
-        dilemmaOptions: [
-          {
-            optionText: "Do nothing",
-            resultsText: "You lose... click back to choose a different option",
-            stateChange: {
-              capital: -10,
-              users: 5,
-              capabilities: 0,
-            },
-            gameOver: true,
-          },
-          {
-            optionText: "Do a little",
-          },
-          {
-            optionText: "Do a lot",
-          },
-          {
-            optionText: "Magically fix it",
-          },
-        ],
-      }
+      this.currentChapterInfo = DilemmaCompiler[0]()
 
     },
     methods: {
-      updateState(newState){
-        this.stateHistory.push(newState)
+      nextPrompt(){
+        let newDilemma = DilemmaCompiler[this.chapterHistory.length](this.stateHistory.at(-1))
+        this.chapterHistory.push(newDilemma)
+        this.currentChapterInfo = newDilemma
       },
       undoStateChange(){
         this.stateHistory.pop()
-      }
+      },
+      updateState(newState){
+        this.stateHistory.push(newState)
+      },
     }
   }
 </script>

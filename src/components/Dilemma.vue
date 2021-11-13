@@ -13,7 +13,10 @@
           <div class="dilemma-option"
             v-for="(option, index) in currentChapterInfo.dilemmaOptions" v-bind:key="index"
           >
-            <button v-on:click="selectOption(option)">
+            <button
+              :disabled="isOptionLocked(option.optionRequirements)"
+              v-on:click="selectOption(option)"
+            >
               {{option.optionText}}
             </button>
           </div>
@@ -37,6 +40,7 @@
       </div>
       <div class="consequences-nav-buttons">
         <button v-on:click="undoChoice()">Back</button>
+        <button v-if="!gameOver" v-on:click="nextPrompt()">Continue</button>
       </div>
     </div>
   </div>
@@ -52,13 +56,28 @@
     data () {
       return {
         chosenOption: null,
+        gameOver: null,
       }
     },
     mounted () {
     },
     methods: {
+      isOptionLocked(requirements){
+        let locked = false
+        for (const requirement in requirements){
+          if (!(this.currentState[requirement] == requirements[requirement] || this.currentState[requirement] >= requirements[requirement])){
+            locked = true;
+          }
+        }
+        return locked
+      },
+      nextPrompt(){
+        this.chosenOption = null
+        this.$emit('next-prompt')
+      },
       selectOption(option){
         this.chosenOption = option
+        this.gameOver = option.gameOver
 
         // Update Game State
         let newState = JSON.parse(JSON.stringify(this.currentState))
@@ -74,7 +93,7 @@
             // TODO logic for ending the game if player runs out of cash
           }          
         }
-        
+
         this.updateState(newState)
       },
       undoChoice(){
