@@ -6,6 +6,7 @@ var DilemmaCompiler = [
          "dilemmaOptions": [
             {
                "optionText": "Do nothing",
+               "optionToolTip": "I'm a tool tip!",
                "resultsText": "You lose... click back to choose a different option",
                "stateChange": {
                   "capital": -100

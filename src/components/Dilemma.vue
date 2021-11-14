@@ -16,6 +16,7 @@
             <button
               :disabled="isOptionLocked(option.optionRequirements)"
               v-on:click="selectOption(option)"
+              v-bind:title="option.optionToolTip"
             >
               {{option.optionText}}
             </button>
@@ -40,7 +41,7 @@
       </div>
       <div class="consequences-nav-buttons">
         <button v-on:click="undoChoice()">Back</button>
-        <button v-if="!gameOver" v-on:click="nextPrompt()">Continue</button>
+        <button v-if="!chosenOption.gameOver" v-on:click="nextPrompt()">Continue</button>
       </div>
     </div>
   </div>
@@ -52,11 +53,10 @@
     props: {
       currentState: Object,
       currentChapterInfo: Object,
+      chosenOption: Object,
     },
     data () {
       return {
-        chosenOption: null,
-        gameOver: null,
       }
     },
     mounted () {
@@ -72,12 +72,10 @@
         return locked
       },
       nextPrompt(){
-        this.chosenOption = null
         this.$emit('next-prompt')
       },
       selectOption(option){
-        this.chosenOption = option
-        this.gameOver = option.gameOver
+        this.$emit('choose-option', option)
 
         // Update Game State
         let newState = JSON.parse(JSON.stringify(this.currentState))
@@ -97,7 +95,6 @@
         this.updateState(newState)
       },
       undoChoice(){
-        this.chosenOption = null
         this.$emit('undo-state-change')
         
       },
