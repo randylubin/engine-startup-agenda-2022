@@ -48,8 +48,7 @@
     },
     mounted () {      
       this.stateHistory = localStorage.stateHistory ? JSON.parse(localStorage.stateHistory) : JSON.parse(JSON.stringify(this.initialState))
-
-      this.chapterHistory = localStorage.currentChapterInfo ? JSON.parse(localStorage.currentChapterInfo) : this.chapterHistory.push(DilemmaCompiler[0]())
+      this.chapterHistory = localStorage.currentChapterInfo ? JSON.parse(localStorage.currentChapterInfo) : [DilemmaCompiler[0]()]
       this.currentChapterInfo = localStorage.currentChapterInfo ? JSON.parse(localStorage.currentChapterInfo) : DilemmaCompiler[0]()
       this.optionHistory = localStorage.optionHistory ? JSON.parse(localStorage.optionHistory) : []
     },
