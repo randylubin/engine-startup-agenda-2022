@@ -82,13 +82,18 @@
           
         if(option.stateChange){          
           for (const stateVariable in option.stateChange){
-            newState[stateVariable] += option.stateChange[stateVariable]
-
-            if (newState[stateVariable] < 0){
-              newState[stateVariable] = 0
+            if (Number.isInteger(option.stateChange[stateVariable])){
+              newState[stateVariable] += option.stateChange[stateVariable]
+  
+              if (newState[stateVariable] < 0){
+                newState[stateVariable] = 0
+              }
+              // TODO logic for ending the game if player runs out of cash
+            } else {
+              newState[stateVariable] = option.stateChange[stateVariable]
             }
 
-            // TODO logic for ending the game if player runs out of cash
+            
           }          
         }
 
