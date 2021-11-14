@@ -2,15 +2,15 @@
   <div id="game">
     <i>The entire game, from Game.vue</i>
     <app-state-sidebar
-      :currentState="stateHistory.at(-1)"
+      :currentState="stateHistory[this.stateHistory.length-1]"
     ></app-state-sidebar>
     <app-chapter-control-panel
       @restart-game="restartGame()"
     ></app-chapter-control-panel>
     <app-dilemma
-      :currentState="stateHistory.at(-1)"
+      :currentState="stateHistory[this.stateHistory.length-1]"
       :currentChapterInfo="currentChapterInfo"
-      :chosenOption="optionHistory.at(-1)"
+      :chosenOption="optionHistory[this.optionHistory.length-1]"
       @choose-option="chooseOption($event)"
       @next-prompt="nextPrompt()"
       @undo-state-change="undoStateChange()"
@@ -48,7 +48,7 @@
     },
     mounted () {      
       this.stateHistory = localStorage.stateHistory ? JSON.parse(localStorage.stateHistory) : JSON.parse(JSON.stringify(this.initialState))
-      this.chapterHistory = localStorage.currentChapterInfo ? JSON.parse(localStorage.currentChapterInfo) : [DilemmaCompiler[0]()]
+      this.chapterHistory = localStorage.chapterHistory ? JSON.parse(localStorage.currentChapterInfo) : [DilemmaCompiler[0]()]
       this.currentChapterInfo = localStorage.currentChapterInfo ? JSON.parse(localStorage.currentChapterInfo) : DilemmaCompiler[0]()
       this.optionHistory = localStorage.optionHistory ? JSON.parse(localStorage.optionHistory) : []
     },
@@ -63,7 +63,8 @@
         this.optionHistory.push(option)
       },
       nextPrompt(){
-        let newDilemma = DilemmaCompiler[this.chapterHistory.length](this.stateHistory.at(-1))
+        console.log('ch length', this.chapterHistory.length)
+        let newDilemma = DilemmaCompiler[this.chapterHistory.length](this.stateHistory[this.stateHistory.length-1])
         this.chapterHistory.push(newDilemma)
         this.optionHistory.push(null)
         this.currentChapterInfo = newDilemma
