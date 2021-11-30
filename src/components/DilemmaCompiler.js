@@ -19,7 +19,9 @@ var DilemmaCompiler = [
                "stateChange": {
                   "capital": -10,
                   "users": -5
-               }
+               },
+               "addEvent": "New past event"
+
             },
             {
                "optionText": "Do a lot",
@@ -38,8 +40,15 @@ var DilemmaCompiler = [
                "optionRequirements": {
                   "hasMagic": true
                }
+            },
+            {
+               "optionText": "Invisible Option",
+               "optionVisibility": {
+                  "noSuchState": true
+               }
             }
-         ]
+         ],
+         "dilemmaNote": "Here's an extra note, clarifying the dilemma..."
       }
    },
    // second
@@ -86,6 +95,13 @@ var DilemmaCompiler = [
                      "capital": 0,
                   },
                },
+               {
+                  "optionText": "Visible because you chose fundraising",
+                  "resultsText": "Results for invisible choice",
+                  "optionVisibility": {
+                     "choseFundraising": true,
+                  }
+               }
             ]
          }
       } else {
@@ -130,6 +146,9 @@ var DilemmaCompiler = [
                },
                "optionRequirements": {
                   "hasMagic": true
+               },
+               "optionVisibility": {
+                  "noSuchState": true
                },
                "gameOver": true
             },

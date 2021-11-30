@@ -17,10 +17,17 @@
               :disabled="isOptionLocked(option.optionRequirements)"
               v-on:click="selectOption(option)"
               v-bind:title="option.optionToolTip"
+              v-if="isOptionVisible(option.optionVisibility)"
             >
               {{option.optionText}}
             </button>
           </div>
+        </div>
+      </div>
+      <div v-if="currentChapterInfo.dilemmaNote">
+        <h3>Dilemma Note</h3>
+        <div>
+          {{currentChapterInfo.dilemmaNote}}
         </div>
       </div>
     </div>
@@ -71,6 +78,23 @@
         }
         return locked
       },
+      isOptionVisible(requirements){
+        if (!requirements) {
+          return true
+        } else {
+          let visible = false
+
+          for (const requirement in requirements){
+            if ((this.currentState[requirement] == requirements[requirement] || this.currentState[requirement] >= requirements[requirement])){
+              visible = true;
+            }
+            console.log("visibility", requirement, visible)
+          }
+          
+
+          return visible
+        }
+      },
       nextPrompt(){
         this.$emit('next-prompt')
       },
@@ -95,6 +119,10 @@
 
             
           }          
+        }
+
+        if(option.addEvent){
+          newState.pastEvents.unshift(option.addEvent)
         }
 
         this.updateState(newState)

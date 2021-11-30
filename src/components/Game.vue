@@ -39,6 +39,7 @@
           users: 30,
           capabilities: 10,
           focus: 3,
+          pastEvents: ["Second example event", "First example event"]
         }],
         stateHistory: [],
         chapterHistory: [],
