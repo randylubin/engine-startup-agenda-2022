@@ -129,7 +129,6 @@
       },
       undoChoice(){
         this.$emit('undo-state-change')
-        
       },
       updateState(newState){
         this.$emit('update-state', newState)

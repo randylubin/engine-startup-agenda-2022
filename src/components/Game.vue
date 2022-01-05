@@ -6,6 +6,7 @@
     ></app-state-sidebar>
     <app-chapter-control-panel
       @restart-game="restartGame()"
+      @undo-state-change="undoStateChange()"
     ></app-chapter-control-panel>
     <app-dilemma
       :currentState="stateHistory[this.stateHistory.length-1]"
@@ -68,6 +69,7 @@
         let newDilemma = DilemmaCompiler[this.chapterHistory.length](this.stateHistory[this.stateHistory.length-1])
         this.chapterHistory.push(newDilemma)
         this.optionHistory.push(null)
+        this.stateHistory.push(JSON.parse(JSON.stringify(this.stateHistory[this.stateHistory.length-1])))
         this.currentChapterInfo = newDilemma
       },
       restartGame(){
@@ -80,7 +82,7 @@
       undoStateChange(){
         this.stateHistory.pop()
         this.optionHistory.pop()
-
+        console.log('undoing')
       },
       updateState(newState){
         this.stateHistory.push(newState)
