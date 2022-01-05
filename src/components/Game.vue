@@ -5,6 +5,7 @@
       :currentState="stateHistory[this.stateHistory.length-1]"
     ></app-state-sidebar>
     <app-chapter-control-panel
+      :chapterHistory="chapterHistory"
       @restart-game="restartGame()"
       @undo-state-change="undoStateChange()"
     ></app-chapter-control-panel>
@@ -17,6 +18,9 @@
       @undo-state-change="undoStateChange()"
       @update-state="updateState($event)"
     ></app-dilemma>
+    <div>
+      Current Gamestate: {{stateHistory[this.stateHistory.length-1]}}
+    </div>
   </div>
 </template>
 
@@ -45,7 +49,7 @@
         stateHistory: [],
         chapterHistory: [],
         currentChapterInfo: {},
-        optionHistory: [],
+        optionHistory: [null],
       }
     },
     mounted () {      
@@ -77,12 +81,19 @@
         this.stateHistory = JSON.parse(JSON.stringify(this.initialState))
         this.chapterHistory = [DilemmaCompiler[0]()]
         this.currentChapterInfo = DilemmaCompiler[0]()
-        this.optionHistory = []
+        this.optionHistory = [null]
       },
       undoStateChange(){
-        this.stateHistory.pop()
-        this.optionHistory.pop()
-        console.log('undoing')
+        if(this.optionHistory.length > 1){
+          this.stateHistory.pop()
+          this.optionHistory.pop()
+          if (this.optionHistory[this.optionHistory.length-1] != null) {
+            this.chapterHistory.pop()
+            this.currentChapterInfo = DilemmaCompiler[this.chapterHistory.length-1](this.stateHistory[this.stateHistory.length-1])
+            console.log('new dilemma', this.currentChapterInfo.dilemmaPrompt)
+          } 
+          console.log('undoing')
+        }
       },
       updateState(newState){
         this.stateHistory.push(newState)

@@ -1,7 +1,7 @@
 <template>
   <div id="chapter-control-panel">
     <button v-on:click="restartGame()">Restart</button>
-    <button v-on:click="undoChoice()">Undo</button>
+    <button v-on:click="undoChoice()" :disabled="chapterHistory.length == 1">Prior Dilemma</button>
   </div>
 </template>
 
@@ -10,7 +10,7 @@
   export default {
     name: 'chapter-control-panel',
     props: {
-      
+      chapterHistory: Array
     },
     components: {
     },
