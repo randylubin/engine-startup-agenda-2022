@@ -1,6 +1,6 @@
 <template>
   <div id="game-dilemma" v-if="currentChapterInfo">
-    <h2>The Dilemma Section</h2>
+    <h2>Dilemma <span>{{currentChapterInfo.dilemmaTitle}}</span></h2>
 
     <div v-if="chosenOption == null">
       <div>
