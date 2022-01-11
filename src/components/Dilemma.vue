@@ -1,14 +1,9 @@
 <template>
   <div id="game-dilemma" v-if="currentChapterInfo">
-    <h2>Dilemma <span>{{currentChapterInfo.dilemmaTitle}}</span></h2>
+    <h2><strong>{{chosenOption == null?"Dilemma":"Result"}}:</strong> <span>{{currentChapterInfo.dilemmaTitle?currentChapterInfo.dilemmaTitle:"Placeholder Title"}}</span></h2>
 
     <div v-if="chosenOption == null">
-      <div>
-        <h3>Dilemma Prompt</h3>
-        {{currentChapterInfo.dilemmaPrompt}}
-      </div>
-      <div>
-        <h3>Dilemma Options</h3>
+		<p>{{currentChapterInfo.dilemmaPrompt}}</p>
         <div class="dilemma-options-list">
           <div class="dilemma-option"
             v-for="(option, index) in currentChapterInfo.dilemmaOptions" v-bind:key="index"
@@ -19,12 +14,19 @@
               v-bind:title="option.optionToolTip"
               v-if="isOptionVisible(option.optionVisibility)"
             >
-              {{option.optionText}}
+				<ul>
+					<li class="capital" v-if="doesOptionRequire('capital',option.optionRequirements)"></li>
+					<li class="users" v-if="doesOptionRequire('users',option.optionRequirements)"></li>
+					<li class="capabilities" v-if="doesOptionRequire('capabilities',option.optionRequirements)"></li>
+					<li class="focus" v-if="doesOptionRequire('focus',option.optionRequirements)"></li>
+				</ul>
+				{{option.optionText}}
+				
             </button>
           </div>
         </div>
-      </div>
-      <div v-if="currentChapterInfo.dilemmaNote">
+
+		<div v-if="currentChapterInfo.dilemmaNote">
         <h3>Dilemma Note</h3>
         <div>
           {{currentChapterInfo.dilemmaNote}}
@@ -33,22 +35,21 @@
     </div>
 
     <div v-if="chosenOption">
-      <h3>Option Consequences</h3>
-      <div>{{chosenOption.resultsText}}</div>
-      <div v-if="chosenOption.stateChange">
-        <div v-if="chosenOption.stateChange.capital">
-          Capital: {{chosenOption.stateChange.capital}}
-        </div>
-        <div v-if="chosenOption.stateChange.users">
-          Users: {{chosenOption.stateChange.users}}
-        </div>
-        <div v-if="chosenOption.stateChange.capabilities">
-          Capabilities: {{chosenOption.stateChange.capabilities}}
-        </div>
-      </div>
-      <div class="consequences-nav-buttons">
-        <button v-on:click="undoChoice()">Back</button>
-        <button v-if="!chosenOption.gameOver" v-on:click="nextPrompt()">Continue</button>
+      <p>{{chosenOption.resultsText}}</p>
+      <ul id="consequences-status" v-if="chosenOption.stateChange.capital || chosenOption.stateChange.users || chosenOption.stateChange.capabilities">
+        <li v-if="chosenOption.stateChange.capital" v-bind:class="{capital: true, increase: chosenOption.stateChange.capital > 0, decrease: chosenOption.stateChange.capital < 0}">
+          Your financial health has changed. [{{chosenOption.stateChange.capital}}]
+        </li>
+        <li v-if="chosenOption.stateChange.users" v-bind:class="{users: true, increase: chosenOption.stateChange.users > 0, decrease: chosenOption.stateChange.users < 0}">
+          Your user growth has changed. [{{chosenOption.stateChange.users}}]
+        </li>
+        <li v-if="chosenOption.stateChange.capabilities" v-bind:class="{capabilities: true, increase: chosenOption.stateChange.capabilities > 0, decrease: chosenOption.stateChange.capabilities < 0}">
+          Your tech and talent has changed. [{{chosenOption.stateChange.capabilities}}]
+        </li>
+      </ul>
+      <div id="consequences-nav-buttons">
+        <button id="nav-continue" v-if="!chosenOption.gameOver" v-on:click="nextPrompt()">Continue</button>
+		<button id="nav-back" v-on:click="undoChoice()">Back</button>       
       </div>
     </div>
   </div>
@@ -80,7 +81,7 @@
       },
       isOptionVisible(requirements){
         if (!requirements) {
-          return true
+			return true;
         } else {
           let visible = false
 
@@ -95,6 +96,17 @@
           return visible
         }
       },
+		doesOptionRequire(check,requirements) {
+		if(!requirements) {
+			return false;
+		} else {
+			if (requirements[check] > 0) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+		},
       nextPrompt(){
         this.$emit('next-prompt')
       },
