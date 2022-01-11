@@ -47,6 +47,9 @@ var DilemmaCompiler = [
                   "investorNetwork": true,
                   "focus": -1,
                },
+				"optionRequirements": {
+					"focus": 1,
+               },
             },
             {
                "optionText": "Focus on recruiting and building an amazing team [Focus]",
@@ -54,6 +57,9 @@ var DilemmaCompiler = [
                "stateChange": {
                   "hiringFocus": true,
                   "focus": -1,
+               },
+				"optionRequirements": {
+                  "focus": 1
                },
             },
             {
@@ -80,8 +86,8 @@ var DilemmaCompiler = [
                   "optionText": "The best candidates, regardless of their cost or if they need to work remotely",
                   "resultsText": "Placeholder",
                   "stateChange": {
-                     "capital": -5,
-                     "capabilities": 5,
+                     "capital": -25,
+                     "capabilities": 25,
                   }, 
                },
                {
@@ -91,24 +97,24 @@ var DilemmaCompiler = [
                      "hiringFocus": true
                   },
                   "stateChange": {
-                     "capital": -2,
-                     "capabilities": 4,
+                     "capital": -10,
+                     "capabilities": 20,
                   }, 
                },
                {
                   "optionText": "We’re going to hire smart but inexperienced people and train them",
                   "resultsText": "Placeholder",
                   "stateChange": {
-                     "capital": -2,
-                     "capabilities": 2,
+                     "capital": -10,
+                     "capabilities": 10,
                   }, 
                },
                {
                   "optionText": "We’ll outsource as much of the work as possible to an inexpensive team overseas",
                   "resultsText": "Placeholder",
                   "stateChange": {
-                     "capital": -1,
-                     "capabilities": 1,
+                     "capital": -5,
+                     "capabilities": 5,
                   }, 
                },
             ]
@@ -126,14 +132,14 @@ var DilemmaCompiler = [
                "optionText": "Set them up to work remotely",
                "resultsText": "Placeholder result",
                "stateChange": {
-                  "capital": -1,
+                  "capital": -5,
                },
             },
             {
                "optionText": "Offer to pay for their relocation",
                "resultsText": "Placeholder result",
                "stateChange": {
-                  "capital": -3,
+                  "capital": -15,
                },
             },
             {
@@ -143,7 +149,7 @@ var DilemmaCompiler = [
                   "hiringFocus": true
                },
                "stateChange": {
-                  "capital": -1,
+                  "capital": -5,
                }, 
             },
          ]
