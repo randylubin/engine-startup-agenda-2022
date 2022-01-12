@@ -1,39 +1,52 @@
 var DilemmaCompiler = [
    // location
    function () {
-      return {
-         "dilemmaPrompt": "Your first decision is to pick a location for your startup. Some areas are more expensive than others, and your choice will impact future access to capital, talent, and internet connectivity.",
-         "dilemmaOptions": [
+      return {            
+            "dilemmaPrompt":"Your first decision is to pick a location for your startup. Some areas are more expensive than others, and your choice will impact future access to capital, talent, and internet connectivity.",
+            "dilemmaOptions":[
             {
-               "optionText": "Tech Hub – expensive but with world class talent and tons of investors",
-               "resultsText": "Silicon Valley here I come!",
-               "stateChange": {
-                  "techHub": true
-               },
+            "optionText":"Tech Hub – expensive but with world class talent and tons of investors",
+            "resultsText":"This is the place to be, and even if that co-working space only gives us a desk in the corner for 3x the cost of a full office somewhere else, we’ll be seen as a *real* startup now. ",
+            "optionRequirements":null,
+            "optionVisibility":null,
+            "stateChange":{
+            "techHub":" true"
+            },
+            "gameOver":""
             },
             {
-               "optionText": "Other City – an aspiring tech hub with a lower cost of living and a smaller talent pool",
-               "resultsText": "I got to meet the mayor!",
-               "stateChange": {
-                  "otherCity": true
-               },
+            "optionText":"Other City – an aspiring tech hub with a lower cost of living and a smaller talent pool",
+            "resultsText":"Silicon Valley is so last century. Innovation is about newness, and the Crypto Hills is where everyone is heading these days.",
+            "optionRequirements":null,
+            "optionVisibility":null,
+            "stateChange":{
+            "otherCity":" true"
+            },
+            "gameOver":""
             },
             {
-               "optionText": "College Town – home of a prestigious university and brimming with talent, though lacking in investors",
-               "resultsText": "I can work from the campus library...",
-               "stateChange": {
-                  "collegeTown": true
-               },
+            "optionText":"College Town – home of a prestigious university and brimming with talent, though lacking in investors",
+            "resultsText":"Startups are kind of like a post-college experience anyway, might as well set up shop in a college town. Plus, so many eager CS students! ",
+            "optionRequirements":null,
+            "optionVisibility":null,
+            "stateChange":{
+            "collegeTown":" true"
+            },
+            "gameOver":""
             },
             {
-               "optionText": "Small Town – it’s cheap but there’s not much in the way of local investors and tech talent",
-               "resultsText": "Home sweet home!",
-               "stateChange": {
-                  "smallTown": true
-               },
+            "optionText":"Small Town – it’s cheap but there’s not much in the way of local investors and tech talent",
+            "resultsText":"The world is remote these days anyway – let’s not waste time and money on expensive offices. Life here is bucolic and we can quickly become the biggest company in town.",
+            "optionRequirements":null,
+            "optionVisibility":null,
+            "stateChange":{
+            "smallTown":" true"
             },
-         ]
+            "gameOver":""
+            }
+            ]
       }
+
    },
    // First focus
    function () {
