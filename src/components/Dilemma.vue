@@ -37,13 +37,13 @@
     <div v-if="chosenOption">
       <p>{{chosenOption.resultsText}}</p>
       <ul id="consequences-status" v-if="chosenOption.stateChange.capital || chosenOption.stateChange.users || chosenOption.stateChange.capabilities">
-        <li v-if="chosenOption.stateChange.capital" v-bind:class="{capital: true, increase: chosenOption.stateChange.capital > 0, decrease: chosenOption.stateChange.capital < 0}">
+        <li v-if="chosenOption.stateChange.capital" :class="{capital: true, increase: chosenOption.stateChange.capital > 0, decrease: chosenOption.stateChange.capital < 0}">
           Your financial health has changed. [{{chosenOption.stateChange.capital}}]
         </li>
-        <li v-if="chosenOption.stateChange.users" v-bind:class="{users: true, increase: chosenOption.stateChange.users > 0, decrease: chosenOption.stateChange.users < 0}">
+        <li v-if="chosenOption.stateChange.users" :class="{users: true, increase: chosenOption.stateChange.users > 0, decrease: chosenOption.stateChange.users < 0}">
           Your user growth has changed. [{{chosenOption.stateChange.users}}]
         </li>
-        <li v-if="chosenOption.stateChange.capabilities" v-bind:class="{capabilities: true, increase: chosenOption.stateChange.capabilities > 0, decrease: chosenOption.stateChange.capabilities < 0}">
+        <li v-if="chosenOption.stateChange.capabilities" :class="{capabilities: true, increase: chosenOption.stateChange.capabilities > 0, decrease: chosenOption.stateChange.capabilities < 0}">
           Your tech and talent has changed. [{{chosenOption.stateChange.capabilities}}]
         </li>
       </ul>
