@@ -398,4 +398,128 @@ button#nav-continue {
 button#nav-continue:hover { background-color: var(--button-bg-dark-hover); }
 button#nav-back { background-image: url("/assets/icons/icon-triangle-l.svg"); }
 
+/* Tooltips */
+
+.tt-container {
+	position: relative;
+	overflow: visible;
+}
+
+.tt-container div.tt-positioner {
+	position: absolute;
+	z-index: 1000;
+	overflow: visible;
+	display: flex;
+	
+	visibility: hidden;
+	opacity: 0;
+}
+
+.tt-container:hover div.tt-positioner {
+	visibility: visible;
+	opacity: 1;
+}
+
+div.tt-positioner.tt-option {
+	bottom: calc(100% + 9px);
+	left: calc(50% - 175px);
+	width: 350px;
+	flex-direction: row;
+	justify-content: center;
+	
+	filter: drop-shadow(4px 4px 4px rgba(0,0,0,50%));
+}
+
+div.tt-positioner.tt-sidebar {
+	left: calc(100% + 48px);
+	top: 0;
+	height: 100%;
+	width: 400px;
+	flex-direction: column;
+	justify-content: center;
+	
+	filter: drop-shadow(4px 4px 4px rgba(0,0,0,50%));
+}
+
+div.tt-frame {
+	padding: .6em 1em .9em;
+	background: #444;
+	color: white;
+	
+	font-family: acumin-pro-condensed, sans-serif;
+	font-size: 1.1em;
+	line-height: 1.25;
+}
+
+div.tt-option div.tt-frame::after {
+	content: " ";
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	margin-left: -16px;
+	border-width: 16px;
+	border-style: solid;
+	border-color: #444 transparent transparent transparent;
+}
+
+div.tt-sidebar div.tt-frame::after {
+	content: " ";
+	position: absolute;
+	top: 50%;
+	right: 100%;
+	margin-top: -16px;
+	border-width: 16px;
+	border-style: solid;
+	border-color: transparent #444 transparent transparent;
+}
+
+div.tt-frame p { margin: 0 0 1em 0; }
+div.tt-frame p:last-child { margin-bottom: 0; }
+
+/* Option Detail Lists */
+
+ul.option-details {
+	margin: 0;
+	padding: 0 0 0 1em;
+	list-style: square;
+}
+
+ul.option-details li {
+	margin-bottom: .25em;
+}
+ul.option-details li:last-child {
+	margin-bottom: 0;
+}
+
+ul.option-details li span {
+	font-weight: 600;
+}
+ul.option-details li.lock {
+	list-style: none;
+	margin-left: -1em;
+	font-weight: 600;
+}
+
+ul.option-details li.lock span {
+	font-weight: 700;
+}
+
+ul.option-details li.focus {
+	list-style: none;
+	margin-left: -1em;
+	padding-top: .5em;
+	margin-top: .75em;
+	border-top: 1px solid white;
+	font-style: italic;
+}
+
+ul.option-details li.focus:first-child {
+	margin-top: 0; padding-top: 0; border-top: none;
+}
+
+ul.option-details li.note {
+	list-style: none;
+	margin-left: -1em;
+}
+
 </style>

@@ -58,8 +58,6 @@ div.state-meter div {
 	display: inline-block;
 	height: 100%;
 	overflow: hidden;
-	white-space: nowrap;
-	text-align: right;
 	transition: width 1s ease-out;
 }
 

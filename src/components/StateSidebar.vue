@@ -7,21 +7,44 @@
 	</ul>
 	<h3>Company Status</h3>
     <div id="game-state-meters">
-		<div id="meter-capital">
+		<div id="meter-capital" class="tt-container">
 			<state-meter :stateValue="currentState.capital" :stateChange="chosenOption?chosenOption.stateChange.capital:0"></state-meter>
+			<div class="tt-positioner tt-sidebar">
+			<div class="tt-frame">
+				<p>This meter tracks your overall <b>Financial Health</b>. If this drops to zero, your company has run out of money and the game will end!</p>
+			</div>
+			</div>
 		</div>
-		<div id="meter-users">
+		<div id="meter-users" class="tt-container">
 			<state-meter :stateValue="currentState.users" :stateChange="chosenOption?chosenOption.stateChange.users:0"></state-meter>
+			<div class="tt-positioner tt-sidebar">
+			<div class="tt-frame">
+				<p>This meter tracks your product's rate of <b>User Growth</b>. If this drops to zero, your product has stagnated and the game will end!</p>
+			</div>
+			</div>
 		</div>
-		<div id="meter-capabilities">
+		<div id="meter-capabilities" class="tt-container">
 			<state-meter :stateValue="currentState.capabilities" :stateChange="chosenOption?chosenOption.stateChange.capabilities:0"></state-meter>
+			<div class="tt-positioner tt-sidebar">
+			<div class="tt-frame">
+				<p>This meter tracks your company's capacity to tackle tough challenges with <b>Tech &amp; Talent</b>. If this drops to zero, your company has run out of innovative power and the game will end!</p>
+			</div>
+			</div>
 		</div>
     </div>
 	<h3>Time &amp; Focus</h3>
+	<div class="tt-container">
 	<div id="game-state-focus">
 		<div v-bind:class="{used: currentState.focus < 1}"><img src="/assets/icons/icon-focus.svg"></div>
 		<div v-bind:class="{used: currentState.focus < 2}"><img src="/assets/icons/icon-focus.svg"></div>
 		<div v-bind:class="{used: currentState.focus < 3}"><img src="/assets/icons/icon-focus.svg"></div>
+	</div>
+	<div class="tt-positioner tt-sidebar">
+		<div class="tt-frame">
+			<p>Some courses of action require <b>Time &amp; Focus</b>, which is always in short supply! Once you run out of this valuable resource, you'll have to wait for it to be replenished at certain game milestones.</p>
+			<p>Unused <b>Time &amp; Focus</b> will become improvements to your core product, so it's sometimes wise to avoid using it all &mdash; if you can!</p>
+		</div>
+	</div>
 	</div>	
 	<h3>Current Issues</h3>
     <div class="game-state-past-events" v-if="currentState.pastEvents">
