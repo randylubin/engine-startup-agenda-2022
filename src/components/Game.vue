@@ -1,7 +1,8 @@
 <template>
   <div id="game">
     <app-state-sidebar
-      :currentState="stateHistory[this.stateHistory.length-1]"
+	:currentState="stateHistory[this.stateHistory.length-1]"
+	:chosenOption="optionHistory[this.optionHistory.length-1]"
     ></app-state-sidebar>
     <app-dilemma
       :currentState="stateHistory[this.stateHistory.length-1]"
@@ -112,7 +113,9 @@
 	
 	--sidebar-bg: #eee;
 	--meter-border: 2px solid #888;
-	--meter-fill: #444;
+	--meter-fill: #666;
+	--meter-increase: #444;
+	--meter-decrease: #888;
 	--button-bg: #ddd;
 	--button-bg-hover: #aaa;
 	--button-bg-dark: #444;
@@ -208,7 +211,7 @@ div#game-dilemma {
 	text-transform: uppercase;
 }
 
-/* State Meters */
+/* State Meter Layout */
 
 div#game-state-meters > div {
 	box-sizing: border-box;
@@ -224,21 +227,6 @@ div#game-state-meters > div {
 div#meter-capital { background-image: url("/assets/icons/icon-capital.svg"); }
 div#meter-users { background-image: url("/assets/icons/icon-users.svg"); }
 div#meter-capabilities { background-image: url("/assets/icons/icon-capabilities.svg"); }
-
-div.state-meter {
-	box-sizing: border-box;
-	width: 100%;
-	height: 100%;
-	overflow: hidden;
-	border: var(--meter-border);
-	border-radius: var(--base-border-radius);
-}
-
-div.state-meter > div {
-	background: var(--meter-fill);
-	height: 100%;
-	transition: width 1s ease-out;
-}
 
 /* Focus Clocks */
 

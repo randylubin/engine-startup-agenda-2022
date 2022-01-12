@@ -8,19 +8,13 @@
 	<h3>Company Status</h3>
     <div id="game-state-meters">
 		<div id="meter-capital">
-			<div class="state-meter">
-				<div v-bind:style="{ width: currentState.capital + '%' }"></div>		
-			</div>
+			<state-meter :stateValue="currentState.capital" :stateChange="chosenOption?chosenOption.stateChange.capital:0"></state-meter>
 		</div>
 		<div id="meter-users">
-			<div class="state-meter">
-				<div v-bind:style="{ width: currentState.users + '%'}"></div>
-			</div>
+			<state-meter :stateValue="currentState.users" :stateChange="chosenOption?chosenOption.stateChange.users:0"></state-meter>
 		</div>
 		<div id="meter-capabilities">
-			<div class="state-meter">
-				<div v-bind:style="{ width: currentState.capabilities + '%' }"></div>
-			</div>
+			<state-meter :stateValue="currentState.capabilities" :stateChange="chosenOption?chosenOption.stateChange.capabilities:0"></state-meter>
 		</div>
     </div>
 	<h3>Time &amp; Focus</h3>
@@ -41,13 +35,16 @@
 </template>
 
 <script>
-
+  import StateMeter from './StateMeter.vue'
+  
   export default {
     name: 'state-sidebar',
     props: {
-      currentState: Object,
+		currentState: Object,
+		chosenOption: Object
     },
     components: {
+		'state-meter': StateMeter
     },
     data () {
       return {
