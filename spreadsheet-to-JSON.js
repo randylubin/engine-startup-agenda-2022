@@ -79,7 +79,7 @@ for (const dataRow in sheetData) {
   dataOutput[row[0]].dilemmaOptions.push(newOption)
 }
 
-fs.writeFile('spreadsheet-output.json', JSON.stringify(dataOutput), err => {
+fs.writeFile('converted-dilemma-list.json', JSON.stringify(dataOutput), err => {
   if (err) {
     console.error(err)
     return

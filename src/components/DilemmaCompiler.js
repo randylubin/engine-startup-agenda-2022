@@ -1,4 +1,4 @@
-import DilemmaList from '../../spreadsheet-output.json'
+import DilemmaList from '../../converted-dilemma-list.json'
 
 var DilemmaCompiler = [
    // location
@@ -57,7 +57,25 @@ var DilemmaCompiler = [
       return DilemmaList['16']
    },
    function () {
-      return DilemmaList['17']
+      return DilemmaList['18']
+   },
+   function () {
+      return DilemmaList['19']
+   },
+   function () {
+      return DilemmaList['20']
+   },
+   function () {
+      return DilemmaList['22.1'] // TODO add conditional
+   },
+   function () {
+      return DilemmaList['23.1'] // TODO add conditional
+   },
+   function () {
+      return DilemmaList['24']
+   },
+   function () {
+      return DilemmaList['25']
    },
    // example dilemma
    // function () {

@@ -380,8 +380,8 @@ ul#consequences-status li.decrease::before {
 /* Result Navigation */
 
 div#consequences-nav-buttons {
-	display: flex;
-	column-gap: 1em;
+	/* display: flex;
+	column-gap: 1em; */
 }
 
 div#consequences-nav-buttons button {
@@ -396,7 +396,7 @@ button#nav-continue {
 }
 
 button#nav-continue:hover { background-color: var(--button-bg-dark-hover); }
-button#nav-back { background-image: url("/assets/icons/icon-triangle-l.svg"); }
+button#nav-back { background-image: url("/assets/icons/icon-triangle-l.svg"); width: 15rem;}
 
 /* Tooltips */
 

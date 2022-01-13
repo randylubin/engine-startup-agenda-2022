@@ -49,7 +49,8 @@
       </ul>
       <div id="consequences-nav-buttons">
         <button id="nav-continue" v-if="!chosenOption.gameOver" v-on:click="nextPrompt()">Continue</button>
-		<button id="nav-back" v-on:click="undoChoice()">Back</button>       
+        <br>
+        <button id="nav-back" v-on:click="undoChoice()">Back</button>       
       </div>
     </div>
   </div>
