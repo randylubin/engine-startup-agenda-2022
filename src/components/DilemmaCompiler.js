@@ -1,6 +1,12 @@
 import DilemmaList from '../../converted-dilemma-list.json'
 
 var DilemmaCompiler = [
+   function () {
+      return DilemmaList['0.1']
+   },
+   function () {
+      return DilemmaList['0.2']
+   },
    // location
    function () {
       return DilemmaList['1']
