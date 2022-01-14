@@ -82,7 +82,7 @@
       },
       isOptionVisible(requirements){
         if (!requirements) {
-			return true;
+          return true;
         } else {
           let visible = false
 
@@ -90,7 +90,6 @@
             if ((this.currentState[requirement] == requirements[requirement] || this.currentState[requirement] >= requirements[requirement])){
               visible = true;
             }
-            console.log("visibility", requirement, visible)
           }
           
 
