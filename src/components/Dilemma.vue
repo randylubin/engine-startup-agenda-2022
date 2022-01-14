@@ -1,9 +1,16 @@
 <template>
   <div id="game-dilemma" v-if="currentChapterInfo">
   
-    <h2><strong>{{chosenOption == null?"Dilemma":"Result"}}:</strong> <span>{{currentChapterInfo.dilemmaTitle?currentChapterInfo.dilemmaTitle:"Placeholder Title"}}</span></h2>
-
-	<div v-if="chosenOption == null">
+	<transition name="title-switch" mode="out-in">
+    <h2 v-if="chosenOption == null" key="dilemma-title">
+		<strong>Dilemma:</strong> <span>{{currentChapterInfo.dilemmaTitle?currentChapterInfo.dilemmaTitle:"Placeholder Title"}}</span>
+	</h2>
+	<h2 v-else key="result-title">
+		<strong>Result:</strong> <span>{{currentChapterInfo.dilemmaTitle?currentChapterInfo.dilemmaTitle:"Placeholder Title"}}</span>
+	</h2>
+	</transition>
+	<transition name="panel-switch" mode="out-in">
+	<div v-if="chosenOption == null" key="dilemma-panel">
 		<p>{{currentChapterInfo.dilemmaPrompt}}</p>
         <div class="dilemma-options-list">
           <div class="dilemma-option"
@@ -33,8 +40,7 @@
         </div>
 		</div>
     </div>
-
-    <div v-if="chosenOption">
+    <div v-else key="result-panel">
       <p>{{chosenOption.resultsText}}</p>
       <ul id="consequences-status" v-if="chosenOption.stateChange.capital || chosenOption.stateChange.users || chosenOption.stateChange.capabilities">
         <li :class="{capital: true, increase: chosenOption.stateChange.capital > 0, decrease: chosenOption.stateChange.capital < 0}"></li>
@@ -46,6 +52,7 @@
         <button id="nav-back" v-on:click="undoChoice()"><span>Back</span></button>       
       </div>
     </div>
+	</transition>
   </div>
 
 </template>
@@ -143,5 +150,21 @@
 </script>
 
 <style>
+
+.panel-switch-enter-active { transition: opacity 1s; transition-delay: 1s; }
+.panel-switch-leave-active { transition: opacity .5s; }
+.panel-switch-enter, .panel-switch-leave-to {
+  opacity: 0;
+}
+
+.title-switch-enter-active { white-space: nowrap; transition: padding-left 1s,opacity 1s; }
+.title-switch-leave-active { transition: padding-left .5s,opacity .51s ease-out; }
+.title-switch-enter, .title-switch-leave-to {
+  white-space: nowrap;
+  padding-left: 20%;
+  opacity: 0;
+}
+
+
 
 </style>

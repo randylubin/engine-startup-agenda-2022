@@ -403,6 +403,10 @@ div#game-dilemma p.dilemma-note {
 /* Choices & General Button Styles */
 
 button {
+	-webkit-appearance: button;
+	text-transform: none;
+	font-size: inherit;
+
 	display: flex;
 	align-items: center;
 	column-gap: 1em;
@@ -420,7 +424,6 @@ button {
 	line-height: 1.4;
 	text-align: left;
 	font-family: aglet-slab, serif;
-	font-size: 1;
 	font-weight: 500;
 	color: var(--c-button-light-text);
 	
