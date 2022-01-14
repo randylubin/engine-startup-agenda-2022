@@ -388,7 +388,7 @@ div#game-dilemma h2 {
 }
 
 div#game-dilemma h2 strong {
-	opacity: .4;
+	color: var(--en-2l)
 }
 
 div#game-dilemma p {
@@ -407,7 +407,7 @@ button {
 	align-items: center;
 	column-gap: 1em;
 	
-	background: var(--bg-button-light);
+	background: var(--c-top);
 	border: 0;
 	border-radius: .3em;
 	width: 100%;
@@ -521,6 +521,7 @@ ul#consequences-status li {
 	flex-shrink: 1;
 	line-height: 0;
 	opacity: .25;
+	filter: grayscale(1) brightness(10);
 }
 
 ul#consequences-status li::before {
@@ -578,7 +579,7 @@ ul#consequences-status li.capabilities::before {
 	mask-image: url("/assets/icons/icon-capabilities.svg");
 }
 
-ul#consequences-status li.increase,ul#consequences-status li.decrease { opacity: 1; }
+ul#consequences-status li.increase,ul#consequences-status li.decrease { opacity: 1; filter:none; }
 
 ul#consequences-status li.increase::before,ul#consequences-status li.decrease::before {
 	animation: ani-pulse 2s ease-in-out infinite;
@@ -608,7 +609,8 @@ ul#consequences-status li.decrease::after {
 /* Result Navigation */
 
 button#nav-continue:hover {  }
-button#nav-back { width: 20%;}
+button#nav-continue { color: var(--en-2d);}
+button#nav-back { width: 20%; filter:grayscale(1);}
 button#nav-back::before { transform: rotate(180deg); }
 
 /* Tooltips */

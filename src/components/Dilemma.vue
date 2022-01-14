@@ -42,7 +42,7 @@
         <li :class="{capabilities: true, increase: chosenOption.stateChange.capabilities > 0, decrease: chosenOption.stateChange.capabilities < 0}"></li>
       </ul>
       <div id="consequences-nav-buttons">
-        <button id="nav-continue" class="dark" v-if="!chosenOption.gameOver" v-on:click="nextPrompt()"><span>Continue</span></button>
+        <button id="nav-continue" class="" v-if="!chosenOption.gameOver" v-on:click="nextPrompt()"><span>Continue</span></button>
         <button id="nav-back" v-on:click="undoChoice()"><span>Back</span></button>       
       </div>
     </div>
