@@ -145,8 +145,8 @@
 	--bg-button-disabled-accent: rgba(0,0,0,.6);
 	--c-button-disabled-text: rgba(0,0,0,.3);
 	
-	--bg-results-up: var(--bg-sidebar-icon);
-	--bg-results-down: var(--bg-sidebar-icon);
+	--bg-results-up: linear-gradient(to bottom,rgb(120,120,120) 20%,rgb(170,170,170) 40%,rgb(170,170,170) 60%,rgb(120,120,120) 80%);
+	--bg-results-down: linear-gradient(to bottom,rgb(120,120,120) 20%,rgb(170,170,170) 40%,rgb(170,170,170) 60%,rgb(120,120,120) 80%);
 
 	/* Meter Styles */
 	
@@ -243,7 +243,6 @@ div#game-dilemma {
 	border-top-right-radius: .5em;
 	border-bottom-right-radius: .5em;
 	background: var(--bg-sidebar-accent);
-
 }
 
 #game-state-sidebar ul {
@@ -299,7 +298,6 @@ div.icon-capital::before { mask-image: url("/assets/icons/icon-capital.svg"); }
 div.icon-users::before { mask-image: url("/assets/icons/icon-users.svg"); }
 div.icon-capabilities::before { mask-image: url("/assets/icons/icon-capabilities.svg"); }
 
-
 /* Focus Clocks */
 
 div#game-state-focus {
@@ -322,7 +320,7 @@ div#game-state-focus > div::before {
 	mask-image: url("/assets/icons/icon-focus.svg");
 	mask-repeat: no-repeat;
 	opacity: 1;
-	transition: opacity .5s ease-out;
+	transition: opacity .7s ease-out;
 }
 
 div#game-state-focus > div::after {
@@ -337,7 +335,45 @@ div#game-state-focus > div::after {
 	transition-delay: .25s;
 }
 
-div#game-state-focus > div.used::before { opacity: 0; }
+@keyframes wobble {
+  0% {
+    -webkit-transform: none;
+    -ms-transform: none;
+    transform: none
+  }
+  15% {
+    -webkit-transform: translate3d(-25%, 0, 0) rotate3d(0, 0, 1, -5deg);
+    -ms-transform: translate3d(-25%, 0, 0) rotate3d(0, 0, 1, -5deg);
+    transform: translate3d(-25%, 0, 0) rotate3d(0, 0, 1, -5deg)
+  }
+  30% {
+    -webkit-transform: translate3d(20%, 0, 0) rotate3d(0, 0, 1, 3deg);
+    -ms-transform: translate3d(20%, 0, 0) rotate3d(0, 0, 1, 3deg);
+    transform: translate3d(20%, 0, 0) rotate3d(0, 0, 1, 3deg)
+  }
+  45% {
+    -webkit-transform: translate3d(-15%, 0, 0) rotate3d(0, 0, 1, -3deg);
+    -ms-transform: translate3d(-15%, 0, 0) rotate3d(0, 0, 1, -3deg);
+    transform: translate3d(-15%, 0, 0) rotate3d(0, 0, 1, -3deg)
+  }
+  60% {
+    -webkit-transform: translate3d(10%, 0, 0) rotate3d(0, 0, 1, 2deg);
+    -ms-transform: translate3d(10%, 0, 0) rotate3d(0, 0, 1, 2deg);
+    transform: translate3d(10%, 0, 0) rotate3d(0, 0, 1, 2deg)
+  }
+  75% {
+    -webkit-transform: translate3d(-5%, 0, 0) rotate3d(0, 0, 1, -1deg);
+    -ms-transform: translate3d(-5%, 0, 0) rotate3d(0, 0, 1, -1deg);
+    transform: translate3d(-5%, 0, 0) rotate3d(0, 0, 1, -1deg)
+  }
+  100% {
+    -webkit-transform: none;
+    -ms-transform: none;
+    transform: none
+  }
+}
+
+div#game-state-focus > div.used::before { animation: wobble .7s linear 1; opacity: 0; }
 div#game-state-focus > div.used::after { opacity: .25; }
 
 /* Main Panel */
@@ -479,8 +515,9 @@ ul#consequences-status {
 
 ul#consequences-status li {
 	margin: 0;
-	width: 20%;
-	display: inline-block;
+	width: 17%;
+	display: flex;
+	align-items: stretch;
 	flex-shrink: 1;
 	line-height: 0;
 	opacity: .25;
@@ -488,22 +525,42 @@ ul#consequences-status li {
 
 ul#consequences-status li::before {
 	content: url("/assets/icons/icon-sizer.svg");
-	display: inline-block;
-	width: 48%;
-	margin-right: 8%;
+	display: block;
+	width: 55%;
+	margin-right: 10%;
 	line-height: 0;
 	background: white;	
 	mask-repeat: no-repeat;
 }
 
 ul#consequences-status li::after {
+	flex-grow: 1;
 	content: url("/assets/icons/icon-sizer.svg");
-	display: inline-block;
-	width: 44%;
+	display: block;
+	margin: 10% 0;
 	line-height: 0;
 	background: white;
+	
 	mask-image: url("/assets/icons/icon-bar.svg");
 	mask-repeat: no-repeat;
+}
+
+@keyframes ani-pulse {
+	0% {
+		filter: brightness(100%);
+	}
+	20% { 
+		filter: brightness(100%);
+	}
+	50% { 
+		filter: brightness(130%);
+	}
+	80% {
+		filter: brightness(100%);
+	}
+	100% {
+		filter: brightness(100%);
+	}
 }
 
 ul#consequences-status li.capital::before {
@@ -523,15 +580,29 @@ ul#consequences-status li.capabilities::before {
 
 ul#consequences-status li.increase,ul#consequences-status li.decrease { opacity: 1; }
 
+ul#consequences-status li.increase::before,ul#consequences-status li.decrease::before {
+	animation: ani-pulse 2s ease-in-out infinite;
+}
+
+@keyframes ani-status-result {
+	0% { background-position: 0 -100%; }
+	100% { background-position: 0 100%; }
+}
+
 ul#consequences-status li.increase::after {
 	background: var(--bg-results-up);
+	background-size: 100% 200%;
 	mask-image: url("/assets/icons/icon-arrow.svg");
+	
+	animation: ani-status-result 1s linear infinite;
 }
 
 ul#consequences-status li.decrease::after {
 	background: var(--bg-results-down);
-	mask-image: url("/assets/icons/icon-arrow.svg");
-	transform: rotate(180deg);
+	background-size: 100% 200%;
+	mask-image: url("/assets/icons/icon-arrow-down.svg");
+	
+	animation: ani-status-result 1s linear infinite reverse;
 }
 
 /* Result Navigation */

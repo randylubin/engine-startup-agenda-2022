@@ -1,8 +1,9 @@
 <template>
   <div id="game-dilemma" v-if="currentChapterInfo">
+  
     <h2><strong>{{chosenOption == null?"Dilemma":"Result"}}:</strong> <span>{{currentChapterInfo.dilemmaTitle?currentChapterInfo.dilemmaTitle:"Placeholder Title"}}</span></h2>
 
-    <div v-if="chosenOption == null">
+	<div v-if="chosenOption == null">
 		<p>{{currentChapterInfo.dilemmaPrompt}}</p>
         <div class="dilemma-options-list">
           <div class="dilemma-option"
@@ -25,13 +26,12 @@
             </button>
           </div>
         </div>
-
 		<div v-if="currentChapterInfo.dilemmaNote">
         <h3>Dilemma Note</h3>
         <div>
           {{currentChapterInfo.dilemmaNote}}
         </div>
-      </div>
+		</div>
     </div>
 
     <div v-if="chosenOption">
@@ -47,6 +47,7 @@
       </div>
     </div>
   </div>
+
 </template>
 
 <script>
@@ -142,6 +143,6 @@
   }
 </script>
 
-<style lang="scss">
+<style>
 
 </style>
