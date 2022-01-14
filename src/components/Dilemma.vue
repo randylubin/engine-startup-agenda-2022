@@ -16,9 +16,9 @@
               v-if="isOptionVisible(option.optionVisibility)"
             >
 				<ul>
-					<li class="capital" v-if="doesOptionRequire('capital',option.optionRequirements)"></li>
-					<li class="users" v-if="doesOptionRequire('users',option.optionRequirements)"></li>
-					<li class="capabilities" v-if="doesOptionRequire('capabilities',option.optionRequirements)"></li>
+					<li class="capital" v-if="isOptionLocked(option.optionRequirements) && doesOptionRequire('capital',option.optionRequirements)"></li>
+					<li class="users" v-if="isOptionLocked(option.optionRequirements) && doesOptionRequire('users',option.optionRequirements)"></li>
+					<li class="capabilities" v-if="isOptionLocked(option.optionRequirements) && doesOptionRequire('capabilities',option.optionRequirements)"></li>
 					<li class="focus" v-if="doesOptionRequire('focus',option.optionRequirements)"></li>
 				</ul>
 				<span>{{option.optionText}}</span>
@@ -114,10 +114,9 @@
           for (const stateVariable in option.stateChange){
             if (Number.isInteger(option.stateChange[stateVariable])){
               newState[stateVariable] += option.stateChange[stateVariable]
-  
-              if (newState[stateVariable] < 0){
+              /*if (newState[stateVariable] < 0){
                 newState[stateVariable] = 0
-              }
+              }*/
               // TODO logic for ending the game if player runs out of cash
             } else {
               newState[stateVariable] = option.stateChange[stateVariable]

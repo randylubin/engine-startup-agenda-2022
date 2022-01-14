@@ -23,13 +23,18 @@
 	computed: {
 		meterValue: function() {
 			if (!this.stateChange || this.stateChange < 0) {
-				return this.stateValue;
+				return Math.max(this.stateValue,0);
 			} else {
-				return this.stateValue - this.stateChange;
+				return Math.max(this.stateValue - this.stateChange,0);
 			}
 		},
 		decreaseValue: function () {
-			return this.stateChange<0?this.stateChange*-1:0;
+			if (this.stateChange < 0) {
+				return this.stateValue<0?this.stateChange*-1+this.stateValue:this.stateChange*-1;
+			} else {
+				return 0;
+			}
+			
 		},
 		increaseValue: function () {
 			return this.stateChange>0?this.stateChange:0;

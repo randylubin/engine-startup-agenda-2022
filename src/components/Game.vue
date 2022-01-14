@@ -131,7 +131,7 @@
 	--bg-sidebar-icon: var(--c-over) linear-gradient(135deg,rgba(255,255,255,1) 10%, rgba(255,255,255,.5) 100%);
 	--bg-sidebar-accent: linear-gradient(to right,var(--en-1d) 0,var(--en-2d) 100%);
 	
-	--bg-button-light: var(--en-2l);
+	--bg-button-light: var(--c-top);
 	--bg-button-light-hover: var(--en-2m);
 	--bg-button-light-accent: linear-gradient(45deg, var(--en-1m) 0,var(--en-2d) 100%);
 	--c-button-light-text: rgba(0,0,0,.8);
@@ -407,7 +407,7 @@ button {
 	align-items: center;
 	column-gap: 1em;
 	
-	background: var(--c-top);
+	background: var(--bg-button-light);
 	border: 0;
 	border-radius: .3em;
 	width: 100%;
