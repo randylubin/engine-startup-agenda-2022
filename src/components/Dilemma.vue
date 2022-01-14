@@ -20,7 +20,7 @@
 					<li class="capabilities" v-if="doesOptionRequire('capabilities',option.optionRequirements)"></li>
 					<li class="focus" v-if="doesOptionRequire('focus',option.optionRequirements)"></li>
 				</ul>
-				{{option.optionText}}
+				<span>{{option.optionText}}</span>
 				
             </button>
           </div>
@@ -37,20 +37,13 @@
     <div v-if="chosenOption">
       <p>{{chosenOption.resultsText}}</p>
       <ul id="consequences-status" v-if="chosenOption.stateChange.capital || chosenOption.stateChange.users || chosenOption.stateChange.capabilities">
-        <li v-if="chosenOption.stateChange.capital" :class="{capital: true, increase: chosenOption.stateChange.capital > 0, decrease: chosenOption.stateChange.capital < 0}">
-          Your financial health has changed. [{{chosenOption.stateChange.capital}}]
-        </li>
-        <li v-if="chosenOption.stateChange.users" :class="{users: true, increase: chosenOption.stateChange.users > 0, decrease: chosenOption.stateChange.users < 0}">
-          Your user growth has changed. [{{chosenOption.stateChange.users}}]
-        </li>
-        <li v-if="chosenOption.stateChange.capabilities" :class="{capabilities: true, increase: chosenOption.stateChange.capabilities > 0, decrease: chosenOption.stateChange.capabilities < 0}">
-          Your tech and talent has changed. [{{chosenOption.stateChange.capabilities}}]
-        </li>
+        <li :class="{capital: true, increase: chosenOption.stateChange.capital > 0, decrease: chosenOption.stateChange.capital < 0}"></li>
+        <li :class="{users: true, increase: chosenOption.stateChange.users > 0, decrease: chosenOption.stateChange.users < 0}"></li>
+        <li :class="{capabilities: true, increase: chosenOption.stateChange.capabilities > 0, decrease: chosenOption.stateChange.capabilities < 0}"></li>
       </ul>
       <div id="consequences-nav-buttons">
-        <button id="nav-continue" v-if="!chosenOption.gameOver" v-on:click="nextPrompt()">Continue</button>
-        <br>
-        <button id="nav-back" v-on:click="undoChoice()">Back</button>       
+        <button id="nav-continue" class="dark" v-if="!chosenOption.gameOver" v-on:click="nextPrompt()"><span>Continue</span></button>
+        <button id="nav-back" v-on:click="undoChoice()"><span>Back</span></button>       
       </div>
     </div>
   </div>

@@ -8,6 +8,7 @@
 	<h3>Company Status</h3>
     <div id="game-state-meters">
 		<div id="meter-capital" class="tt-container">
+			<div class="icon-meter icon-capital"></div>
 			<state-meter :stateValue="currentState.capital" :stateChange="chosenOption?chosenOption.stateChange.capital:0"></state-meter>
 			<div class="tt-positioner tt-sidebar">
 			<div class="tt-frame">
@@ -16,6 +17,7 @@
 			</div>
 		</div>
 		<div id="meter-users" class="tt-container">
+			<div class="icon-meter icon-users"></div>
 			<state-meter :stateValue="currentState.users" :stateChange="chosenOption?chosenOption.stateChange.users:0"></state-meter>
 			<div class="tt-positioner tt-sidebar">
 			<div class="tt-frame">
@@ -24,6 +26,7 @@
 			</div>
 		</div>
 		<div id="meter-capabilities" class="tt-container">
+			<div class="icon-meter icon-capabilities"></div>
 			<state-meter :stateValue="currentState.capabilities" :stateChange="chosenOption?chosenOption.stateChange.capabilities:0"></state-meter>
 			<div class="tt-positioner tt-sidebar">
 			<div class="tt-frame">
@@ -35,9 +38,9 @@
 	<h3>Time &amp; Focus</h3>
 	<div class="tt-container">
 	<div id="game-state-focus">
-		<div v-bind:class="{used: currentState.focus < 1}"><img src="/assets/icons/icon-focus.svg"></div>
-		<div v-bind:class="{used: currentState.focus < 2}"><img src="/assets/icons/icon-focus.svg"></div>
-		<div v-bind:class="{used: currentState.focus < 3}"><img src="/assets/icons/icon-focus.svg"></div>
+		<div v-bind:class="{used: currentState.focus < 1}"></div>
+		<div v-bind:class="{used: currentState.focus < 2}"></div>
+		<div v-bind:class="{used: currentState.focus < 3}"></div>
 	</div>
 	<div class="tt-positioner tt-sidebar">
 		<div class="tt-frame">
@@ -47,7 +50,7 @@
 	</div>
 	</div>	
 	<h3>Current Issues</h3>
-    <div class="game-state-past-events" v-if="currentState.pastEvents">
+    <div id="game-state-flags" v-if="currentState.pastEvents">
       <div v-for="(pastEvent,index) in currentState.pastEvents" v-bind:key="index">
         <div v-if="index < 3">
           {{pastEvent}}
