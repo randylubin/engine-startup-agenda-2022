@@ -1,7 +1,7 @@
 <template>
  <div id="chapter-control-panel">
-    <button v-on:click="restartGame()">Restart</button>
-    <button v-on:click="undoChoice()" :disabled="chapterHistory.length == 1">Previous</button>
+    <button v-on:click="restartGame()"><span>Restart</span></button>
+    <button v-on:click="undoChoice()" :disabled="chapterHistory.length == 1"><span>Previous</span></button>
   </div>
 </template>
 
@@ -34,18 +34,25 @@
 <style>
 
 div#chapter-control-panel {
-	display: inline-block;
-	position: absolute;
+	display: flex;
+	position: fixed;
 	left: 0; bottom: 0;
 	padding: .5em;
 	background: #000;
+	z-index: 5000;
 }
 
 div#chapter-control-panel button {
-	display:inline-block;
+	column-gap: .25em;
 	font-size: .75em;
-	width: 40%;
-	margin-right: 1em;
+	padding: .25em;
+	padding-right: 1em;
+	margin-right: .5em;
+	margin-bottom: 0;
+	
+	background: var(--bg-button-disabled);
 }
+
+div#chapter-control-panel button::before { content: '' }
 
 </style>
