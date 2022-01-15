@@ -507,6 +507,7 @@ div.dilemma-option button ul li.focus::before { mask-image: url("/assets/icons/i
 
 ul#consequences-status {
 	display: flex;
+	flex-wrap: wrap;
 	justify-content: center;
 	column-gap: 10%;
 	list-style: none;
@@ -516,7 +517,7 @@ ul#consequences-status {
 	border-bottom: 2px solid var(--c-top);
 }
 
-ul#consequences-status li {
+ul#consequences-status li:not(.focus) {
 	margin: 0;
 	width: 17%;
 	display: flex;
@@ -527,7 +528,7 @@ ul#consequences-status li {
 	filter: grayscale(1) brightness(10);
 }
 
-ul#consequences-status li::before {
+ul#consequences-status li:not(.focus)::before {
 	content: url("/assets/icons/icon-sizer.svg");
 	display: block;
 	width: 55%;
@@ -537,7 +538,7 @@ ul#consequences-status li::before {
 	mask-repeat: no-repeat;
 }
 
-ul#consequences-status li::after {
+ul#consequences-status li:not(.focus)::after {
 	flex-grow: 1;
 	content: url("/assets/icons/icon-sizer.svg");
 	display: block;
@@ -565,6 +566,14 @@ ul#consequences-status li::after {
 	100% {
 		filter: brightness(100%);
 	}
+}
+
+ul#consequences-status li.focus {
+	width: 100%;
+	font-size: .8em;
+	margin-top: 3em;
+	text-align: center;
+	font-style: italic;
 }
 
 ul#consequences-status li.capital::before {
@@ -693,6 +702,33 @@ div.tt-sidebar div.tt-frame::after {
 
 div.tt-frame p { margin: 0 0 1em 0; }
 div.tt-frame p:last-child { margin-bottom: 0; }
+
+/* Inline Icons */
+
+.ii { 
+	font-style: normal; 
+	margin-left: 0;
+	color: currentColor;
+	white-space: nowrap;
+}
+.ii::before {
+	content: url("/assets/icons/icon-sizer.svg");
+	display: inline-block;
+	line-height: 1;
+	vertical-align: middle;
+	width: 1em;
+	margin-right: .3em;
+	background-color: currentColor;
+	mask-repeat: no-repeat;
+}
+
+.ii.capital::before { mask-image: url("/assets/icons/icon-capital.svg"); }
+.ii.users::before { mask-image: url("/assets/icons/icon-users.svg"); }
+.ii.capabilities::before { mask-image: url("/assets/icons/icon-capabilities.svg"); }
+.ii.focus::before { mask-image: url("/assets/icons/icon-focus-small.svg"); }
+.ii.lock::before { mask-image: url("/assets/icons/icon-lock.svg"); }
+.ii.unlock::before { mask-image: url("/assets/icons/icon-lock-open.svg"); }
+
 
 /* Option Detail Lists */
 

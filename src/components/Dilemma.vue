@@ -42,10 +42,12 @@
     </div>
     <div v-else key="result-panel">
       <p>{{chosenOption.resultsText}}</p>
-      <ul id="consequences-status" v-if="chosenOption.stateChange.capital || chosenOption.stateChange.users || chosenOption.stateChange.capabilities">
+      <ul id="consequences-status" v-if="chosenOption.stateChange.capital || chosenOption.stateChange.users || chosenOption.stateChange.capabilities || chosenOption.stateChange.focus">
         <li :class="{capital: true, increase: chosenOption.stateChange.capital > 0, decrease: chosenOption.stateChange.capital < 0}"></li>
         <li :class="{users: true, increase: chosenOption.stateChange.users > 0, decrease: chosenOption.stateChange.users < 0}"></li>
         <li :class="{capabilities: true, increase: chosenOption.stateChange.capabilities > 0, decrease: chosenOption.stateChange.capabilities < 0}"></li>
+		<li class="focus replenish" v-if="chosenOption.stateChange.focus > 0">Your <strong class="ii focus">Time &amp; Focus</strong> has been replenished.</li>
+		<li class="focus deplete" v-if="chosenOption.stateChange.focus < 0">Some of your&ensp;<strong class="ii focus">Time &amp; Focus</strong> is occupied by this choice.</li>
       </ul>
       <div id="consequences-nav-buttons">
         <button id="nav-continue" class="" v-if="!chosenOption.gameOver" v-on:click="nextPrompt()"><span>Continue</span></button>
@@ -151,14 +153,14 @@
 
 <style>
 
-.panel-switch-enter-active { transition: opacity 1s; transition-delay: 1s; }
+.panel-switch-enter-active { transition: opacity .75s; transition-delay: .5s; }
 .panel-switch-leave-active { transition: opacity .5s; }
 .panel-switch-enter, .panel-switch-leave-to {
   opacity: 0;
 }
 
-.title-switch-enter-active { white-space: nowrap; transition: padding-left 1s,opacity 1s; }
-.title-switch-leave-active { transition: padding-left .5s,opacity .51s ease-out; }
+.title-switch-enter-active { white-space: nowrap; transition: padding-left .75s,opacity .75s; }
+.title-switch-leave-active { transition: padding-left .5s,opacity .5s ease-out; }
 .title-switch-enter, .title-switch-leave-to {
   white-space: nowrap;
   padding-left: 20%;
