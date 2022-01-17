@@ -576,6 +576,10 @@ ul#consequences-status li.focus {
 	font-style: italic;
 }
 
+ul#consequences-status li.focus:first-child {
+	margin-top: 0;
+}
+
 ul#consequences-status li.capital::before {
 	background: var(--bg-capital);
 	mask-image: url("/assets/icons/icon-capital.svg");

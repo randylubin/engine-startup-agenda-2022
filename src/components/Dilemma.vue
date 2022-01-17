@@ -13,7 +13,15 @@
 	<div v-if="chosenOption == null" key="dilemma-panel">
 		<p>{{currentChapterInfo.dilemmaPrompt}}</p>
         <div class="dilemma-options-list">
-          <div class="dilemma-option"
+			<dilemma-option 
+				v-for="(option,index) in currentChapterInfo.dilemmaOptions"
+				:currentState = "currentState"
+				:option = "option"
+				:key = "index"
+				@click-option = "selectOption"
+			></dilemma-option>
+
+		<!--<div class="dilemma-option"
             v-for="(option, index) in currentChapterInfo.dilemmaOptions" v-bind:key="index"
           >
             <button
@@ -31,7 +39,7 @@
 				<span>{{option.optionText}}</span>
 				
             </button>
-          </div>
+          </div>-->
         </div>
 		<div v-if="currentChapterInfo.dilemmaNote">
         <h3>Dilemma Note</h3>
@@ -42,10 +50,10 @@
     </div>
     <div v-else key="result-panel">
       <p>{{chosenOption.resultsText}}</p>
-      <ul id="consequences-status" v-if="chosenOption.stateChange.capital || chosenOption.stateChange.users || chosenOption.stateChange.capabilities || chosenOption.stateChange.focus">
-        <li :class="{capital: true, increase: chosenOption.stateChange.capital > 0, decrease: chosenOption.stateChange.capital < 0}"></li>
-        <li :class="{users: true, increase: chosenOption.stateChange.users > 0, decrease: chosenOption.stateChange.users < 0}"></li>
-        <li :class="{capabilities: true, increase: chosenOption.stateChange.capabilities > 0, decrease: chosenOption.stateChange.capabilities < 0}"></li>
+      <ul id="consequences-status" v-if="primaryStateChange || chosenOption.stateChange.focus">
+        <li :class="{capital: true, increase: chosenOption.stateChange.capital > 0, decrease: chosenOption.stateChange.capital < 0}" v-if="primaryStateChange"></li>
+        <li :class="{users: true, increase: chosenOption.stateChange.users > 0, decrease: chosenOption.stateChange.users < 0}" v-if="primaryStateChange"></li>
+        <li :class="{capabilities: true, increase: chosenOption.stateChange.capabilities > 0, decrease: chosenOption.stateChange.capabilities < 0}" v-if="primaryStateChange"></li>
 		<li class="focus replenish" v-if="chosenOption.stateChange.focus > 0">Your <strong class="ii focus">Time &amp; Focus</strong> has been replenished.</li>
 		<li class="focus deplete" v-if="chosenOption.stateChange.focus < 0">Some of your&ensp;<strong class="ii focus">Time &amp; Focus</strong> is occupied by this choice.</li>
       </ul>
@@ -60,8 +68,13 @@
 </template>
 
 <script>
+  import DilemmaOption from './DilemmaOption.vue';
+  
   export default {
     name: 'dilemma',
+	components: {
+      'dilemma-option': DilemmaOption
+	},
     props: {
       currentState: Object,
       currentChapterInfo: Object,
@@ -71,6 +84,15 @@
       return {
       }
     },
+	computed: {
+		primaryStateChange: function () {
+			if (!this.chosenOption) {
+				return false;
+			} else {
+				return this.chosenOption.stateChange.capital || this.chosenOption.stateChange.users || this.chosenOption.stateChange.capabilities;
+			}
+		}
+	},
     mounted () {
     },
     methods: {
@@ -94,8 +116,6 @@
               visible = true;
             }
           }
-          
-
           return visible
         }
       },
@@ -130,8 +150,6 @@
             } else {
               newState[stateVariable] = option.stateChange[stateVariable]
             }
-
-            
           }          
         }
 
