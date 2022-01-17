@@ -72,7 +72,7 @@ for (const dataRow in sheetData) {
     let newStateSection = row[otherStateCol].split(',')
     for (const obj in newStateSection) {
       let newStateObj = newStateSection[obj].split(':')
-      newOption.stateChange[newStateObj[0]] = newStateObj[0] == "focus" ? parseInt(newStateObj[1]) : newStateObj[1]
+      newOption.stateChange[newStateObj[0]] = newStateObj[0] == "focus" ? parseInt(newStateObj[1]) : newStateObj[1] === 'true' ? true : false 
     }  
   }
 
