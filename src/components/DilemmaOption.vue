@@ -43,7 +43,7 @@ export default {
 			} else {
 				let visible = false
 				for (const requirement in this.option.optionVisibility){
-					if ((this.currentState[requirement] == this.option.optionRequirements[requirement] || this.currentState[requirement] >= this.option.optionRequirements[requirement])){
+					if (this.currentState[requirement] == this.option.optionVisibility[requirement] || this.currentState[requirement] >= this.option.optionRequirements[requirement]){
 						visible = true;
 					}
 				}
@@ -88,8 +88,12 @@ export default {
 					requirement == "focus") {
 						continue; // Primary state visibility locks are irrelevant to this map for current functionality
 				}
-				if (!customStates[requirement]) { // apply visibility unlocks only, but normal locks take precedent
-					customStates[requirement].unlockedBy = this.currentState[requirement] == this.option.optionVisibility[requirement];
+				if (customStates[requirement] == undefined) { // apply visibility locks, but normal locks take precedent
+					customStates[requirement] = {
+						required: true,
+						lockedBy: !(this.currentState[requirement] == this.option.optionVisibility[requirement]),
+						unlockedBy: this.currentState[requirement] == this.option.optionVisibility[requirement]
+					}
 				}
 			}
 			return {
