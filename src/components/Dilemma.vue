@@ -20,26 +20,6 @@
 				:key = "index"
 				@click-option = "selectOption"
 			></dilemma-option>
-
-		<!--<div class="dilemma-option"
-            v-for="(option, index) in currentChapterInfo.dilemmaOptions" v-bind:key="index"
-          >
-            <button
-              :disabled="isOptionLocked(option.optionRequirements)"
-              v-on:click="selectOption(option)"
-              v-bind:title="option.optionToolTip"
-              v-if="isOptionVisible(option.optionVisibility)"
-            >
-				<ul>
-					<li class="capital" v-if="isOptionLocked(option.optionRequirements) && doesOptionRequire('capital',option.optionRequirements)"></li>
-					<li class="users" v-if="isOptionLocked(option.optionRequirements) && doesOptionRequire('users',option.optionRequirements)"></li>
-					<li class="capabilities" v-if="isOptionLocked(option.optionRequirements) && doesOptionRequire('capabilities',option.optionRequirements)"></li>
-					<li class="focus" v-if="doesOptionRequire('focus',option.optionRequirements)"></li>
-				</ul>
-				<span>{{option.optionText}}</span>
-				
-            </button>
-          </div>-->
         </div>
 		<div v-if="currentChapterInfo.dilemmaNote">
         <h3>Dilemma Note</h3>
@@ -96,40 +76,6 @@
     mounted () {
     },
     methods: {
-      isOptionLocked(requirements){
-        let locked = false
-        for (const requirement in requirements){
-          if (!(this.currentState[requirement] == requirements[requirement] || this.currentState[requirement] >= requirements[requirement])){
-            locked = true;
-          }
-        }
-        return locked
-      },
-      isOptionVisible(requirements){
-        if (!requirements) {
-          return true;
-        } else {
-          let visible = false
-
-          for (const requirement in requirements){
-            if ((this.currentState[requirement] == requirements[requirement] || this.currentState[requirement] >= requirements[requirement])){
-              visible = true;
-            }
-          }
-          return visible
-        }
-      },
-		doesOptionRequire(check,requirements) {
-		if(!requirements) {
-			return false;
-		} else {
-			if (requirements[check] > 0) {
-				return true;
-			} else {
-				return false;
-			}
-		}
-		},
       nextPrompt(){
         this.$emit('next-prompt')
       },
