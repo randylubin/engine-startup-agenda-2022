@@ -260,7 +260,6 @@ export default {
 				for (const i in this.tooltipItems.links) {
 					let element = document.getElementById(this.tooltipItems.links[i]);
 					if (element) element.classList.add("highlight");
-					console.log("on");
 				}
 			} else {
 				for (const i in this.tooltipItems.links) {
