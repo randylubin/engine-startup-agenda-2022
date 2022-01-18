@@ -54,15 +54,15 @@
 		<div>
 			<transition-group name="list-update">
 			<div 
-				v-for="(flag,index) in activityFlags"
-				:key="'flag-' + index" :id="'flag-' + flag.state"
-				:class="['tt-container','activity-flag',...flag.cssClass.split(' ')]"
+				v-for="state in activityFlags"
+				:key="state" :id="'flag-' + state"
+				:class="['tt-container','activity-flag',FlagIndex[state].flagClass?FlagIndex[state].flagClass:'default']"
 			>
-				<span class="text">{{flag.title}}</span>
+				<span class="text">{{FlagIndex[state].flagTitle}}</span>
 				<span class="ani"></span>
-				<div v-if="flag.text" class="tt-positioner tt-sidebar">
+				<div v-if="FlagIndex[state].flagText" class="tt-positioner tt-sidebar">
 				<div class="tt-frame">
-					{{flag.text}}
+					{{FlagIndex[state].flagText}}
 				</div>
 				</div>
 			</div>
@@ -87,24 +87,24 @@
     },
     data () {
       return {
+		FlagIndex: FlagIndex,
+		activityFlags: []
       }
     },
-	computed: {
-		activityFlags: function () {
-			let flags = [];
+	watch: {
+		currentState: function () {
 			for (const state in this.currentState) {
 				if (FlagIndex[state]) {
-					if (this.currentState[state] && FlagIndex[state].flagTitle) {
-						flags.push({
-							state: state,
-							title: FlagIndex[state].flagTitle,
-							cssClass: FlagIndex[state].flagClass?FlagIndex[state].flagClass:"default",
-							text: FlagIndex[state].flagText?FlagIndex[state].flagText:false
-						});
+					if (this.currentState[state] && FlagIndex[state].flagTitle && this.activityFlags.indexOf(state) < 0) {
+						this.activityFlags.splice(0,0,state);
 					}
 				}
 			}
-			return flags;
+			for (const i in this.activityFlags) {
+				if (this.activityFlags[i] && !this.currentState[this.activityFlags[i]]) {
+					this.activityFlags.splice(i,1);
+				}
+			}
 		}
 	},
     mounted () {
@@ -123,6 +123,10 @@
 .list-update-enter, .list-update-leave-to {
 	opacity: 0;
 	transform: translateX(10%);
+}
+
+.list-update-leave-active {
+	position: absolute;
 }
 
 </style>
