@@ -12,8 +12,16 @@
       @next-prompt="nextPrompt()"
       @undo-state-change="undoStateChange()"
       @update-state="updateState($event)"
+			v-if="!optionHistory[this.optionHistory.length-1] || !optionHistory[this.optionHistory.length-1].gameOver"
     ></app-dilemma>
-	<app-chapter-control-panel
+		<app-game-over
+      :currentState="stateHistory[this.stateHistory.length-1]"
+      :currentChapterInfo="currentChapterInfo"
+      :chosenOption="optionHistory[this.optionHistory.length-1]"
+			v-if="optionHistory[this.optionHistory.length-1] && optionHistory[this.optionHistory.length-1].gameOver"
+      @undo-state-change="undoStateChange()"
+    ></app-game-over>
+		<app-chapter-control-panel
       :chapterHistory="chapterHistory"
 			:currentStateString="JSON.stringify(stateHistory[this.stateHistory.length-1], null, 5)"
 			@go-to-chapter="goToChapter($event)"
@@ -32,6 +40,7 @@
   import Dilemma from './Dilemma.vue'
   import DilemmaCompiler from './DilemmaCompiler.js'
   import ChapterControlPanel from './ChapterControlPanel.vue'
+	import GameOver from './GameOver.vue'
 
   export default {
     name: 'game',
@@ -39,6 +48,7 @@
       'app-state-sidebar': StateSidebar,
       'app-dilemma': Dilemma,
       'app-chapter-control-panel': ChapterControlPanel,
+			'app-game-over': GameOver,
     },
     data () {
       return {
@@ -70,6 +80,9 @@
     methods: {
       chooseOption(option){
         this.optionHistory.push(option)
+				if (this.currentChapterInfo.specialChapterType == 'singleScreen'){
+					this.nextPrompt();
+				}
       },
 			goToChapter(targetChapter){
 				console.log('going to', targetChapter)
@@ -86,6 +99,13 @@
         this.optionHistory.push(null)
         this.stateHistory.push(JSON.parse(JSON.stringify(this.stateHistory[this.stateHistory.length-1])))
         this.currentChapterInfo = newDilemma
+
+				// check for single screen with state change
+				if (newDilemma.specialChapterType == 'singleScreen'){
+					if (Object.keys(newDilemma.dilemmaOptions[0].stateChange).length > 3 || newDilemma.dilemmaOptions[0].stateChange.cash || newDilemma.dilemmaOptions[0].stateChange.users || newDilemma.dilemmaOptions[0].stateChange.capabilities){
+						this.chooseOption(newDilemma.dilemmaOptions[0])
+					}
+				}
       },
       restartGame(){
         console.log('restarting')

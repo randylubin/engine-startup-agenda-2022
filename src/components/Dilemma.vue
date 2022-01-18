@@ -34,12 +34,12 @@
         <li :class="{capital: true, increase: chosenOption.stateChange.capital > 0, decrease: chosenOption.stateChange.capital < 0}" v-if="primaryStateChange"></li>
         <li :class="{users: true, increase: chosenOption.stateChange.users > 0, decrease: chosenOption.stateChange.users < 0}" v-if="primaryStateChange"></li>
         <li :class="{capabilities: true, increase: chosenOption.stateChange.capabilities > 0, decrease: chosenOption.stateChange.capabilities < 0}" v-if="primaryStateChange"></li>
-		<li class="focus replenish" v-if="chosenOption.stateChange.focus > 0">Your <strong class="ii focus">Time &amp; Focus</strong> has been replenished.</li>
-		<li class="focus deplete" v-if="chosenOption.stateChange.focus < 0">Some of your&ensp;<strong class="ii focus">Time &amp; Focus</strong> is occupied by this choice.</li>
+        <li class="focus replenish" v-if="chosenOption.stateChange.focus > 0">Your <strong class="ii focus">Time &amp; Focus</strong> has been replenished.</li>
+        <li class="focus deplete" v-if="chosenOption.stateChange.focus < 0">Some of your&ensp;<strong class="ii focus">Time &amp; Focus</strong> is occupied by this choice.</li>
       </ul>
       <div id="consequences-nav-buttons">
         <button id="nav-continue" class="" v-if="!chosenOption.gameOver" v-on:click="nextPrompt()"><span>Continue</span></button>
-        <button id="nav-back" v-on:click="undoChoice()"><span>Back</span></button>       
+        <button id="nav-back" v-on:click="undoChoice()" v-if="!(currentChapterInfo.specialChapterType == 'singleScreen')"><span>Back</span></button>       
       </div>
     </div>
 	</transition>

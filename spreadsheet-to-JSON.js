@@ -15,7 +15,7 @@ let capitalCol = 7
 let userCol = 8
 let capabilitiesCol = 9
 let otherStateCol = 10
-let gameOverCol = 11
+let specialChapterTypeCol = 11
 let engineIssueCol = 12
 
 let dataOutput = {}
@@ -29,6 +29,10 @@ for (const dataRow in sheetData) {
       dilemmaOptions: [],
       engineIssue: row[engineIssueCol]
     }
+
+    if (row[specialChapterTypeCol] == "singleScreen") {
+      dataOutput[row[0]].specialChapterType = row[specialChapterTypeCol]
+    }
   }
 
   let newOption = {
@@ -41,7 +45,9 @@ for (const dataRow in sheetData) {
       users: 0,
       capabilities: 0
     },
-    gameOver: row[gameOverCol] ?? null,  
+  }
+  if (row[specialChapterTypeCol] == "gameOver") {
+    newOption.gameOver = true;  
   }
 
   // Option Requirements
