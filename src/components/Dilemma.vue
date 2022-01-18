@@ -52,9 +52,9 @@
   
   export default {
     name: 'dilemma',
-	components: {
-      'dilemma-option': DilemmaOption
-	},
+    components: {
+        'dilemma-option': DilemmaOption
+    },
     props: {
       currentState: Object,
       currentChapterInfo: Object,

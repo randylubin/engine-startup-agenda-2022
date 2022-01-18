@@ -47,16 +47,16 @@
 import FlagIndex from "./FlagIndex.js";
 
 export default {
-    name: 'dilemma-option',
-    props: {
+	name: 'dilemma-option',
+	props: {
 		currentState: Object,
 		option: Object,
-    },
-    data () {
+	},
+	data () {
 		return {
 			hover: false
 		}
-    },
+	},
 	computed: {
 		isLocked: function() {
 			let locked = false
@@ -73,7 +73,7 @@ export default {
 			} else {
 				let visible = false
 				for (const requirement in this.option.optionVisibility){
-					if (this.currentState[requirement] == this.option.optionVisibility[requirement] || this.currentState[requirement] >= this.option.optionRequirements[requirement]){
+					if (this.currentState[requirement] && (this.currentState[requirement] == this.option.optionVisibility[requirement] || this.currentState[requirement] >= this.option.optionRequirements[requirement])){
 						visible = true;
 					}
 				}
