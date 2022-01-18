@@ -38,9 +38,9 @@
 	<h3>Time &amp; Focus</h3>
 	<div class="tt-container">
 	<div id="game-state-focus">
-		<div v-bind:class="{used: currentState.focus < 1}"></div>
-		<div v-bind:class="{used: currentState.focus < 2}"></div>
-		<div v-bind:class="{used: currentState.focus < 3}"></div>
+		<div v-bind:class="{used: currentState.focus < 1}" id="focus-1"></div>
+		<div v-bind:class="{used: currentState.focus < 2}" id="focus-2"></div>
+		<div v-bind:class="{used: currentState.focus < 3}" id="focus-3"></div>
 	</div>
 	<div class="tt-positioner tt-sidebar">
 		<div class="tt-frame">
@@ -49,19 +49,32 @@
 		</div>
 	</div>
 	</div>	
-	<h3>Current Issues</h3>
+	<h3>Current Activity</h3>
     <div id="game-state-flags" v-if="currentState.pastEvents">
-      <div v-for="(pastEvent,index) in currentState.pastEvents" v-bind:key="index">
-        <div v-if="index < 3">
-          {{pastEvent}}
-        </div>
-      </div>
+		<div>
+			<transition-group name="list-update">
+			<div 
+				v-for="(flag,index) in activityFlags"
+				:key="'flag-' + index" :id="'flag-' + flag.state"
+				:class="['tt-container','activity-flag',...flag.cssClass.split(' ')]"
+			>
+				<span class="text">{{flag.title}}</span>
+				<span class="ani"></span>
+				<div v-if="flag.text" class="tt-positioner tt-sidebar">
+				<div class="tt-frame">
+					{{flag.text}}
+				</div>
+				</div>
+			</div>
+			</transition-group>
+		</div>
     </div>
   </div>
 </template>
 
 <script>
   import StateMeter from './StateMeter.vue'
+  import FlagIndex from "./FlagIndex.js";
   
   export default {
     name: 'state-sidebar',
@@ -76,6 +89,24 @@
       return {
       }
     },
+	computed: {
+		activityFlags: function () {
+			let flags = [];
+			for (const state in this.currentState) {
+				if (FlagIndex[state]) {
+					if (this.currentState[state] && FlagIndex[state].flagTitle) {
+						flags.push({
+							state: state,
+							title: FlagIndex[state].flagTitle,
+							cssClass: FlagIndex[state].flagClass?FlagIndex[state].flagClass:"default",
+							text: FlagIndex[state].flagText?FlagIndex[state].flagText:false
+						});
+					}
+				}
+			}
+			return flags;
+		}
+	},
     mounted () {
     },
     methods: {
@@ -83,6 +114,15 @@
   }
 </script>
 
-<style lang="scss">
+<style>
+
+.activity-flag {
+	transition: transform .5s ease-out, opacity .5s ease-out;
+}
+
+.list-update-enter, .list-update-leave-to {
+	opacity: 0;
+	transform: translateX(10%);
+}
 
 </style>

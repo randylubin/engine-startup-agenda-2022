@@ -115,7 +115,7 @@
 	--en-1m: rgb(236,65,102);  --en-2m: rgb(238,117,85);  --en-3m: rgb(240,155,41);
 	--en-1l: rgb(240,110,143); --en-2l: rgb(244,157,119); --en-3l: rgb(250,201,63);
 	
-	/* State Styles */
+	/* States */
 	
 	--bg-capital: rgb(89,178,94) linear-gradient(to bottom, rgba(0,0,0,0) 10%, rgba(0,0,0,.2) 90%);
 	--bg-users: rgb(55,99,196) linear-gradient(to bottom, rgba(0,0,0,0) 10%, rgba(0,0,0,.2) 90%);
@@ -147,16 +147,39 @@
 	
 	--bg-results-up: linear-gradient(to bottom,rgb(120,120,120) 20%,rgb(170,170,170) 40%,rgb(170,170,170) 60%,rgb(120,120,120) 80%);
 	--bg-results-down: linear-gradient(to bottom,rgb(120,120,120) 20%,rgb(170,170,170) 40%,rgb(170,170,170) 60%,rgb(120,120,120) 80%);
-
-	/* Meter Styles */
+	
+	/* Tooltips */
+	
+	--c-tooltip: white;
+	--c-tooltip-text: #444;
+	--sh-tooltip: 0px 0px 4px rgba(0,0,0,70%);
+	
+	--bg-tooltip-lock: rgb(237,157,157);
+	--bg-tooltip-unlock: rgb(132,206,120);
+	--bg-tooltip-focus: rgb(154,178,232);
+	
+	/* Meters */
 	
 	--c-meter-bg: var(--c-over);
 	--c-meter-border: rgb(200,200,200);
+	--sh-meter-highlight: 0 0 4px rgba(237,157,157,.75);
 	
+	/* Activity List */
+	
+	--bg-activity-default: linear-gradient(to bottom,rgb(91,80,87) 5%, rgb(71,60,67) 95%);
+	--c-activity-default-text: inherit;
+	--bg-activity-default-icon: var(--bg-sidebar-icon);	
 }
+
+	/* Activity List Custom Item Styles */
+	
+	div.activity-flag.focus::before {
+		mask-image: url("/assets/icons/icon-focus.svg");
+	}
 
 /* General Settings */
 
+* { cursor: default; } /* Prevent text selection cursor for more gamelike feel */
 html { font-size: calc(6px + 0.5vw);}
 body { 
 	font-family: aglet-slab, serif;
@@ -182,8 +205,6 @@ p { margin-bottom: 1em; }
 
 div#app {
 	position: absolute; top: 0;  left: 0; right: 0; bottom: 0;
-
-
 }
 
 div#game {
@@ -250,18 +271,14 @@ div#game-dilemma {
 	margin: 0; padding: 0;
 }
 
-#game-state-sidebar ul li {
+#game-state-sidebar ul#company-info li {
 	font-size: .9em;
 	margin-bottom: .4em;
 	line-height: 1;
 }
 
-#game-state-sidebar ul li strong {
+#game-state-sidebar ul#company-info li strong {
 	text-transform: uppercase;
-}
-
-#game-state-flags {
-	flex-grow: 1;
 }
 
 /* State Meter Layout */
@@ -277,6 +294,10 @@ div#game-state-meters > div {
 
 div#game-state-meters > div:last-child {
 	margin-bottom: 0;
+}
+
+div#game-state-meters > div.highlight {
+	filter: drop-shadow(var(--sh-meter-highlight));
 }
 
 /* State Meter Icons */
@@ -298,6 +319,7 @@ div.icon-capital::before { mask-image: url("/assets/icons/icon-capital.svg"); }
 div.icon-users::before { mask-image: url("/assets/icons/icon-users.svg"); }
 div.icon-capabilities::before { mask-image: url("/assets/icons/icon-capabilities.svg"); }
 
+
 /* Focus Clocks */
 
 div#game-state-focus {
@@ -309,6 +331,10 @@ div#game-state-focus {
 div#game-state-focus > div {
 	flex: 1;
 	position: relative;
+}
+
+div#game-state-focus > div.highlight {
+	opacity: .6;
 }
 
 div#game-state-focus > div::before {
@@ -376,6 +402,72 @@ div#game-state-focus > div::after {
 div#game-state-focus > div.used::before { animation: wobble .7s linear 1; opacity: 0; }
 div#game-state-focus > div.used::after { opacity: .25; }
 
+/* Activity List */
+
+#game-state-flags {
+	flex-grow: 1;
+	max-width: 100%;
+}
+
+div.activity-flag {
+	display: flex;
+	background: var(--bg-activity-default);
+	color: var(--bg-activity-text);
+	line-height: 1;
+	padding: .5em;
+	margin-bottom: .5em;
+	border-radius: .9em;
+	font-weight: 500;
+}
+
+div.activity-flag > span.text {
+	display: block;
+	width: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+	mask-image: linear-gradient(to right,rgba(255,255,255,1) 93%,rgba(255,255,255,0) 98%);
+}
+
+div.activity-flag::before {
+	flex-shrink:0;
+	content: url("/assets/icons/icon-sizer.svg");
+	line-height: 0;
+	background: var(--bg-activity-default-icon);
+	margin-right: .5em;
+	mask-image: url("/assets/icons/icon-circle.svg");
+	mask-repeat: no-repeat;
+	width: 1em;
+}
+
+@keyframes ani-activity-highlight {
+	0% { background-position: 0 0; }
+	100% { background-position: 0 2em; }
+}
+
+div.activity-flag > span.ani {
+	display: none;
+	position: absolute; top: 0; right: 0; bottom: 0; left: 0;
+	background-image: 
+		linear-gradient(
+		-45deg, 
+		rgba(0, 0, 0, .1) 25%, 
+		transparent 25%, 
+		transparent 50%, 
+		rgba(0, 0, 0, .1) 50%, 
+		rgba(0, 0, 0, .1) 75%, 
+		transparent 75%, 
+		transparent
+	);
+	z-index: 1;
+	background-size: 2em 2em;
+	background-repeat: repeat;
+	animation: ani-activity-highlight .5s linear infinite reverse;
+}
+
+div.activity-flag.highlight > span.ani {
+	display: block;
+}
+
 /* Main Panel */
 
 div#game-dilemma { font-size: 1.3em; }
@@ -430,6 +522,8 @@ button {
 	transition: background-color .2s ease-out;
 }
 
+button * { cursor: pointer; }
+
 button::before {
 	order: 1;
 	flex-shrink:0;
@@ -439,6 +533,10 @@ button::before {
 	mask-image: url("/assets/icons/icon-triangle.svg");
 	mask-repeat: no-repeat;
 	width: 1em;
+}
+
+button.unlock::before {
+	mask-image: url("/assets/icons/icon-lock-open.svg");
 }
 
 button > span {
@@ -464,6 +562,9 @@ button[disabled] {
 	background: var(--bg-button-disabled);
 	color: var(--c-button-disabled-text);
 }
+
+button[disabled] * { cursor: not-allowed; }
+
 button[disabled]::before {
 	background: var(--bg-button-disabled-accent);
 	mask-image: url("/assets/icons/icon-lock.svg");
@@ -484,6 +585,10 @@ div.dilemma-option button ul {
 div.dilemma-option button ul li {
 	width: 1em;
 	margin-left: .1em;
+}
+
+div.dilemma-option button ul li.satisfied {
+	opacity: .4;
 }
 
 div.dilemma-option button ul li::before {
@@ -652,34 +757,42 @@ button#nav-back::before { transform: rotate(180deg); }
 }
 
 div.tt-positioner.tt-option {
-	bottom: calc(100% + 9px);
-	left: calc(50% - 175px);
-	width: 350px;
+	bottom: 112%;
+	left: max(25%, calc(50% - 360px));
+	width: min(50%, 720px);
+	
 	flex-direction: row;
 	justify-content: center;
 	
-	filter: drop-shadow(4px 4px 4px rgba(0,0,0,50%));
+	filter: drop-shadow(var(--sh-tooltip));
 }
 
 div.tt-positioner.tt-sidebar {
-	left: calc(100% + 48px);
+	left: 110%;
 	top: 0;
 	height: 100%;
-	width: 400px;
+	width: min(100%, 450px);
 	flex-direction: column;
 	justify-content: center;
 	
-	filter: drop-shadow(4px 4px 4px rgba(0,0,0,50%));
+	filter: drop-shadow(var(--sh-tooltip));
 }
 
 div.tt-frame {
 	padding: .6em 1em .9em;
-	background: #444;
-	color: white;
-	
+	background-color: var(--c-tooltip);
+	color: var(--c-tooltip-text);
+	border-radius: 1em;
 	font-family: acumin-pro-condensed, sans-serif;
-	font-size: 1.1em;
+	font-size: 1.4rem;
 	line-height: 1.25;
+}
+
+div.tt-option div.tt-frame {
+	padding: 0;
+	border: .5em solid;
+	border-color: var(--c-tooltip);
+	overflow: hidden;
 }
 
 div.tt-option div.tt-frame::after {
@@ -687,10 +800,11 @@ div.tt-option div.tt-frame::after {
 	position: absolute;
 	top: 100%;
 	left: 50%;
-	margin-left: -16px;
-	border-width: 16px;
+	margin-left: -.75em;
+	border-width: .75em;
 	border-style: solid;
-	border-color: #444 transparent transparent transparent;
+	border-color: transparent;
+	border-top-color: var(--c-tooltip);
 }
 
 div.tt-sidebar div.tt-frame::after {
@@ -698,14 +812,74 @@ div.tt-sidebar div.tt-frame::after {
 	position: absolute;
 	top: 50%;
 	right: 100%;
-	margin-top: -16px;
-	border-width: 16px;
+	margin-top: -.5em;
+	border-width: .5em;
 	border-style: solid;
-	border-color: transparent #444 transparent transparent;
+	border-color: transparent;
+	border-right-color: var(--c-tooltip);
 }
 
 div.tt-frame p { margin: 0 0 1em 0; }
 div.tt-frame p:last-child { margin-bottom: 0; }
+
+/* Option Detail Tooltips */
+
+ul.option-details {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+ul.option-details li {
+	padding: .75em 1em;
+}
+ul.option-details li::first-letter {
+	text-transform: uppercase;
+}
+
+ul.option-details li:last-child {
+	margin-bottom: 0;
+}
+
+ul.option-details li.lock {
+	list-style: none;
+	font-weight: 600;
+	background: var(--bg-tooltip-lock);
+}
+
+ul.option-details li.lock strong {
+	font-weight: 700;
+}
+
+ul.option-details li.lock-list {
+	list-style: square inside;
+	background: var(--bg-tooltip-lock);
+}
+
+ul.option-details li.unlock {
+	list-style: none;
+	font-weight: 600;
+	background: var(--bg-tooltip-unlock);
+}
+
+ul.option-details li.unlock-list {
+	list-style: square inside;
+	background: var(--bg-tooltip-unlock);
+}
+
+ul.option-details li.lock+li.lock-list,ul.option-details li.lock-list+li.lock-list,
+ul.option-details li.unlock+li.unlock-list,ul.option-details li.unlock-list+li.unlock-list {
+	padding-top: 0;
+}
+
+ul.option-details li.focus {
+	background: var(--bg-tooltip-focus);
+	font-style: italic;
+}
+
+ul.option-details li.note {
+	list-style: none;
+}
 
 /* Inline Icons */
 
@@ -717,11 +891,12 @@ div.tt-frame p:last-child { margin-bottom: 0; }
 }
 .ii::before {
 	content: url("/assets/icons/icon-sizer.svg");
+	position: relative;
 	display: inline-block;
 	line-height: 1;
 	vertical-align: middle;
 	width: 1em;
-	margin-right: .3em;
+	margin-right: .2em;
 	background-color: currentColor;
 	mask-repeat: no-repeat;
 }
@@ -730,54 +905,7 @@ div.tt-frame p:last-child { margin-bottom: 0; }
 .ii.users::before { mask-image: url("/assets/icons/icon-users.svg"); }
 .ii.capabilities::before { mask-image: url("/assets/icons/icon-capabilities.svg"); }
 .ii.focus::before { mask-image: url("/assets/icons/icon-focus-small.svg"); }
-.ii.lock::before { mask-image: url("/assets/icons/icon-lock.svg"); }
+.ii.lock::before { mask-image: url("/assets/icons/icon-lock.svg"); top: -0.1em; }
 .ii.unlock::before { mask-image: url("/assets/icons/icon-lock-open.svg"); }
-
-
-/* Option Detail Lists */
-
-ul.option-details {
-	margin: 0;
-	padding: 0 0 0 1em;
-	list-style: square;
-}
-
-ul.option-details li {
-	margin-bottom: .25em;
-}
-ul.option-details li:last-child {
-	margin-bottom: 0;
-}
-
-ul.option-details li span {
-	font-weight: 600;
-}
-ul.option-details li.lock {
-	list-style: none;
-	margin-left: -1em;
-	font-weight: 600;
-}
-
-ul.option-details li.lock span {
-	font-weight: 700;
-}
-
-ul.option-details li.focus {
-	list-style: none;
-	margin-left: -1em;
-	padding-top: .5em;
-	margin-top: .75em;
-	border-top: 1px solid white;
-	font-style: italic;
-}
-
-ul.option-details li.focus:first-child {
-	margin-top: 0; padding-top: 0; border-top: none;
-}
-
-ul.option-details li.note {
-	list-style: none;
-	margin-left: -1em;
-}
 
 </style>

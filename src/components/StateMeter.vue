@@ -54,8 +54,8 @@ div.state-meter {
 	display: block;
 	flex-grow: 1;
 	overflow: hidden;
-	white-space: nowrap;
 	background-color: var(--c-meter-bg);
+	white-space: nowrap;
 	border: 2px solid var(--c-meter-border);
 	border-radius: .9em;
 }
