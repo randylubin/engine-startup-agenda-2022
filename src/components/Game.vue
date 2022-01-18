@@ -53,6 +53,7 @@
         chapterHistory: [],
         currentChapterInfo: {},
         optionHistory: [null],
+				singlePageDilemmas: [1]
       }
     },
     mounted () {      
@@ -70,6 +71,9 @@
     methods: {
       chooseOption(option){
         this.optionHistory.push(option)
+				if (this.singlePageDilemmas.includes(this.chapterHistory.length)){
+					this.nextPrompt();
+				}
       },
 			goToChapter(targetChapter){
 				console.log('going to', targetChapter)
