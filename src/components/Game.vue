@@ -15,8 +15,11 @@
     ></app-dilemma>
 	<app-chapter-control-panel
       :chapterHistory="chapterHistory"
+			:currentStateString="JSON.stringify(stateHistory[this.stateHistory.length-1], null, 5)"
+			@go-to-chapter="goToChapter($event)"
       @restart-game="restartGame()"
       @undo-state-change="undoStateChange()"
+			@update-state="updateState($event)"
     ></app-chapter-control-panel>
     <!--<div>
       Current Gamestate: {{stateHistory[this.stateHistory.length-1]}}
@@ -68,8 +71,16 @@
       chooseOption(option){
         this.optionHistory.push(option)
       },
+			goToChapter(targetChapter){
+				console.log('going to', targetChapter)
+				let newDilemma = DilemmaCompiler[targetChapter](this.stateHistory[this.stateHistory.length-1])
+        this.chapterHistory.push(newDilemma)
+        this.optionHistory.push(null)
+        this.stateHistory.push(JSON.parse(JSON.stringify(this.stateHistory[this.stateHistory.length-1])))
+        this.currentChapterInfo = newDilemma
+			},
       nextPrompt(){
-        console.log('ch length', this.chapterHistory.length)
+        // console.log('ch length', this.chapterHistory.length)
         let newDilemma = DilemmaCompiler[this.chapterHistory.length](this.stateHistory[this.stateHistory.length-1])
         this.chapterHistory.push(newDilemma)
         this.optionHistory.push(null)
