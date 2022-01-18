@@ -12,7 +12,7 @@
 			<state-meter :stateValue="currentState.capital" :stateChange="chosenOption?chosenOption.stateChange.capital:0"></state-meter>
 			<div class="tt-positioner tt-sidebar">
 			<div class="tt-frame">
-				<p>This meter tracks your overall <b>Financial Health</b>. If this drops to zero, your company has run out of money and the game will end!</p>
+				<p>This meter tracks your overall&ensp;<strong class="ii capital">Financial Health</strong>. If this drops to zero, your company has run out of money and the game will end!</p>
 			</div>
 			</div>
 		</div>
@@ -21,7 +21,7 @@
 			<state-meter :stateValue="currentState.users" :stateChange="chosenOption?chosenOption.stateChange.users:0"></state-meter>
 			<div class="tt-positioner tt-sidebar">
 			<div class="tt-frame">
-				<p>This meter tracks your product's rate of <b>User Growth</b>. If this drops to zero, your product has stagnated and the game will end!</p>
+				<p>This meter tracks your product's rate of&ensp;<strong class="ii users">User Growth</strong>. If this drops to zero, your product has stagnated and the game will end!</p>
 			</div>
 			</div>
 		</div>
@@ -30,7 +30,7 @@
 			<state-meter :stateValue="currentState.capabilities" :stateChange="chosenOption?chosenOption.stateChange.capabilities:0"></state-meter>
 			<div class="tt-positioner tt-sidebar">
 			<div class="tt-frame">
-				<p>This meter tracks your company's capacity to tackle tough challenges with <b>Tech &amp; Talent</b>. If this drops to zero, your company has run out of innovative power and the game will end!</p>
+				<p>This meter tracks your company's capacity to tackle challenges with&ensp;<strong class="ii capabilities">Tech &amp; Talent</strong>. If this drops to zero, your company has run out of innovative power and the game will end!</p>
 			</div>
 			</div>
 		</div>
@@ -38,30 +38,43 @@
 	<h3>Time &amp; Focus</h3>
 	<div class="tt-container">
 	<div id="game-state-focus">
-		<div v-bind:class="{used: currentState.focus < 1}"></div>
-		<div v-bind:class="{used: currentState.focus < 2}"></div>
-		<div v-bind:class="{used: currentState.focus < 3}"></div>
+		<div v-bind:class="{used: currentState.focus < 1}" id="focus-1"></div>
+		<div v-bind:class="{used: currentState.focus < 2}" id="focus-2"></div>
+		<div v-bind:class="{used: currentState.focus < 3}" id="focus-3"></div>
 	</div>
 	<div class="tt-positioner tt-sidebar">
 		<div class="tt-frame">
-			<p>Some courses of action require <b>Time &amp; Focus</b>, which is always in short supply! Once you run out of this valuable resource, you'll have to wait for it to be replenished at certain game milestones.</p>
-			<p>Unused <b>Time &amp; Focus</b> will become improvements to your core product, so it's sometimes wise to avoid using it all &mdash; if you can!</p>
+			<p>Some courses of action require&ensp;<strong class="ii focus">Time &amp; Focus</strong>, which is always in short supply! Once you run out of this valuable resource, you'll have to wait for it to be replenished at certain game milestones.</p>
+			<p>Unused&ensp;<strong class="ii focus">Time &amp; Focus</strong> will become improvements to your core product, so it's sometimes wise to avoid using it all &mdash; if you can!</p>
 		</div>
 	</div>
 	</div>	
-	<h3>Current Issues</h3>
+	<h3>Current Activity</h3>
     <div id="game-state-flags" v-if="currentState.pastEvents">
-      <div v-for="(pastEvent,index) in currentState.pastEvents" v-bind:key="index">
-        <div v-if="index < 3">
-          {{pastEvent}}
-        </div>
-      </div>
+		<div>
+			<transition-group name="list-update">
+			<div 
+				v-for="(flag,index) in activityFlags"
+				:key="'flag-' + index" :id="'flag-' + flag.state"
+				:class="['tt-container','activity-flag',...flag.cssClass.split(' ')]"
+			>
+				<span class="text">{{flag.title}}</span>
+				<span class="ani"></span>
+				<div v-if="flag.text" class="tt-positioner tt-sidebar">
+				<div class="tt-frame">
+					{{flag.text}}
+				</div>
+				</div>
+			</div>
+			</transition-group>
+		</div>
     </div>
   </div>
 </template>
 
 <script>
   import StateMeter from './StateMeter.vue'
+  import FlagIndex from "./FlagIndex.js";
   
   export default {
     name: 'state-sidebar',
@@ -76,6 +89,24 @@
       return {
       }
     },
+	computed: {
+		activityFlags: function () {
+			let flags = [];
+			for (const state in this.currentState) {
+				if (FlagIndex[state]) {
+					if (this.currentState[state] && FlagIndex[state].flagTitle) {
+						flags.push({
+							state: state,
+							title: FlagIndex[state].flagTitle,
+							cssClass: FlagIndex[state].flagClass?FlagIndex[state].flagClass:"default",
+							text: FlagIndex[state].flagText?FlagIndex[state].flagText:false
+						});
+					}
+				}
+			}
+			return flags;
+		}
+	},
     mounted () {
     },
     methods: {
@@ -83,6 +114,15 @@
   }
 </script>
 
-<style lang="scss">
+<style>
+
+.activity-flag {
+	transition: transform .5s ease-out, opacity .5s ease-out;
+}
+
+.list-update-enter, .list-update-leave-to {
+	opacity: 0;
+	transform: translateX(10%);
+}
 
 </style>
