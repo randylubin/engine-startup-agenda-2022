@@ -78,9 +78,9 @@
       optionHistory(newData){ localStorage.optionHistory = JSON.stringify(newData)},
     },
     methods: {
-      chooseOption(option){
+      chooseOption(option, skipping = false){
         this.optionHistory.push(option)
-				if (this.currentChapterInfo.specialChapterType == 'singleScreen'){
+				if (this.currentChapterInfo.specialChapterType == 'singleScreen' && !skipping){
 					this.nextPrompt();
 				}
       },
@@ -102,8 +102,9 @@
 
 				// check for single screen with state change
 				if (newDilemma.specialChapterType == 'singleScreen'){
-					if (Object.keys(newDilemma.dilemmaOptions[0].stateChange).length > 3 || newDilemma.dilemmaOptions[0].stateChange.cash || newDilemma.dilemmaOptions[0].stateChange.users || newDilemma.dilemmaOptions[0].stateChange.capabilities){
-						this.chooseOption(newDilemma.dilemmaOptions[0])
+					if (Object.keys(newDilemma.dilemmaOptions[0].stateChange).length > 3 || newDilemma.dilemmaOptions[0].stateChange.capital || newDilemma.dilemmaOptions[0].stateChange.users || newDilemma.dilemmaOptions[0].stateChange.capabilities){
+						console.log('skipping')
+						this.chooseOption(newDilemma.dilemmaOptions[0], 'skipping')
 					}
 				}
       },
