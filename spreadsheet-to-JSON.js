@@ -49,7 +49,20 @@ for (const dataRow in sheetData) {
     let newRequirements = row[requirementsCol].split(',')
     for (const obj in newRequirements) {
       let newReqObject = newRequirements[obj].split(':')
-      newOption.optionRequirements[newReqObject[0]] = newReqObject[1]
+      let newProp = newReqObject[0]
+      let newValue = newReqObject[1]
+
+      if (['capital', 'users', 'capabilities', 'focus'].includes(newProp)) {
+        newValue = parseInt(newValue)
+      } else {
+        if (newValue === 'true') {
+          newValue = true
+        } else {
+          newValue = false;
+        }
+      }
+
+      newOption.optionRequirements[newProp] = newValue
     }  
   } else {newOption.optionRequirements = null}
 
@@ -58,7 +71,20 @@ for (const dataRow in sheetData) {
     let newVisSection = row[visibilityCol].split(',')
     for (const obj in newVisSection) {
       let newVisObject = newVisSection[obj].split(':')
-      newOption.optionVisibility[newVisObject[0]] = newVisObject[1]
+      let newProp = newVisObject[0]
+      let newValue = newVisObject[1]
+
+      if (['capital', 'users', 'capabilities', 'focus'].includes(newProp)) {
+        newValue = parseInt(newValue)
+      } else {
+        if (newValue === 'true') {
+          newValue = true
+        } else {
+          newValue = false;
+        }
+      }
+        
+      newOption.optionVisibility[newProp] = newValue
     }  
   } else {newOption.optionVisibility = null}
 
