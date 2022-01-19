@@ -63,6 +63,9 @@ var DilemmaCompiler = [
       return DilemmaList['16']
    },
    function () {
+      return DilemmaList['17']
+   },
+   function () {
       return DilemmaList['18']
    },
    function () {
