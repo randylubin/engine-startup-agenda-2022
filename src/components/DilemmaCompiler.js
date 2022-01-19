@@ -2,89 +2,92 @@ import DilemmaList from '../../converted-dilemma-list.json'
 
 var DilemmaCompiler = [
    function () {
-      return DilemmaList['0.1']
+      return DilemmaList['T-WELCOME']
    },
    function () {
-      return DilemmaList['0.2']
+      return DilemmaList['T-FOUNDER']
    },
-   // location
    function () {
-      return DilemmaList['1']
+      return DilemmaList['T-LOCATION']
    },
-   // First focus
    function () {
-      return DilemmaList['2']
+      return DilemmaList['T-FOCUS']
    },
-   // template
    function (gameState) {
       if (gameState.techHub) {
-         return DilemmaList['3.1']
+         return DilemmaList['T-REC-TECH']
       } else {
-         return DilemmaList['3.2']
+         return DilemmaList['T-REC-OTHER']
       }
    },
    function () {
-      return DilemmaList['4']
+      return DilemmaList['T-PRIVACY']
    },
    function () {
-      return DilemmaList['5']
+      return DilemmaList['A-FUNDING']
    },
    function () {
-      return DilemmaList['6']
+      return DilemmaList['A-START']
    },
    function () {
-      return DilemmaList['7']
+      return DilemmaList['A-PATENT']
    },
    function () {
-      return DilemmaList['8']
+      return DilemmaList['A-NSL']
    },
    function () {
-      return DilemmaList['9']
+      return DilemmaList['A-COPYRIGHT']
    },
    function () {
-      return DilemmaList['10']
+      return DilemmaList['A-STATELAW']
    },
    function () {
-      return DilemmaList['11']
+      return DilemmaList['A-DEFAME']
    },
    function () {
-      return DilemmaList['12']
+      return DilemmaList['A-DISINFO']
    },
    function () {
-      return DilemmaList['13']
+      return DilemmaList['A-BACKDOOR']
    },
    function () {
-      return DilemmaList['14']
+      return DilemmaList['A-NETNEUTRALITY']
    },
    function () {
-      return DilemmaList['15']
+      return DilemmaList['A-FAIRUSE']
    },
    function () {
-      return DilemmaList['16']
+      return DilemmaList['A-TBD']
    },
    function () {
-      return DilemmaList['17']
+      return DilemmaList['C-FUNDING']
    },
    function () {
-      return DilemmaList['18']
+      return DilemmaList['C-START']
    },
    function () {
-      return DilemmaList['19']
+      return DilemmaList['C-EUREG']
    },
    function () {
-      return DilemmaList['20']
+      return DilemmaList['C-BREACH']
    },
    function () {
-      return DilemmaList['22.1'] // TODO add conditional
+      return DilemmaList['C-DISINFO-2']
    },
    function () {
-      return DilemmaList['23.1'] // TODO add conditional
+      return DilemmaList['C-TROLLS'] // TODO add conditional for C-HOLLYWOOD, C-HEALTHCARE
    },
    function () {
-      return DilemmaList['24']
+      return DilemmaList['C-INDIA-DATA'] // TODO add conditional for C-BRAZIL-TAKEDOWN
    },
    function () {
-      return DilemmaList['25']
+      return DilemmaList['C-SWISS-TAX'] // TODO add conditional for C-KOREA-TAX
+   },
+   function () {
+      return DilemmaList['C-TBD']
+   },
+   function () {
+      return DilemmaList['E-END']
    },
    // example dilemma
    // function () {
@@ -219,29 +222,29 @@ var DilemmaCompiler = [
          "dilemmaPrompt": "That's all for now...",
       }
    },
-   // template
-   function () {
-      return {
-         "dilemmaPrompt": "Do you want to spend time fundraising or hiring? This will matter for the next dilemma...",
-         "dilemmaOptions": [
-            {
-               "optionText": "This is a placeholder option",
-               "resultsText": "This is the placeholder result of an option",
-               "stateChange": {
-                  "capital": 15,
-                  "choseFundraising": true
-               },
-               "optionRequirements": {
-                  "hasMagic": true
-               },
-               "optionVisibility": {
-                  "noSuchState": true
-               },
-               "gameOver": true
-            },
-         ]
-      }
-   },
+   // // template
+   // function () {
+   //    return {
+   //       "dilemmaPrompt": "Do you want to spend time fundraising or hiring? This will matter for the next dilemma...",
+   //       "dilemmaOptions": [
+   //          {
+   //             "optionText": "This is a placeholder option",
+   //             "resultsText": "This is the placeholder result of an option",
+   //             "stateChange": {
+   //                "capital": 15,
+   //                "choseFundraising": true
+   //             },
+   //             "optionRequirements": {
+   //                "hasMagic": true
+   //             },
+   //             "optionVisibility": {
+   //                "noSuchState": true
+   //             },
+   //             "gameOver": true
+   //          },
+   //       ]
+   //    }
+   // },
 ]
 
 export default DilemmaCompiler
