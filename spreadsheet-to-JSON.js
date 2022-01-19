@@ -5,25 +5,29 @@ const fs = require('fs');
 let rawdata = fs.readFileSync('spreadsheet-input.json');
 let sheetData = JSON.parse(rawdata);
 
-let titleCol = 1
-let promptCol = 2
-let optionCol = 3
-let resultsCol = 4
-let requirementsCol = 5
-let visibilityCol = 6
-let capitalCol = 7
-let userCol = 8
-let capabilitiesCol = 9
-let otherStateCol = 10
-let specialChapterTypeCol = 11
-let engineIssueCol = 12
+let colIndex = 0
+
+let chapterCode = colIndex; colIndex++;
+colIndex++; // gameRound
+let titleCol = colIndex; colIndex++;
+let promptCol = colIndex; colIndex++;
+let optionCol = colIndex; colIndex++;
+let resultsCol = colIndex; colIndex++;
+let requirementsCol = colIndex; colIndex++;
+let visibilityCol = colIndex; colIndex++;
+let capitalCol = colIndex; colIndex++;
+let userCol = colIndex; colIndex++;
+let capabilitiesCol = colIndex; colIndex++;
+let otherStateCol = colIndex; colIndex++;
+let specialChapterTypeCol = colIndex; colIndex++;
+let engineIssueCol = colIndex; colIndex++;
 
 let dataOutput = {}
 
 for (const dataRow in sheetData) {
   let row = sheetData[dataRow]
-  if (!dataOutput[row[0]]) {
-    dataOutput[row[0]] = {
+  if (!dataOutput[row[chapterCode]]) {
+    dataOutput[row[chapterCode]] = {
       dilemmaTitle: row[titleCol],
       dilemmaPrompt: row[promptCol],
       dilemmaOptions: [],
@@ -31,7 +35,7 @@ for (const dataRow in sheetData) {
     }
 
     if (row[specialChapterTypeCol] == "singleScreen") {
-      dataOutput[row[0]].specialChapterType = row[specialChapterTypeCol]
+      dataOutput[row[chapterCode]].specialChapterType = row[specialChapterTypeCol]
     }
   }
 
