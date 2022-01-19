@@ -12,13 +12,13 @@
       @next-prompt="nextPrompt()"
       @undo-state-change="undoStateChange()"
       @update-state="updateState($event)"
-			v-if="!optionHistory[this.optionHistory.length-1] || !optionHistory[this.optionHistory.length-1].gameOver"
+			v-if="!gameOver"
     ></app-dilemma>
 		<app-game-over
       :currentState="stateHistory[this.stateHistory.length-1]"
       :currentChapterInfo="currentChapterInfo"
       :chosenOption="optionHistory[this.optionHistory.length-1]"
-			v-if="optionHistory[this.optionHistory.length-1] && optionHistory[this.optionHistory.length-1].gameOver"
+			v-if="gameOver"
       @undo-state-change="undoStateChange()"
     ></app-game-over>
 		<app-chapter-control-panel
@@ -65,6 +65,24 @@
         optionHistory: [null],
       }
     },
+		computed: {
+			gameOver: function(){
+				let showGameOverScreen = false;
+				if (this.optionHistory[this.optionHistory.length-1] && this.stateHistory[this.stateHistory.length-1]){
+					if (this.optionHistory[this.optionHistory.length-1].gameOver){ // test for game over from dilemma
+						showGameOverScreen = true;
+					} else { // test if game over from resources
+						let capital = this.stateHistory[this.stateHistory.length-1].capital
+						let users = this.stateHistory[this.stateHistory.length-1].users
+						let capabilities  = this.stateHistory[this.stateHistory.length-1].capabilities
+						if (this.stateHistory.length && !(capital && users && capabilities)){
+							// showGameOverScreen = true // TODO uncomment this after balancing game
+						}
+					}
+				}
+				return showGameOverScreen; 
+			}
+		},
     mounted () {      
       this.stateHistory = localStorage.stateHistory ? JSON.parse(localStorage.stateHistory) : JSON.parse(JSON.stringify(this.initialState))
       this.chapterHistory = localStorage.chapterHistory ? JSON.parse(localStorage.currentChapterInfo) : [DilemmaCompiler[0]()]
