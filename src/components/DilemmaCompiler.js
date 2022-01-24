@@ -1,94 +1,37 @@
 import DilemmaList from '../../converted-dilemma-list.json'
 
 var DilemmaCompiler = [
-   function () {
-      return DilemmaList['T-WELCOME']
+   { // Example dilemma with optional structure for extra flags
+      compile: () => DilemmaList['T-WELCOME'],
+      flags: ['big']
    },
-   function () {
-      return DilemmaList['T-FOUNDER']
-   },
-   function () {
-      return DilemmaList['T-LOCATION']
-   },
-   function () {
-      return DilemmaList['T-FOCUS']
-   },
-   function (gameState) {
-      if (gameState.techHub) {
-         return DilemmaList['T-REC-TECH']
-      } else {
-         return DilemmaList['T-REC-OTHER']
-      }
-   },
-   function () {
-      return DilemmaList['T-PRIVACY']
-   },
-   function () {
-      return DilemmaList['A-FUNDING']
-   },
-   function () {
-      return DilemmaList['A-START']
-   },
-   function () {
-      return DilemmaList['A-PATENT']
-   },
-   function () {
-      return DilemmaList['A-NSL']
-   },
-   function () {
-      return DilemmaList['A-COPYRIGHT']
-   },
-   function () {
-      return DilemmaList['A-STATELAW']
-   },
-   function () {
-      return DilemmaList['A-DEFAME']
-   },
-   function () {
-      return DilemmaList['A-DISINFO']
-   },
-   function () {
-      return DilemmaList['A-BACKDOOR']
-   },
-   function () {
-      return DilemmaList['A-NETNEUTRALITY']
-   },
-   function () {
-      return DilemmaList['A-FAIRUSE']
-   },
-   function () {
-      return DilemmaList['A-TBD']
-   },
-   function () {
-      return DilemmaList['C-FUNDING']
-   },
-   function () {
-      return DilemmaList['C-START']
-   },
-   function () {
-      return DilemmaList['C-EUREG']
-   },
-   function () {
-      return DilemmaList['C-BREACH']
-   },
-   function () {
-      return DilemmaList['C-DISINFO-2']
-   },
-   function () {
-      return DilemmaList['C-TROLLS'] // TODO add conditional for C-HOLLYWOOD, C-HEALTHCARE
-   },
-   function () {
-      return DilemmaList['C-INDIA-DATA'] // TODO add conditional for C-BRAZIL-TAKEDOWN
-   },
-   function () {
-      return DilemmaList['C-SWISS-TAX'] // TODO add conditional for C-KOREA-TAX
-   },
-   function () {
-      return DilemmaList['C-TBD']
-   },
-   function () {
-      return DilemmaList['E-END']
-   },
+   () => DilemmaList['T-FOUNDER'], // Creating the object with "compile" and "flags" is not required - just a function still works (see handler at bottom)
+   () => DilemmaList['T-LOCATION'],
+   () => DilemmaList['T-FOCUS'],
+   (gameState) => gameState.techHub?DilemmaList['T-REC-TECH']:DilemmaList['T-REC-OTHER'],
+   () => DilemmaList['T-PRIVACY'],
+   () => DilemmaList['A-FUNDING'],
+   () => DilemmaList['A-START'],
+   () => DilemmaList['A-PATENT'],
+   () => DilemmaList['A-NSL'],
+   () => DilemmaList['A-COPYRIGHT'],
+   () => DilemmaList['A-STATELAW'],
+   () => DilemmaList['A-DEFAME'],
+   () => DilemmaList['A-DISINFO'],
+   () => DilemmaList['A-BACKDOOR'],
+   () => DilemmaList['A-NETNEUTRALITY'],
+   () => DilemmaList['A-FAIRUSE'],
+   () => DilemmaList['A-TBD'],
+   () => DilemmaList['C-FUNDING'],
+   () => DilemmaList['C-START'],
+   () => DilemmaList['C-EUREG'],
+   () => DilemmaList['C-BREACH'],
+   () => DilemmaList['C-DISINFO-2'],
+   () => DilemmaList['C-TROLLS'], // TODO add conditional for C-HOLLYWOOD, C-HEALTHCARE
+   () => DilemmaList['C-INDIA-DATA'], // TODO add conditional for C-BRAZIL-TAKEDOWN
+   () => DilemmaList['C-SWISS-TAX'], // TODO add conditional for C-KOREA-TAX
+   () => DilemmaList['C-TBD'],
+   () => DilemmaList['E-END'],
    // example dilemma
    // function () {
    //    return {
@@ -246,5 +189,8 @@ var DilemmaCompiler = [
    //    }
    // },
 ]
+
+// Normalize all items to an object with "compile" and "flags" (set flags to false if not provided)
+DilemmaCompiler = DilemmaCompiler.map(item => (typeof item === 'function')?{compile:item,flags:false}:item)
 
 export default DilemmaCompiler

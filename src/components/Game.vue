@@ -85,8 +85,8 @@
 		},
     mounted () {      
       this.stateHistory = localStorage.stateHistory ? JSON.parse(localStorage.stateHistory) : JSON.parse(JSON.stringify(this.initialState))
-      this.chapterHistory = localStorage.chapterHistory ? JSON.parse(localStorage.currentChapterInfo) : [DilemmaCompiler[0]()]
-      this.currentChapterInfo = localStorage.currentChapterInfo ? JSON.parse(localStorage.currentChapterInfo) : DilemmaCompiler[0]()
+      this.chapterHistory = localStorage.chapterHistory ? JSON.parse(localStorage.currentChapterInfo) : [DilemmaCompiler[0].compile()]
+      this.currentChapterInfo = localStorage.currentChapterInfo ? JSON.parse(localStorage.currentChapterInfo) : DilemmaCompiler[0].compile()
       this.optionHistory = localStorage.optionHistory ? JSON.parse(localStorage.optionHistory) : []
     },
     watch: {
@@ -104,7 +104,7 @@
       },
 			goToChapter(targetChapter){
 				console.log('going to', targetChapter)
-				let newDilemma = DilemmaCompiler[targetChapter](this.stateHistory[this.stateHistory.length-1])
+				let newDilemma = DilemmaCompiler[targetChapter].compile(this.stateHistory[this.stateHistory.length-1])
         this.chapterHistory.push(newDilemma)
         this.optionHistory.push(null)
         this.stateHistory.push(JSON.parse(JSON.stringify(this.stateHistory[this.stateHistory.length-1])))
@@ -112,7 +112,7 @@
 			},
       nextPrompt(){
         // console.log('ch length', this.chapterHistory.length)
-        let newDilemma = DilemmaCompiler[this.chapterHistory.length](this.stateHistory[this.stateHistory.length-1])
+        let newDilemma = DilemmaCompiler[this.chapterHistory.length].compile(this.stateHistory[this.stateHistory.length-1])
         this.chapterHistory.push(newDilemma)
         this.optionHistory.push(null)
         this.stateHistory.push(JSON.parse(JSON.stringify(this.stateHistory[this.stateHistory.length-1])))
@@ -129,8 +129,8 @@
       restartGame(){
         console.log('restarting')
         this.stateHistory = JSON.parse(JSON.stringify(this.initialState))
-        this.chapterHistory = [DilemmaCompiler[0]()]
-        this.currentChapterInfo = DilemmaCompiler[0]()
+        this.chapterHistory = [DilemmaCompiler[0].compile()]
+        this.currentChapterInfo = DilemmaCompiler[0].compile()
         this.optionHistory = [null]
       },
       undoStateChange(){
@@ -139,7 +139,7 @@
           this.optionHistory.pop()
           if (this.optionHistory[this.optionHistory.length-1] != null) {
             this.chapterHistory.pop()
-            this.currentChapterInfo = DilemmaCompiler[this.chapterHistory.length-1](this.stateHistory[this.stateHistory.length-1])
+            this.currentChapterInfo = DilemmaCompiler[this.chapterHistory.length-1].compile(this.stateHistory[this.stateHistory.length-1])
             console.log('new dilemma', this.currentChapterInfo.dilemmaPrompt)
           } 
           console.log('undoing')
