@@ -4,6 +4,8 @@ dist
 npm-debug.log
 yarn-error.log
 package-lock.json
+.eslintrc.js
+jsconfig.json
 
 # Editor directories and files
 .idea
