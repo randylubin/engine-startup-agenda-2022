@@ -74,7 +74,6 @@
 
 <script>
   import StateMeter from './StateMeter.vue'
-  import FlagIndex from "./FlagIndex.js";
   
   export default {
     name: 'state-sidebar',
@@ -82,20 +81,22 @@
 		currentState: Object,
 		chosenOption: Object
     },
+	inject: {
+		FlagIndex: 'flag-index'
+	},
     components: {
 		'state-meter': StateMeter
     },
     data () {
       return {
-		FlagIndex: FlagIndex,
 		activityFlags: []
       }
     },
 	watch: {
 		currentState: function () {
 			for (const state in this.currentState) {
-				if (FlagIndex[state]) {
-					if (this.currentState[state] && FlagIndex[state].flagTitle && this.activityFlags.indexOf(state) < 0) {
+				if (this.FlagIndex[state]) {
+					if (this.currentState[state] && this.FlagIndex[state].flagTitle && this.activityFlags.indexOf(state) < 0) {
 						this.activityFlags.splice(0,0,state);
 					}
 				}

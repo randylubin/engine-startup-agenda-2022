@@ -7,6 +7,7 @@
     <app-dilemma
       :currentState="stateHistory[this.stateHistory.length-1]"
       :currentChapterInfo="currentChapterInfo"
+		:currentChapterIndex="chapterHistory.length-1"
       :chosenOption="optionHistory[this.optionHistory.length-1]"
       @choose-option="chooseOption($event)"
       @next-prompt="nextPrompt()"
@@ -41,6 +42,7 @@
   import DilemmaCompiler from './DilemmaCompiler.js'
   import ChapterControlPanel from './ChapterControlPanel.vue'
 	import GameOver from './GameOver.vue'
+	import FlagIndex from "./FlagIndex.js"
 
   export default {
     name: 'game',
@@ -50,6 +52,10 @@
       'app-chapter-control-panel': ChapterControlPanel,
 			'app-game-over': GameOver,
     },
+	provide: {
+		"dilemma-compiler": DilemmaCompiler,
+		"flag-index": FlagIndex
+	},
     data () {
       return {
         initialState: [{
@@ -57,7 +63,7 @@
           users: 45,
           capabilities: 15,
           focus: 3,
-          pastEvents: ["Second example event", "First example event"]
+          pastEvents: []
         }],
         stateHistory: [],
         chapterHistory: [],
@@ -85,13 +91,13 @@
 		},
     mounted () {      
       this.stateHistory = localStorage.stateHistory ? JSON.parse(localStorage.stateHistory) : JSON.parse(JSON.stringify(this.initialState))
-      this.chapterHistory = localStorage.chapterHistory ? JSON.parse(localStorage.currentChapterInfo) : [DilemmaCompiler[0].compile()]
+      this.chapterHistory = localStorage.chapterHistory ? JSON.parse(localStorage.chapterHistory) : [DilemmaCompiler[0].compile()]
       this.currentChapterInfo = localStorage.currentChapterInfo ? JSON.parse(localStorage.currentChapterInfo) : DilemmaCompiler[0].compile()
       this.optionHistory = localStorage.optionHistory ? JSON.parse(localStorage.optionHistory) : []
     },
     watch: {
       stateHistory(newHistory){ localStorage.stateHistory = JSON.stringify(newHistory)},
-      chapterHistory(newData){ localStorage.currentChapterInfo = JSON.stringify(newData)},
+      chapterHistory(newData){ localStorage.chapterHistory = JSON.stringify(newData)},
       currentChapterInfo(newData){ localStorage.currentChapterInfo = JSON.stringify(newData)},
       optionHistory(newData){ localStorage.optionHistory = JSON.stringify(newData)},
     },
@@ -198,6 +204,14 @@
 	--bg-results-up: linear-gradient(to bottom,rgb(120,120,120) 20%,rgb(170,170,170) 40%,rgb(170,170,170) 60%,rgb(120,120,120) 80%);
 	--bg-results-down: linear-gradient(to bottom,rgb(120,120,120) 20%,rgb(170,170,170) 40%,rgb(170,170,170) 60%,rgb(120,120,120) 80%);
 	
+	--bg-timeline: var(--c-over);
+	--sh-timeline: -5px -5px 10px rgba(0,0,0,.8);
+	--c-timeline: rgb(150,150,150);
+	--bg-tl-chapter: rgb(100,100,100);
+	--bg-tl-chapter-past: var(--en-3l);
+	--bg-tl-chapter-current: var(--en-3d);
+	--bg-tl-spacer: transparent;
+	
 	/* Tooltips */
 	
 	--c-tooltip: white;
@@ -287,13 +301,13 @@ div#game-state-sidebar {
 }
 
 div#game-dilemma {
-	position: absolute; top: 0; right: 0;
+	position: fixed; top: 0; right: 0; bottom: 0;
 	left: calc(200px + 19%);
 	
 	min-height: 100%;
 	
 	box-sizing: border-box;
-	overflow: auto;
+	overflow-y: scroll;
 	padding-top: 2em;
 	padding-right: 4%;
 }
