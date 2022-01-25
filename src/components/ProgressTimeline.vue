@@ -34,10 +34,16 @@ export default {
   computed: {
   },
   mounted () {
-    let computedWidth = parseInt(window.getComputedStyle(this.$refs.timelineElement.querySelector('.chapter')).getPropertyValue('width'))
-    this.$refs.timelineElement.style.setProperty('--tick-width',Math.round(computedWidth) + "px")
+    this.roundTickWidths();
+    window.addEventListener('resize', this.roundTickWidths);
   },
   methods: {
+    roundTickWidths() {
+      console.log("resizing")
+      this.$refs.timelineElement.style.removeProperty('--tick-width')
+      const computedWidth = parseInt(window.getComputedStyle(document.querySelector('#progress-timeline .chapter')).getPropertyValue('width'))
+      this.$refs.timelineElement.style.setProperty('--tick-width',Math.round(computedWidth) + "px")
+    }
   }
 }
 </script>
