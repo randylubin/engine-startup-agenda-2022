@@ -1,5 +1,5 @@
 <template>
-<div id="progress-timeline">
+<div id="progress-timeline" ref="timelineElement">
   <label>Progress</label>
   <template v-for="(item,i) in DilemmaCompiler">
     <div 
@@ -34,6 +34,8 @@ export default {
   computed: {
   },
   mounted () {
+    let computedWidth = parseInt(window.getComputedStyle(this.$refs.timelineElement.querySelector('.chapter')).getPropertyValue('width'))
+    this.$refs.timelineElement.style.setProperty('--tick-width',Math.round(computedWidth) + "px")
   },
   methods: {
   }
@@ -54,6 +56,8 @@ div#progress-timeline {
   background: var(--bg-timeline);
   border-bottom-left-radius: .5em;
   box-shadow: var(--sh-timeline);
+
+  --tick-width: .2em;
 }
 
 div#progress-timeline > label {
@@ -70,7 +74,7 @@ div#progress-timeline > div {
   display: inline-block;
   vertical-align: middle;
   height: .5em;
-  width: .2em;
+  width: var(--tick-width);
 
   transition: background-color .5s;
 }
@@ -88,9 +92,8 @@ div.chapter {
   border-radius: .05em;
 }
 
-div#progress-timeline > div.spacer {
+div.spacer {
   background: var(--bg-tl-spacer);
-  width: .2em;
 }
 
 div.chapter.current { background: var(--bg-tl-chapter-current); }
