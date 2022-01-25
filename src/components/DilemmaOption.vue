@@ -32,7 +32,7 @@
 			<ul class="option-details">
 				<li
 					v-for="(item,index) in tooltipItems.items"
-					:key="index"
+					:key="'detail-' + index"
 					:class="item.classes"
 					v-html="item.content"
 				></li>
@@ -44,13 +44,14 @@
 
 <script>
 
-import FlagIndex from "./FlagIndex.js";
-
 export default {
 	name: 'dilemma-option',
 	props: {
 		currentState: Object,
 		option: Object,
+	},
+	inject: {
+		FlagIndex: 'flag-index'
 	},
 	data () {
 		return {
@@ -106,7 +107,7 @@ export default {
 							lockedBy: this.currentState[requirement] < this.option.optionRequirements[requirement],
 							unlockedBy: this.currentState[requirement] >= this.option.optionRequirements[requirement]
 						}
-				} else if (FlagIndex[requirement]) { // only track custom states that have flags in the index
+				} else if (this.FlagIndex[requirement]) { // only track custom states that have flags in the index
 					if (this.currentState[requirement] == this.option.optionRequirements[requirement]) {
 						customunlock = true;
 					}
@@ -125,7 +126,7 @@ export default {
 					requirement == "focus") {
 						continue; // Primary state visibility locks are irrelevant to this map for current functionality
 				}
-				if (flaggedStates[requirement] == undefined && FlagIndex[requirement]) { // apply visibility locks, but normal locks take precedent
+				if (flaggedStates[requirement] == undefined && this.FlagIndex[requirement]) { // apply visibility locks, but normal locks take precedent
 					if (this.currentState[requirement] == this.option.optionVisibility[requirement]) {
 						customunlock = true;
 					}
@@ -137,7 +138,6 @@ export default {
 					}
 				}
 			}
-			console.log(primarylock);
 			return {
 				primaryLocked: primarylock,
 				customUnlocked: customunlock,
@@ -154,17 +154,17 @@ export default {
 					content: "This choice uses&ensp;<strong class='ii focus'>Time & Focus</strong>",
 					classes: ["note","focus"]
 				});
-				ttLinks.push("focus-" + Math.max(this.currentState.focus,3));
+				ttLinks.push("focus-" + Math.min(this.currentState.focus,3));
 			}
 			
 			for (const state in this.lockIndex.flagged) {
 				let text = this.lockIndex.flagged[state].stateValue?"trueText":"falseText";
-				let link = this.lockIndex.flagged[state].stateValue && FlagIndex[state].flagTitle?"flag-" + state:false;
-				if (this.lockIndex.flagged[state].lockedBy && FlagIndex[state][text]) {
-					customLocks.push(FlagIndex[state][text]);
+				let link = this.lockIndex.flagged[state].stateValue && this.FlagIndex[state].flagTitle?"flag-" + state:false;
+				if (this.lockIndex.flagged[state].lockedBy && this.FlagIndex[state][text]) {
+					customLocks.push(this.FlagIndex[state][text]);
 					if (link) ttLinks.push(link);
-				} else if (this.lockIndex.flagged[state].unlockedBy && FlagIndex[state][text]) {
-					customUnlocks.push(FlagIndex[state][text]);
+				} else if (this.lockIndex.flagged[state].unlockedBy && this.FlagIndex[state][text]) {
+					customUnlocks.push(this.FlagIndex[state][text]);
 					if (link) ttLinks.push(link);
 				}
 			}

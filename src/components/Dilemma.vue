@@ -1,6 +1,5 @@
 <template>
   <div id="game-dilemma" v-if="currentChapterInfo">
-  
 	<transition name="title-switch" mode="out-in">
     <h2 v-if="chosenOption == null" key="dilemma-title">
 		<strong>Dilemma:</strong> <span>{{currentChapterInfo.dilemmaTitle?currentChapterInfo.dilemmaTitle:"Placeholder Title"}}</span>
@@ -34,8 +33,8 @@
         <li :class="{capital: true, increase: chosenOption.stateChange.capital > 0, decrease: chosenOption.stateChange.capital < 0}" v-if="primaryStateChange"></li>
         <li :class="{users: true, increase: chosenOption.stateChange.users > 0, decrease: chosenOption.stateChange.users < 0}" v-if="primaryStateChange"></li>
         <li :class="{capabilities: true, increase: chosenOption.stateChange.capabilities > 0, decrease: chosenOption.stateChange.capabilities < 0}" v-if="primaryStateChange"></li>
-        <li class="focus replenish" v-if="chosenOption.stateChange.focus > 0">Your <strong class="ii focus">Time &amp; Focus</strong> has been replenished.</li>
-        <li class="focus deplete" v-if="chosenOption.stateChange.focus < 0">Some of your&ensp;<strong class="ii focus">Time &amp; Focus</strong> is occupied by this choice.</li>
+        <li class="focus replenish" v-if="chosenOption.stateChange.focus > 0">Your&ensp;<strong class="ii focus">Time &amp; Focus</strong> has been replenished.</li>
+        <li class="focus deplete" v-if="chosenOption.stateChange.focus < 0">Some of your&ensp;<strong class="ii focus">Time &amp; Focus</strong> has been occupied.</li>
       </ul>
       <div id="consequences-nav-buttons">
         <button id="nav-continue" class="" v-if="!chosenOption.gameOver" v-on:click="nextPrompt()"><span>Continue</span></button>
@@ -43,21 +42,25 @@
       </div>
     </div>
 	</transition>
+  <progress-timeline :current-chapter-index="currentChapterIndex"></progress-timeline>
   </div>
 
 </template>
 
 <script>
   import DilemmaOption from './DilemmaOption.vue';
+  import ProgressTimeline from './ProgressTimeline.vue'
   
   export default {
     name: 'dilemma',
     components: {
-        'dilemma-option': DilemmaOption
+        'dilemma-option': DilemmaOption,
+        'progress-timeline': ProgressTimeline
     },
     props: {
       currentState: Object,
       currentChapterInfo: Object,
+      currentChapterIndex: Number,
       chosenOption: Object,
     },
     data () {

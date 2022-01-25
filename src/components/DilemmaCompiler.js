@@ -3,14 +3,17 @@ import DilemmaList from '../../converted-dilemma-list.json'
 var DilemmaCompiler = [
    { // Example dilemma with optional structure for extra flags
       compile: () => DilemmaList['T-WELCOME'],
-      flags: ['big']
+      flags: ['hidden']
    },
    () => DilemmaList['T-FOUNDER'], // Creating the object with "compile" and "flags" is not required - just a function still works (see handler at bottom)
    () => DilemmaList['T-LOCATION'],
    () => DilemmaList['T-FOCUS'],
    (gameState) => gameState.techHub?DilemmaList['T-REC-TECH']:DilemmaList['T-REC-OTHER'],
    () => DilemmaList['T-PRIVACY'],
-   () => DilemmaList['A-FUNDING'],
+   {
+      compile: () => DilemmaList['A-FUNDING'],
+      flags: ['milestone']
+   },
    () => DilemmaList['A-START'],
    () => DilemmaList['A-PATENT'],
    () => DilemmaList['A-NSL'],
@@ -22,7 +25,10 @@ var DilemmaCompiler = [
    () => DilemmaList['A-NETNEUTRALITY'],
    () => DilemmaList['A-FAIRUSE'],
    () => DilemmaList['A-TBD'],
-   () => DilemmaList['C-FUNDING'],
+   {
+      compile: () => DilemmaList['C-FUNDING'],
+      flags: ['milestone']
+   },
    () => DilemmaList['C-START'],
    () => DilemmaList['C-EUREG'],
    () => DilemmaList['C-BREACH'],
@@ -32,12 +38,16 @@ var DilemmaCompiler = [
    () => DilemmaList['C-SWISS-TAX'], // TODO add conditional for C-KOREA-TAX
    () => DilemmaList['C-TBD'],
    () => DilemmaList['E-END'],
+   {
+      compile: () => ({"dilemmaPrompt": "That's all for now..."}),
+      flags: ['milestone']
+   }
    // example dilemma
    // function () {
-   //    return {
-   //       "dilemmaPrompt": "The dilemma for this round is lorem ipsum... what do you do?",
-   //       "dilemmaOptions": [
-   //          {
+      //    return {
+         //       "dilemmaPrompt": "The dilemma for this round is lorem ipsum... what do you do?",
+         //       "dilemmaOptions": [
+            //          {
    //             "optionText": "Do nothing",
    //             "optionToolTip": "I'm a tool tip!",
    //             "resultsText": "You lose... click back to choose a different option",
@@ -160,11 +170,6 @@ var DilemmaCompiler = [
    //    }
    // },
    // fourth, the end for now
-   function () {
-      return {
-         "dilemmaPrompt": "That's all for now...",
-      }
-   },
    // // template
    // function () {
    //    return {
@@ -190,7 +195,7 @@ var DilemmaCompiler = [
    // },
 ]
 
-// Normalize all items to an object with "compile" and "flags" (set flags to false if not provided)
-DilemmaCompiler = DilemmaCompiler.map(item => (typeof item === 'function')?{compile:item,flags:false}:item)
+// Normalize all items to an object with "compile" and "flags"
+DilemmaCompiler = DilemmaCompiler.map(item => (typeof item === 'function')?{compile:item,flags:[]}:item)
 
 export default DilemmaCompiler
