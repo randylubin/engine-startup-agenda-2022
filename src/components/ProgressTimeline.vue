@@ -34,12 +34,14 @@ export default {
   computed: {
   },
   mounted () {
-    this.roundTickWidths();
-    window.addEventListener('resize', this.roundTickWidths);
+    this.roundTickWidths()
+    window.addEventListener('resize', this.roundTickWidths)
+  },
+  beforeDestroy() {
+    window.removeEventListener('resize', this.roundTickWidths)
   },
   methods: {
     roundTickWidths() {
-      console.log("resizing")
       this.$refs.timelineElement.style.removeProperty('--tick-width')
       const computedWidth = parseInt(window.getComputedStyle(document.querySelector('#progress-timeline .chapter')).getPropertyValue('width'))
       this.$refs.timelineElement.style.setProperty('--tick-width',Math.round(computedWidth) + "px")
