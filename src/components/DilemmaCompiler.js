@@ -35,7 +35,6 @@ var DilemmaCompiler = [
    () => DilemmaList['C-DISINFO-2'],
    () => DilemmaList['C-TROLLS'], // TODO add conditional for C-HOLLYWOOD, C-HEALTHCARE
    () => DilemmaList['C-INDIA-DATA'], // TODO add conditional for C-BRAZIL-TAKEDOWN
-   () => DilemmaList['C-SWISS-TAX'], // TODO add conditional for C-KOREA-TAX
    () => DilemmaList['C-TBD'],
    () => DilemmaList['E-END'],
    {
