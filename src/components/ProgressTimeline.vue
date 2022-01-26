@@ -54,15 +54,14 @@ export default {
 
 div#progress-timeline {
   display: inline-block;
-  justify-content: space-between;
-  align-items: center;
 
-  position: absolute; right: 0; top: 0;
+  position: absolute; right: .7em; top: .75em;
 
   box-sizing: border-box;
-  padding: .2em .75em .4em;
+  padding: 0.1em .6em .35em;
+  line-height: 1;
   background: var(--bg-timeline);
-  border-bottom-left-radius: .5em;
+  border-radius: .5em;
   box-shadow: var(--sh-timeline);
 
   --tick-width: .2em;
@@ -74,6 +73,7 @@ div#progress-timeline > label {
 
   font-size: .7em;
   font-weight: 800;
+  line-height: 1;
   text-transform: uppercase;
   color: var(--c-timeline);
 }

@@ -1,5 +1,5 @@
 <template>
-  <div id="game-state-sidebar" v-if="currentState">
+  <div id="sidebar-panel" v-if="currentState">
     <h2>Company Name</h2>
 	<ul id="company-info">
 		<li><strong>Founder:</strong> Placeholder</li>
@@ -13,6 +13,7 @@
 			<div class="tt-positioner tt-sidebar">
 			<div class="tt-frame">
 				<p>This meter tracks your overall&ensp;<strong class="ii capital">Financial Health</strong>. If this drops to zero, your company has run out of money and the game will end!</p>
+				<button class="dark" @click="nextTutorial"><span>Next</span></button>
 			</div>
 			</div>
 		</div>
@@ -22,6 +23,7 @@
 			<div class="tt-positioner tt-sidebar">
 			<div class="tt-frame">
 				<p>This meter tracks your product's rate of&ensp;<strong class="ii users">User Growth</strong>. If this drops to zero, your product has stagnated and the game will end!</p>
+				<button class="dark" @click="nextTutorial"><span>Next</span></button>
 			</div>
 			</div>
 		</div>
@@ -31,12 +33,13 @@
 			<div class="tt-positioner tt-sidebar">
 			<div class="tt-frame">
 				<p>This meter tracks your company's capacity to tackle challenges with&ensp;<strong class="ii capabilities">Tech &amp; Talent</strong>. If this drops to zero, your company has run out of innovative power and the game will end!</p>
+				<button class="dark" @click="nextTutorial"><span>Next</span></button>
 			</div>
 			</div>
 		</div>
     </div>
 	<h3>Time &amp; Focus</h3>
-	<div class="tt-container">
+	<div id="counter-focus" class="tt-container">
 	<div id="game-state-focus">
 		<div v-bind:class="{used: currentState.focus < 1}" id="focus-1"></div>
 		<div v-bind:class="{used: currentState.focus < 2}" id="focus-2"></div>
@@ -46,10 +49,19 @@
 		<div class="tt-frame">
 			<p>Some courses of action require&ensp;<strong class="ii focus">Time &amp; Focus</strong>, which is always in short supply! Once you run out of this valuable resource, you'll have to wait for it to be replenished at certain game milestones.</p>
 			<p>Unused&ensp;<strong class="ii focus">Time &amp; Focus</strong> will become improvements to your core product, so it's sometimes wise to avoid using it all &mdash; if you can!</p>
+			<button class="dark" @click="nextTutorial"><span>Next</span></button>
 		</div>
 	</div>
 	</div>	
-	<h3>Current Activity</h3>
+	<h3 id="list-activity" class="tt-container">
+		Current Activity
+		<div class="tt-positioner tt-sidebar">
+		<div class="tt-frame">
+			<p>Some of the current issues and activities affecting your company will appear here. They may result in different options being available!</p>
+			<button class="dark" @click="nextTutorial"><span>Next</span></button>
+		</div>
+		</div>
+	</h3>
     <div id="game-state-flags" v-if="currentState.pastEvents">
 		<div>
 			<transition-group name="list-update">
@@ -76,7 +88,7 @@
   import StateMeter from './StateMeter.vue'
   
   export default {
-    name: 'state-sidebar',
+    name: 'sidebar-panel',
     props: {
 		currentState: Object,
 		chosenOption: Object
@@ -111,6 +123,9 @@
     mounted () {
     },
     methods: {
+		nextTutorial() {
+			this.$emit("next-tutorial")
+		}
     }
   }
 </script>

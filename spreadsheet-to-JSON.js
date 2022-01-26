@@ -22,6 +22,8 @@ let otherStateCol = colIndex; colIndex++;
 let specialChapterTypeCol = colIndex; colIndex++;
 let engineIssueCol = colIndex; colIndex++;
 
+let validSpecialChapters = ["singleScreen","tutorialPage"]
+
 let dataOutput = {}
 
 for (const dataRow in sheetData) {
@@ -34,7 +36,7 @@ for (const dataRow in sheetData) {
       engineIssue: row[engineIssueCol]
     }
 
-    if (row[specialChapterTypeCol] == "singleScreen") {
+    if (validSpecialChapters.includes(row[specialChapterTypeCol])) {
       dataOutput[row[chapterCode]].specialChapterType = row[specialChapterTypeCol]
     }
   }
