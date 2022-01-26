@@ -1,61 +1,94 @@
 <template>
   <div id="game">
-    <app-state-sidebar
-	:currentState="stateHistory[this.stateHistory.length-1]"
-	:chosenOption="optionHistory[this.optionHistory.length-1]"
-    ></app-state-sidebar>
-    <app-dilemma
-      :currentState="stateHistory[this.stateHistory.length-1]"
-      :currentChapterInfo="currentChapterInfo"
-		:currentChapterIndex="chapterHistory.length-1"
-      :chosenOption="optionHistory[this.optionHistory.length-1]"
-      @choose-option="chooseOption($event)"
-      @next-prompt="nextPrompt()"
-      @undo-state-change="undoStateChange()"
-      @update-state="updateState($event)"
-			v-if="!gameOver"
-    ></app-dilemma>
-		<app-game-over
-      :currentState="stateHistory[this.stateHistory.length-1]"
-      :currentChapterInfo="currentChapterInfo"
-      :chosenOption="optionHistory[this.optionHistory.length-1]"
-			v-if="gameOver"
-      @undo-state-change="undoStateChange()"
-    ></app-game-over>
-		<app-chapter-control-panel
+    <transition appear name="title-screen"> 
+      <title-screen
+        v-if="!gameStarted"
+        key="title-screen"
+        :save-exists="saveExists"
+        @new-game="newGame"
+        @resume-game="resumeGame"
+      />
+    </transition>
+    <div class="overlay-wrapper" key="overlay-wrapper">
+      <transition appear name="menu-bar"> 
+        <menu-panel v-if="gameStarted" />
+      </transition>
+      <transition appear name="side-bar"> 
+        <sidebar-panel
+          v-if="gameStarted"
+          key="sidebar-panel"
+          :currentState="stateHistory[this.stateHistory.length-1]"
+          :chosenOption="optionHistory[this.optionHistory.length-1]"
+          @next-tutorial="nextTutorial()"
+        />
+      </transition>
+    </div>
+    <transition appear name="content-main">
+      <content-panel
+        v-if="!gameOver && gameStarted"
+        key="content-panel"
+        ref="content-panel"
+        :currentState="stateHistory[this.stateHistory.length-1]"
+        :currentChapterInfo="currentChapterInfo"
+        :currentChapterIndex="chapterHistory.length-1"
+        :chosenOption="optionHistory[this.optionHistory.length-1]"
+        @choose-option="chooseOption($event)"
+        @next-prompt="nextPrompt()"
+        @undo-state-change="undoStateChange()"
+        @update-state="updateState($event)"
+      />
+    </transition>
+    <transition appear name="game-over">
+      <gameover-panel
+        v-if="gameOver && gameStarted"
+        key="gameover-panel"
+        :currentState="stateHistory[this.stateHistory.length-1]"
+        :currentChapterInfo="currentChapterInfo"
+        :currentChapterIndex="chapterHistory.length-1"
+        :chosenOption="optionHistory[this.optionHistory.length-1]"
+        @undo-state-change="undoStateChange()"
+      />
+    </transition>
+    <devtools-panel
+      v-if="gameStarted && devMode"
       :chapterHistory="chapterHistory"
-			:currentStateString="JSON.stringify(stateHistory[this.stateHistory.length-1], null, 5)"
-			@go-to-chapter="goToChapter($event)"
+      :currentStateString="JSON.stringify(stateHistory[this.stateHistory.length-1], null, 5)"
+      @go-to-chapter="goToChapter($event)"
       @restart-game="restartGame()"
       @undo-state-change="undoStateChange()"
-			@update-state="updateState($event)"
-    ></app-chapter-control-panel>
-    <!--<div>
-      Current Gamestate: {{stateHistory[this.stateHistory.length-1]}}
-    </div>-->
+      @update-state="updateState($event)"
+      @set-game-over="setGameOver"
+    />
   </div>
 </template>
 
 <script>
-  import StateSidebar from './StateSidebar.vue'
-  import Dilemma from './Dilemma.vue'
-  import DilemmaCompiler from './DilemmaCompiler.js'
-  import ChapterControlPanel from './ChapterControlPanel.vue'
-	import GameOver from './GameOver.vue'
-	import FlagIndex from "./FlagIndex.js"
+
+  import DilemmaCompiler from './DilemmaCompiler.js' 
+  import FlagIndex from "./FlagIndex.js"
+
+  import GameMenu from './GameMenu.vue'
+  import GameSidebar from './GameSidebar.vue'
+  import GameContent from './GameContent.vue'
+  import GameDevtools from './GameDevtools.vue'
+  import GameOver from './GameOver.vue'
+  import GameTitleScreen from './GameTitleScreen.vue'
+
 
   export default {
     name: 'game',
     components: {
-      'app-state-sidebar': StateSidebar,
-      'app-dilemma': Dilemma,
-      'app-chapter-control-panel': ChapterControlPanel,
-			'app-game-over': GameOver,
+      'title-screen': GameTitleScreen,
+      'menu-panel': GameMenu,
+      'sidebar-panel': GameSidebar,
+      'content-panel': GameContent,
+      'devtools-panel': GameDevtools,
+			'gameover-panel': GameOver,
     },
-	provide: {
-		"dilemma-compiler": DilemmaCompiler,
-		"flag-index": FlagIndex
-	},
+    provide: {
+      "dilemma-compiler": DilemmaCompiler,
+      "flag-index": FlagIndex
+    },
     data () {
       return {
         initialState: [{
@@ -69,6 +102,9 @@
         chapterHistory: [],
         currentChapterInfo: {},
         optionHistory: [null],
+        gameStarted: false,
+        devMode: true,
+        preventGameOver: true
       }
     },
 		computed: {
@@ -78,16 +114,23 @@
 					if (this.optionHistory[this.optionHistory.length-1].gameOver){ // test for game over from dilemma
 						showGameOverScreen = true;
 					} else { // test if game over from resources
-						let capital = this.stateHistory[this.stateHistory.length-1].capital
-						let users = this.stateHistory[this.stateHistory.length-1].users
-						let capabilities  = this.stateHistory[this.stateHistory.length-1].capabilities
-						if (this.stateHistory.length && !(capital && users && capabilities)){
-							// showGameOverScreen = true // TODO uncomment this after balancing game
+						let { capital, users, capabilities } = this.stateHistory[this.stateHistory.length-1]
+						if (this.stateHistory.length && !(capital > 0 && users > 0 && capabilities > 0)){
+							if (!this.preventGameOver) showGameOverScreen = true // TODO uncomment this after balancing game
 						}
 					}
 				}
 				return showGameOverScreen; 
-			}
+			},
+      saveExists: function() {
+        return (
+          localStorage.stateHistory && 
+          localStorage.chapterHistory && 
+          localStorage.currentChapterInfo && 
+          localStorage.optionHistory &&
+          this.chapterHistory.length > 1
+          )?true:false;
+      }
 		},
     mounted () {      
       this.stateHistory = localStorage.stateHistory ? JSON.parse(localStorage.stateHistory) : JSON.parse(JSON.stringify(this.initialState))
@@ -154,6 +197,23 @@
       updateState(newState){
         this.stateHistory.push(newState)
       },
+      newGame() {
+        this.stateHistory = JSON.parse(JSON.stringify(this.initialState))
+        this.chapterHistory = [DilemmaCompiler[0].compile()]
+        this.currentChapterInfo = DilemmaCompiler[0].compile()
+        this.optionHistory = []
+        this.gameStarted = true
+      },
+      resumeGame() {
+        this.gameStarted = true
+      },
+      nextTutorial() {
+        this.$refs['content-panel'].$refs['dilemma-panel'].nextTutorial();
+      }, 
+      setGameOver(val) {
+        console.log(val)
+        this.preventGameOver = val
+      } 
     }
   }
 </script>
@@ -182,8 +242,13 @@
 	--c-base: rgb(30,20,25);   /* main background */
 	--c-over: rgb(50,40,45);   /* sidebar background */
 	--c-top: rgb(255,255,255); /* master text colour */
+
+  --sh-overlay: 5px 5px 10px rgba(0,0,0,.8); /* for overlay wrapper combining multiple elements */
+
+  --sh-menu: none; /* defer to overlay wrapper */
+  --bg-menu: linear-gradient(to right,var(--en-1d) 0,var(--en-2d) 60%);
 	
-	--sh-sidebar: 5px 0 10px rgba(0,0,0,.8);
+	--sh-sidebar: none; /* defer to overlay wrapper */
 	--bg-sidebar-icon: var(--c-over) linear-gradient(135deg,rgba(255,255,255,1) 10%, rgba(255,255,255,.5) 100%);
 	--bg-sidebar-accent: linear-gradient(to right,var(--en-1d) 0,var(--en-2d) 100%);
 	
@@ -205,7 +270,7 @@
 	--bg-results-down: linear-gradient(to bottom,rgb(120,120,120) 20%,rgb(170,170,170) 40%,rgb(170,170,170) 60%,rgb(120,120,120) 80%);
 	
 	--bg-timeline: var(--c-over);
-	--sh-timeline: -5px -5px 10px rgba(0,0,0,.8);
+	--sh-timeline: none;
 	--c-timeline: rgb(150,150,150);
 	--bg-tl-chapter: rgb(100,100,100);
 	--bg-tl-chapter-past: var(--en-3l);
@@ -282,27 +347,49 @@ div#game {
 	color: var(--c-top);
 }
 
-div#game-state-sidebar {
-	position: absolute; top: 0; left: 0;
+div.overlay-wrapper {
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 100;
+  filter: drop-shadow(var(--sh-overlay));
+  pointer-events: none;
+  overflow: hidden;
+}
+
+div.overlay-wrapper * { pointer-events: auto; }
+
+div#menu-panel {
+  position: fixed; top:0; left: 0; right: 0;
+  z-index: 60;
+
+  height: 3.5rem;
+  box-sizing: border-box;
+
+  background: var(--bg-menu);
+  box-shadow: var(--sh-menu);
+}
+
+div#sidebar-panel {
+	position: absolute; top: 3.5rem; left: 0;
+  z-index: 40;
 	
 	display: flex;
 	flex-direction: column;
 	
 	width: calc(200px + 15%);
-	min-height: 100%;
+	min-height: calc(100% - 3.5rem);
 	
 	box-sizing: border-box;
-	padding: 2em;
+	padding: 1.5em 2em 0;
 	
 	background-color: var(--c-over);
 	filter: drop-shadow(var(--sh-sidebar));
 	
-	z-index: 1000;
 }
 
-div#game-dilemma {
-	position: fixed; top: 0; right: 0; bottom: 0;
+div#content-panel {
+	position: fixed; top: 3.5rem; right: 0; bottom: 0;
 	left: calc(200px + 19%);
+  z-index: 30;
 	
 	min-height: 100%;
 	
@@ -310,16 +397,23 @@ div#game-dilemma {
 	overflow-y: scroll;
 	padding-top: 2em;
 	padding-right: 4%;
+
+  transition: opacity .5s ease-out;
+}
+
+div#content-panel.tutorial-active {
+  opacity: .1;
+  transition: opacity .5s ease-out;
 }
 
 /* Sidebar Master Styles */
 
-#game-state-sidebar h2 {
+#sidebar-panel h2 {
 	font-size: 1.5em;
 	
 }
 
-#game-state-sidebar h3 {
+#sidebar-panel h3 {
 	font-size: 1em;
 	font-weight: 800;
 	text-transform: uppercase;
@@ -330,18 +424,18 @@ div#game-dilemma {
 	background: var(--bg-sidebar-accent);
 }
 
-#game-state-sidebar ul {
+#sidebar-panel ul {
 	list-style: none;
 	margin: 0; padding: 0;
 }
 
-#game-state-sidebar ul#company-info li {
+#sidebar-panel ul#company-info li {
 	font-size: .9em;
 	margin-bottom: .4em;
 	line-height: 1;
 }
 
-#game-state-sidebar ul#company-info li strong {
+#sidebar-panel ul#company-info li strong {
 	text-transform: uppercase;
 }
 
@@ -534,25 +628,25 @@ div.activity-flag.highlight > span.ani {
 
 /* Main Panel */
 
-div#game-dilemma { font-size: 1.3em; }
+div#content-panel { font-size: 1.3em; }
 
-div#game-dilemma h2 {
+div#content-panel h2 {
 	font-size: 1.4em;
 	font-weight: 800;
 	padding-bottom: .5em;
 	border-bottom: 3px solid var(--c-top);
 }
 
-div#game-dilemma h2 strong {
+div#content-panel h2 strong {
 	color: var(--en-2l)
 }
 
-div#game-dilemma p {
+div#content-panel p {
 	font-size: 1.1em;
 	line-height: 1.5;
 }
 
-div#game-dilemma p.dilemma-note {
+div#content-panel p.dilemma-note {
 	font-weight: 500;
 }
 
@@ -793,19 +887,26 @@ ul#consequences-status li.decrease::after {
 
 /* Result Navigation */
 
-button#nav-continue:hover {  }
+/*button#nav-continue:hover {  }*/
 button#nav-continue { color: var(--en-2d);}
 button#nav-back { width: 20%; filter:grayscale(1);}
 button#nav-back::before { transform: rotate(180deg); }
 
+/* Special Navigation */
+
+button#skip-tutorial { filter:grayscale(1) brightness(0.6); }
+button#start-tutorial::before {
+	mask-image: url("/assets/icons/icon-question.svg");
+}
+
 /* Tooltips */
 
-.tt-container {
+.tt-container, .tt-paused {
 	position: relative;
 	overflow: visible;
 }
 
-.tt-container div.tt-positioner {
+div.tt-positioner {
 	position: absolute;
 	z-index: 1000;
 	overflow: visible;
@@ -842,7 +943,13 @@ div.tt-positioner.tt-sidebar {
 	filter: drop-shadow(var(--sh-tooltip));
 }
 
+h3 div.tt-positioner.tt-sidebar {
+  left: calc((100% - 2.75em)*1.1);
+  top: 2em;
+}
+
 div.tt-frame {
+  position: relative;
 	padding: .6em 1em .9em;
 	background-color: var(--c-tooltip);
 	color: var(--c-tooltip-text);
@@ -850,6 +957,8 @@ div.tt-frame {
 	font-family: acumin-pro-condensed, sans-serif;
 	font-size: 1.4rem;
 	line-height: 1.25;
+  font-weight: normal;
+  text-transform: none;
 }
 
 div.tt-option div.tt-frame {
@@ -884,7 +993,31 @@ div.tt-sidebar div.tt-frame::after {
 }
 
 div.tt-frame p { margin: 0 0 1em 0; }
-div.tt-frame p:last-child { margin-bottom: 0; }
+div.tt-frame p:last-of-type { margin-bottom: 0; }
+
+/* Tutorial Forced Tooltips */
+
+.tt-frame button {
+  position: absolute; right: 0; top: calc(100% + .5em);
+  column-gap: .5em;
+  width: auto;
+  display: none;
+}
+
+.tt-force .tt-frame button {
+  display: inline-flex;
+}
+
+.tt-force {
+  position: relative;
+	overflow: visible;
+}
+
+.tt-force div.tt-positioner {
+  visibility: visible;
+	opacity: 1;
+  transition: opacity .5s ease-out;
+}
 
 /* Option Detail Tooltips */
 
@@ -971,5 +1104,42 @@ ul.option-details li.note {
 .ii.focus::before { mask-image: url("/assets/icons/icon-focus-small.svg"); }
 .ii.lock::before { mask-image: url("/assets/icons/icon-lock.svg"); top: -0.1em; }
 .ii.unlock::before { mask-image: url("/assets/icons/icon-lock-open.svg"); }
+
+/* Vue Transitions */
+
+.title-screen-enter-active { transition: opacity 2s, filter 3s; transition-delay: 0; }
+.title-screen-leave-active { transition: opacity 1.5s, filter 1.5s ease-in; }
+.title-screen-enter {
+  opacity: 0;
+  filter: blur(0) grayscale(1);
+}
+.title-screen-leave-to {
+  opacity: 0;
+  filter: blur(2em) grayscale(1);
+}
+
+.menu-bar-enter-active { transition: transform .75s ease-out; transition-delay: .5s }
+.menu-bar-leave-active { transition: transform .75s ease-out; }
+.menu-bar-enter, .menu-bar-leave-to {
+  transform: translateX(100%);
+}
+
+.side-bar-enter-active { transition: transform .5s ease-out; transition-delay: 1.25s }
+.side-bar-leave-active { transition: transform 1s ease-out; }
+.side-bar-enter, .side-bar-leave-to {
+  transform: translateX(-110%);
+}
+
+#content-panel.content-main-enter-active { transition: opacity 1.75s ease-out; transition-delay: 1.75s }
+.content-main-leave-active { transition: opacity .5s ease-out; }
+.content-main-enter, .content-main-leave-to {
+  opacity: 0;
+}
+
+#content-panel.game-over-enter-active { transition: opacity 1s ease-out; transition-delay: .75s }
+.game-over-leave-active { transition: opacity .5s ease-out; }
+.game-over-enter, .game-over-leave-to {
+  opacity: 0;
+}
 
 </style>

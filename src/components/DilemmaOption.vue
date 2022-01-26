@@ -249,12 +249,11 @@ export default {
 				items: ttItems,
 				links: ttLinks
 			};
-		}
-		
+		}		
 	},
-    mounted () {
+  mounted () {
     },
-    methods: {
+  methods: {
 		highlightStates(on) {
 			if (on) {
 				for (const i in this.tooltipItems.links) {
@@ -272,7 +271,7 @@ export default {
 			this.highlightStates(false);
 			this.$emit('click-option',this.option);
 		}
-    }
+  }
 }
 </script>
 

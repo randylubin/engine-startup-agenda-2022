@@ -11,8 +11,8 @@
   export default {
     name: 'state-meter',
     props: {
-		stateValue: Number,
-		stateChange: Number
+      stateValue: Number,
+      stateChange: Number
     },
     components: {
     },
@@ -20,26 +20,26 @@
       return {
       }
     },
-	computed: {
-		meterValue: function() {
-			if (!this.stateChange || this.stateChange < 0) {
-				return Math.max(this.stateValue,0);
-			} else {
-				return Math.max(this.stateValue - this.stateChange,0);
-			}
-		},
-		decreaseValue: function () {
-			if (this.stateChange < 0) {
-				return this.stateValue<0?this.stateChange*-1+this.stateValue:this.stateChange*-1;
-			} else {
-				return 0;
-			}
-			
-		},
-		increaseValue: function () {
-			return this.stateChange>0?this.stateChange:0;
-		}
-	},
+    computed: {
+      meterValue: function() {
+        if (!this.stateChange || this.stateChange < 0) {
+          return Math.max(this.stateValue,0);
+        } else {
+          return Math.max(this.stateValue - this.stateChange,0);
+        }
+      },
+      decreaseValue: function () {
+        if (this.stateChange < 0) {
+          return this.stateValue<0?this.stateChange*-1+this.stateValue:this.stateChange*-1;
+        } else {
+          return 0;
+        }
+        
+      },
+      increaseValue: function () {
+        return this.stateChange>0?this.stateChange:0;
+      }
+    },
     mounted () {
     },
     methods: {

@@ -1,51 +1,46 @@
 <template>
-  <div id="game-dilemma" v-if="currentChapterInfo">
-  
-	<transition name="title-switch" mode="out-in">
-    <h2 key="result-title">
-      <strong>Game Over:</strong> <span>{{currentChapterInfo.dilemmaTitle?currentChapterInfo.dilemmaTitle:"Placeholder Title"}}</span>
+  <div id="content-panel" v-if="currentChapterInfo">
+    <h2>
+      <span>
+        <strong>
+          Game Over:
+        </strong> 
+        {{currentChapterInfo.dilemmaTitle}}
+      </span>
     </h2>
-	</transition>
-	<transition name="panel-switch" mode="out-in">
-    <div key="result-panel">
-      <p>{{chosenOption.resultsText}}</p>
-      <ul id="consequences-status" v-if="primaryStateChange || chosenOption.stateChange.focus">
-        <li :class="{capital: true, increase: chosenOption.stateChange.capital > 0, decrease: chosenOption.stateChange.capital < 0}" v-if="primaryStateChange"></li>
-        <li :class="{users: true, increase: chosenOption.stateChange.users > 0, decrease: chosenOption.stateChange.users < 0}" v-if="primaryStateChange"></li>
-        <li :class="{capabilities: true, increase: chosenOption.stateChange.capabilities > 0, decrease: chosenOption.stateChange.capabilities < 0}" v-if="primaryStateChange"></li>
-        <li class="focus replenish" v-if="chosenOption.stateChange.focus > 0">Your <strong class="ii focus">Time &amp; Focus</strong> has been replenished.</li>
-        <li class="focus deplete" v-if="chosenOption.stateChange.focus < 0">Some of your&ensp;<strong class="ii focus">Time &amp; Focus</strong> is occupied by this choice.</li>
-      </ul>
-      <div id="consequences-nav-buttons">
-        <button id="nav-back" v-on:click="undoChoice()"><span>Back</span></button>       
-      </div>
-    </div>
-	</transition>
+    <result-panel
+      key="result-panel"
+      ref="result-panel"
+      :forceGameOver="true"
+      :currentChapterInfo="currentChapterInfo"
+      :chosenOption="chosenOption"
+      @undo-choice="undoChoice"
+    />
+  <progress-timeline :currentChapterIndex="currentChapterIndex"></progress-timeline>
   </div>
-
 </template>
 
 <script>
+
+  import ContentResult from './ContentResult.vue'
+  import ProgressTimeline from './ProgressTimeline.vue'
+
   export default {
     name: 'game-over',
+    components: {
+      'result-panel': ContentResult,
+      'progress-timeline': ProgressTimeline
+    },
     props: {
       currentState: Object,
       currentChapterInfo: Object,
+      currentChapterIndex: Number,
       chosenOption: Object,
     },
     data () {
       return {
       }
     },
-	computed: {
-		primaryStateChange: function () {
-			if (!this.chosenOption) {
-				return false;
-			} else {
-				return this.chosenOption.stateChange.capital || this.chosenOption.stateChange.users || this.chosenOption.stateChange.capabilities;
-			}
-		}
-	},
     mounted () {
     },
     methods: {

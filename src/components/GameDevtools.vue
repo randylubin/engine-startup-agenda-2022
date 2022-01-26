@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div id="chapter-control-panel">
+    <div id="devtools-panel">
       <button v-on:click="restartGame()"><span>Restart</span></button>
       <button v-on:click="undoChoice()" :disabled="chapterHistory.length == 1"><span>Previous</span></button>
       <button v-on:click="toggleDebug()"><span>Debug</span></button>
@@ -15,6 +15,9 @@
       <div class="go-to-chapter">
         Go to chapter: <input v-model="targetChapter" type="text" id="input-go-to-chapter"> <button v-on:click="goToChapter(targetChapter)" :disabled="!targetChapter">Go</button>
       </div>
+      <div class="allow-gameover">
+        Prevent state-based gameover: <input type="checkbox" id="prevent-gameover" v-model="preventGameOver">
+      </div><br>
       <button v-on:click="toggleDebug()">Close</button>
 
 
@@ -25,7 +28,7 @@
 <script>
 
   export default {
-    name: 'chapter-control-panel',
+    name: 'devtools-panel',
     props: {
       chapterHistory: Array,
       currentStateString: String,
@@ -37,6 +40,7 @@
         debugOpen: false,
         targetChapter: null,
         editedStateString: null, 
+        preventGameOver: true
       }
     },
     mounted () {
@@ -54,6 +58,9 @@
     watch: {
       currentStateString: function(state){
         this.editedStateString = state;
+      },
+      preventGameOver: function(val) {
+        this.$emit('set-game-over',val)
       }
     },
     methods: {
@@ -80,7 +87,7 @@
 
 <style lang="scss" >
 
-div#chapter-control-panel {
+div#devtools-panel {
 	display: flex;
 	position: fixed;
 	left: 0; bottom: 0;
@@ -89,7 +96,7 @@ div#chapter-control-panel {
 	z-index: 5000;
 }
 
-div#chapter-control-panel button {
+div#devtools-panel button {
 	column-gap: .25em;
 	font-size: .75em;
 	padding: .25em;
@@ -100,7 +107,7 @@ div#chapter-control-panel button {
 	background: var(--bg-button-disabled);
 }
 
-div#chapter-control-panel button::before { content: '' }
+div#devtools-panel button::before { content: '' }
 
 div#debug-panel {
   position: absolute;
