@@ -1,12 +1,22 @@
 <template>
   <div id="game-dilemma" v-if="currentChapterInfo">
-	<transition name="title-switch" mode="out-in">
-    <h2 v-if="chosenOption == null" key="dilemma-title">
-		<strong>Dilemma:</strong> <span>{{currentChapterInfo.dilemmaTitle?currentChapterInfo.dilemmaTitle:"Placeholder Title"}}</span>
-	</h2>
-	<h2 v-else key="result-title">
-		<strong>Result:</strong> <span>{{currentChapterInfo.dilemmaTitle?currentChapterInfo.dilemmaTitle:"Placeholder Title"}}</span>
-	</h2>
+	<transition name="title-switch" mode="out-in" v-if="currentChapterInfo.dilemmaTitle">
+    <h2 v-if="currentChapterIndex % 2" key="odd-title">
+      <span>
+        <strong v-if="currentChapterInfo.engineIssue">
+          {{currentChapterInfo.engineIssue}}:
+        </strong> 
+        {{currentChapterInfo.dilemmaTitle}}
+      </span>
+    </h2>
+    <h2 v-else key="even-title">
+      <span>
+        <strong v-if="currentChapterInfo.engineIssue">
+          {{currentChapterInfo.engineIssue}}:
+        </strong> 
+        {{currentChapterInfo.dilemmaTitle}}
+      </span>
+    </h2>
 	</transition>
 	<transition name="panel-switch" mode="out-in">
 	<div v-if="chosenOption == null" key="dilemma-panel">

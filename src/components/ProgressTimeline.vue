@@ -44,7 +44,7 @@ export default {
     roundTickWidths() {
       this.$refs.timelineElement.style.removeProperty('--tick-width')
       const computedWidth = parseInt(window.getComputedStyle(document.querySelector('#progress-timeline .chapter')).getPropertyValue('width'))
-      this.$refs.timelineElement.style.setProperty('--tick-width',Math.round(computedWidth) + "px")
+      this.$refs.timelineElement.style.setProperty('--tick-width',Math.round(computedWidth) + 'px')
     }
   }
 }
