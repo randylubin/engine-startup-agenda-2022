@@ -103,7 +103,7 @@
         currentChapterInfo: {},
         optionHistory: [null],
         gameStarted: false,
-        devMode: true,
+        devMode: false,
         preventGameOver: true
       }
     },
@@ -111,7 +111,7 @@
 			gameOver: function(){
 				let showGameOverScreen = false;
 				if (this.optionHistory[this.optionHistory.length-1] && this.stateHistory[this.stateHistory.length-1]){
-					if (this.optionHistory[this.optionHistory.length-1].gameOver){ // test for game over from dilemma
+					if (this.optionHistory[this.optionHistory.length-1].settings.resultType == 'game-over'){ // test for game over from dilemma
 						showGameOverScreen = true;
 					} else { // test if game over from resources
 						let { capital, users, capabilities } = this.stateHistory[this.stateHistory.length-1]
@@ -137,6 +137,8 @@
       this.chapterHistory = localStorage.chapterHistory ? JSON.parse(localStorage.chapterHistory) : [DilemmaCompiler[0].compile()]
       this.currentChapterInfo = localStorage.currentChapterInfo ? JSON.parse(localStorage.currentChapterInfo) : DilemmaCompiler[0].compile()
       this.optionHistory = localStorage.optionHistory ? JSON.parse(localStorage.optionHistory) : []
+
+			window.addEventListener('keydown', this.shortcutKeys)
     },
     watch: {
       stateHistory(newHistory){ localStorage.stateHistory = JSON.stringify(newHistory)},
@@ -147,7 +149,7 @@
     methods: {
       chooseOption(option, skipping = false){
         this.optionHistory.push(option)
-				if (this.currentChapterInfo.specialChapterType == 'singleScreen' && !skipping){
+				if (this.currentChapterInfo.settings.singleScreen && !skipping){
 					this.nextPrompt();
 				}
       },
@@ -168,7 +170,7 @@
         this.currentChapterInfo = newDilemma
 
 				// check for single screen with state change
-				if (newDilemma.specialChapterType == 'singleScreen'){
+				if (newDilemma.settings.singleScreen){
 					if (Object.keys(newDilemma.dilemmaOptions[0].stateChange).length > 3 || newDilemma.dilemmaOptions[0].stateChange.capital || newDilemma.dilemmaOptions[0].stateChange.users || newDilemma.dilemmaOptions[0].stateChange.capabilities){
 						console.log('skipping')
 						this.chooseOption(newDilemma.dilemmaOptions[0], 'skipping')
@@ -213,7 +215,10 @@
       setGameOver(val) {
         console.log(val)
         this.preventGameOver = val
-      } 
+      },
+			shortcutKeys(e) {
+				if (e.key == 'D' && e.altKey && e.ctrlKey) this.devMode = !this.devMode
+			}
     }
   }
 </script>
