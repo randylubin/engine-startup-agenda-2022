@@ -217,7 +217,7 @@
         this.preventGameOver = val
       },
 			shortcutKeys(e) {
-				if (e.key == 'D' && e.altKey && e.ctrlKey) this.devMode = !this.devMode
+				if (e.key == 'D') this.devMode = !this.devMode
 			}
     }
   }
