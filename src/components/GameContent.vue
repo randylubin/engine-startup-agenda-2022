@@ -3,16 +3,16 @@
     <transition name="title-switch" mode="out-in" v-if="currentChapterInfo.dilemmaTitle">
       <h2 v-if="currentChapterIndex % 2" key="odd-title">
         <span>
-          <strong v-if="currentChapterInfo.engineIssue">
-            {{currentChapterInfo.engineIssue}}:
+          <strong v-if="currentChapterInfo.settings.titleTag">
+            {{currentChapterInfo.settings.titleTag}}:
           </strong> 
           {{currentChapterInfo.dilemmaTitle}}
         </span>
       </h2>
       <h2 v-else key="even-title">
         <span>
-          <strong v-if="currentChapterInfo.engineIssue">
-            {{currentChapterInfo.engineIssue}}:
+          <strong v-if="currentChapterInfo.settings.titleTag">
+            {{currentChapterInfo.settings.titleTag}}:
           </strong> 
           {{currentChapterInfo.dilemmaTitle}}
         </span>

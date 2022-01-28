@@ -19,10 +19,8 @@ let capitalCol = colIndex; colIndex++;
 let userCol = colIndex; colIndex++;
 let capabilitiesCol = colIndex; colIndex++;
 let otherStateCol = colIndex; colIndex++;
-let specialChapterTypeCol = colIndex; colIndex++;
-let engineIssueCol = colIndex; colIndex++;
-
-let validSpecialChapters = ["singleScreen","tutorialPage"]
+let chapterSettingsCol = colIndex; colIndex++;
+let optionSettingsCol = colIndex; colIndex++;
 
 let dataOutput = {}
 
@@ -33,11 +31,15 @@ for (const dataRow in sheetData) {
       dilemmaTitle: row[titleCol],
       dilemmaPrompt: row[promptCol],
       dilemmaOptions: [],
-      engineIssue: row[engineIssueCol]
+      settings: {}
     }
-
-    if (validSpecialChapters.includes(row[specialChapterTypeCol])) {
-      dataOutput[row[chapterCode]].specialChapterType = row[specialChapterTypeCol]
+    // Chapter Settings
+    if (row[chapterSettingsCol]) {
+      let newChapterSettings = row[chapterSettingsCol].split(',')
+      for (const i in newChapterSettings) {
+        let newSetting = newChapterSettings[i].split(':')
+        dataOutput[row[chapterCode]].settings[newSetting[0]] = newSetting[1]
+      }
     }
   }
 
@@ -51,9 +53,15 @@ for (const dataRow in sheetData) {
       users: 0,
       capabilities: 0
     },
+    settings: {}
   }
-  if (row[specialChapterTypeCol] == "gameOver") {
-    newOption.gameOver = true;  
+  // Chapter Settings
+  if (row[optionSettingsCol]) {
+    let newOptionSettings = row[optionSettingsCol].split(',')
+    for (const i in newOptionSettings) {
+      let newSetting = newOptionSettings[i].split(':')
+      newOption.settings[newSetting[0]] = newSetting[1]
+    }
   }
 
   // Option Requirements
