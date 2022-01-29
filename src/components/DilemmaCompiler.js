@@ -8,8 +8,10 @@ var DilemmaCompiler = [
    () => DilemmaList['T-FOUNDER'], // Creating the object with "compile" and "flags" is not required - just a function still works (see handler at bottom)
    () => DilemmaList['T-LOCATION'],
    () => DilemmaList['T-FOCUS'],
-   (gameState) => gameState.techHub?DilemmaList['T-REC-TECH']:DilemmaList['T-REC-OTHER'],
+   () => DilemmaList['T-REC'],
+   () => DilemmaList['T-BETA'],
    () => DilemmaList['T-PRIVACY'],
+   (gameState) => gameState.focus>=2?DilemmaList['T-FOCUS-PAYOFF']:DilemmaList['T-COMPETITION'],
    {
       compile: () => DilemmaList['A-FUNDING'],
       flags: ['milestone']
@@ -22,7 +24,6 @@ var DilemmaCompiler = [
    () => DilemmaList['A-DEFAME'],
    () => DilemmaList['A-DISINFO'],
    () => DilemmaList['A-BACKDOOR'],
-   () => DilemmaList['A-NETNEUTRALITY'],
    () => DilemmaList['A-FAIRUSE'],
    () => DilemmaList['A-TBD'],
    {
