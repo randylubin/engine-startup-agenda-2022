@@ -1,4 +1,16 @@
 var FlagIndex = { 
+	"techHub": {
+		trueText: "you are based in techHub"
+	},
+	"otherCity": {
+		trueText: "you are based in otherCity"
+	},
+	"collegeTown": {
+		trueText: "you are based in collegeTown"
+	},
+	"smallTown": {
+		trueText: "you are based in smallTown"
+	},
 	"hiringFocus": {
 		flagTitle: "Focused on Hiring",
 		flagClass: "focus",
