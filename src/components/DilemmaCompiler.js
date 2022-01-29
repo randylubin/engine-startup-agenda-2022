@@ -19,13 +19,20 @@ var DilemmaCompiler = [
    () => DilemmaList['A-START'],
    () => DilemmaList['A-PATENT'],
    () => DilemmaList['A-NSL'],
+   (gameState) => gameState.whiteMaleFounder?DilemmaList['A-BURNINGMAN']:DilemmaList['A-MENTOR'],
    () => DilemmaList['A-COPYRIGHT'],
    () => DilemmaList['A-STATELAW'],
-   () => DilemmaList['A-DEFAME'],
-   () => DilemmaList['A-DISINFO'],
-   () => DilemmaList['A-BACKDOOR'],
-   () => DilemmaList['A-FAIRUSE'],
-   () => DilemmaList['A-TBD'],
+   () => DilemmaList['A-NEWS'],
+   {
+      compile: () => DilemmaList['B-FUNDING'],
+      flags: ['milestone']
+   },
+   () => DilemmaList['B-FAIRUSE'],
+   () => DilemmaList['B-DEFAME'],
+   () => DilemmaList['B-PRIORITIES'],
+   () => DilemmaList['B-DISINFO'],
+   () => DilemmaList['B-BACKDOOR'],
+   () => DilemmaList['B-TBD'],
    {
       compile: () => DilemmaList['C-FUNDING'],
       flags: ['milestone']

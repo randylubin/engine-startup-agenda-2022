@@ -92,9 +92,9 @@
     data () {
       return {
         initialState: [{
-          capital: 40,
-          users: 45,
-          capabilities: 15,
+          capital: 5,
+          users: 5,
+          capabilities: 5,
           focus: 3,
           pastEvents: []
         }],
