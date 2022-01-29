@@ -44,6 +44,7 @@
       }
     },
     mounted () {
+      this.editedStateString = this.currentStateString
     },
     computed: {
       jsonError: function(){
