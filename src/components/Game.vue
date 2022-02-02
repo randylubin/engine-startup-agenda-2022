@@ -96,7 +96,7 @@
           users: 5,
           capabilities: 5,
           focus: 3,
-					totalDilution: 0,
+					founderDilution: 0,
           pastEvents: []
         }],
         stateHistory: [],
