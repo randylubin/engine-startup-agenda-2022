@@ -85,7 +85,7 @@ for (const dataRow in sheetData) {
 
       newOption.optionRequirements[newProp] = newValue
     }  
-  } else {newOption.optionRequirements = null}
+  } else {newOption.optionRequirements = {}}
 
   // Option visibility
   if (row[visibilityCol]) {
@@ -107,7 +107,7 @@ for (const dataRow in sheetData) {
         
       newOption.optionVisibility[newProp] = newValue
     }  
-  } else {newOption.optionVisibility = null}
+  } else {newOption.optionVisibility = {}}
 
   // State Change
   newOption.stateChange['capital'] = row[capitalCol] ? parseInt(row[capitalCol]) : 0

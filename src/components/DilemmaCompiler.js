@@ -11,7 +11,7 @@ var DilemmaCompiler = [
    () => DilemmaList['T-REC'],
    () => DilemmaList['T-BETA'],
    () => DilemmaList['T-PRIVACY'],
-   (gameState) => gameState.focus>=2?DilemmaList['T-FOCUS-PAYOFF']:DilemmaList['T-COMPETITION'],
+   (gameState) => gameState.focus>=2?DilemmaList['T-FOCUS-PAYOFF']:DilemmaList['T-COMPETITION'], // add T-BAD-SECURITY?
    {
       compile: () => DilemmaList['A-FUNDING'],
       flags: ['milestone']
@@ -19,7 +19,7 @@ var DilemmaCompiler = [
    () => DilemmaList['A-START'],
    () => DilemmaList['A-PATENT'],
    () => DilemmaList['A-NSL'],
-   (gameState) => gameState.whiteMaleFounder?DilemmaList['A-BURNINGMAN']:DilemmaList['A-MENTOR'],
+   (gameState) => gameState.whiteMaleFounder?DilemmaList['A-BURNING-MAN']:DilemmaList['A-MENTOR'],
    () => DilemmaList['A-COPYRIGHT'],
    () => DilemmaList['A-STATELAW'],
    () => DilemmaList['A-NEWS'],
@@ -40,8 +40,8 @@ var DilemmaCompiler = [
    },
    () => DilemmaList['C-START'],
    () => DilemmaList['C-BREACH'],
-   () => DilemmaList['C-DISINFO-2'],
-   () => DilemmaList['C-TROLLS'], // TODO add conditional for C-HOLLYWOOD, C-HEALTHCARE
+   () => DilemmaList['C-DISINFO-2'], // TODO ADD conditional for C-TROLLS C-HOLLYWOOD
+   () => DilemmaList['C-MID-ROUND-UPDATE'],
    () => DilemmaList['C-INDIA-DATA'], // TODO add conditional for C-BRAZIL-TAKEDOWN
    () => DilemmaList['C-TBD'],
    () => DilemmaList['E-END'],

@@ -69,7 +69,7 @@ export default {
 			return locked
 		},
 		isVisible: function() {
-			if (!this.option.optionVisibility) {
+			if (!Object.keys(this.option.optionVisibility).length) {
 				return true;
 			} else {
 				let visible = false
