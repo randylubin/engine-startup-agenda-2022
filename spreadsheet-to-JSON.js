@@ -51,7 +51,8 @@ for (const dataRow in sheetData) {
     stateChange: {
       capital: 0,
       users: 0,
-      capabilities: 0
+      capabilities: 0,
+      totalDilution: 0,
     },
     settings: {}
   }
@@ -72,7 +73,7 @@ for (const dataRow in sheetData) {
       let newProp = newReqObject[0]
       let newValue = newReqObject[1]
 
-      if (['capital', 'users', 'capabilities', 'focus'].includes(newProp)) {
+      if (['capital', 'users', 'capabilities', 'focus', 'totalDilution'].includes(newProp)) {
         newValue = parseInt(newValue)
       } else {
         if (newValue === 'true') {
@@ -94,7 +95,7 @@ for (const dataRow in sheetData) {
       let newProp = newVisObject[0]
       let newValue = newVisObject[1]
 
-      if (['capital', 'users', 'capabilities', 'focus'].includes(newProp)) {
+      if (['capital', 'users', 'capabilities', 'focus', 'totalDilution'].includes(newProp)) {
         newValue = parseInt(newValue)
       } else {
         if (newValue === 'true') {
@@ -118,7 +119,15 @@ for (const dataRow in sheetData) {
     let newStateSection = row[otherStateCol].split(',')
     for (const obj in newStateSection) {
       let newStateObj = newStateSection[obj].split(':')
-      newOption.stateChange[newStateObj[0]] = newStateObj[0] == "focus" ? parseInt(newStateObj[1]) : newStateObj[1] === 'true' ? true : false 
+      let newValue = 0
+
+      if (newStateObj[0] == "focus" || newStateObj[0] == "totalDilution"){
+        newValue = parseInt(newStateObj[1])
+      } else {
+        newValue = newStateObj[1] === 'true' ? true : false 
+      }
+      
+      newOption.stateChange[newStateObj[0]] = newValue
     }  
   }
 
