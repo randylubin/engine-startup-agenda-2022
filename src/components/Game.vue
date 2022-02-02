@@ -164,7 +164,8 @@
             } else {
               newState[stateVariable] = option.stateChange[stateVariable]
             }
-          }          
+          }
+					if (newState.focus > 3) {newState.focus = 3}          
         }
         if(option.addEvent){
           newState.pastEvents.unshift(option.addEvent)

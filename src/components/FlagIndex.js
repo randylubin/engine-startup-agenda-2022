@@ -11,6 +11,9 @@ var FlagIndex = {
 	"smallTown": {
 		trueText: "you are based in smallTown"
 	},
+	lowUserData: {
+		trueText: "you've already minimized the amount of user data you retain."
+	},
 	"hiringFocus": {
 		flagTitle: "Focused on Hiring",
 		flagClass: "focus",

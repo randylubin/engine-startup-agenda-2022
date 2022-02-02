@@ -33,12 +33,12 @@ var DilemmaCompiler = [
    () => DilemmaList['B-DISINFO'],
    () => DilemmaList['B-BACKDOOR'],
    () => DilemmaList['B-TBD'],
+   () => DilemmaList['B-EUREG'],
    {
       compile: () => DilemmaList['C-FUNDING'],
       flags: ['milestone']
    },
    () => DilemmaList['C-START'],
-   () => DilemmaList['C-EUREG'],
    () => DilemmaList['C-BREACH'],
    () => DilemmaList['C-DISINFO-2'],
    () => DilemmaList['C-TROLLS'], // TODO add conditional for C-HOLLYWOOD, C-HEALTHCARE
