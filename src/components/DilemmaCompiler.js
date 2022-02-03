@@ -11,7 +11,7 @@ var DilemmaCompiler = [
    () => DilemmaList['T-REC'],
    () => DilemmaList['T-BETA'],
    () => DilemmaList['T-PRIVACY'],
-   (gameState) => gameState.focus>=2?DilemmaList['T-FOCUS-PAYOFF']:DilemmaList['T-COMPETITION'], // add T-BAD-SECURITY?
+   (gameState) => gameState.badPrivacy==true?DilemmaList['T-BAD-SECURITY'] : gameState.focus>=2?DilemmaList['T-FOCUS-PAYOFF']:DilemmaList['T-COMPETITION'],
    {
       compile: () => DilemmaList['A-FUNDING'],
       flags: ['milestone']
@@ -32,17 +32,17 @@ var DilemmaCompiler = [
    () => DilemmaList['B-PRIORITIES'],
    () => DilemmaList['B-DISINFO'],
    () => DilemmaList['B-BACKDOOR'],
-   () => DilemmaList['B-TBD'],
    () => DilemmaList['B-EUREG'],
+   () => DilemmaList['B-TBD'],
    {
       compile: () => DilemmaList['C-FUNDING'],
       flags: ['milestone']
    },
    () => DilemmaList['C-START'],
    () => DilemmaList['C-BREACH'],
-   () => DilemmaList['C-DISINFO-2'], // TODO ADD conditional for C-TROLLS C-HOLLYWOOD
+   (gameState) => gameState.banDisinfo?DilemmaList['C-DISINFO-2'] : gameState.piracy?DilemmaList['C-HOLLYWOOD'] : DilemmaList['C-TROLLS'],
    () => DilemmaList['C-MID-ROUND-UPDATE'],
-   () => DilemmaList['C-INDIA-DATA'], // TODO add conditional for C-BRAZIL-TAKEDOWN
+   () => Math.random()>0.5?DilemmaList['C-INDIA-DATA']:DilemmaList['C-BRAZIL-TAKEDOWN'], //TODO better approach than coinflip?
    () => DilemmaList['C-TBD'],
    () => DilemmaList['E-END'],
    {
