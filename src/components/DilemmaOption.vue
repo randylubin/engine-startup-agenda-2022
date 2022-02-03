@@ -251,8 +251,12 @@ export default {
 			};
 		}		
 	},
-  mounted () {
-    },
+  beforeUnmount () {
+		this.highlightStates(false);
+  },
+	deactivated () {
+		this.highlightStates(false);
+	},
   methods: {
 		highlightStates(on) {
 			if (on) {

@@ -56,7 +56,7 @@ div.state-meter {
 	overflow: hidden;
 	background-color: var(--c-meter-bg);
 	white-space: nowrap;
-	border: 2px solid var(--c-meter-border);
+	border: .2rem solid var(--c-meter-border);
 	border-radius: .9em;
 }
 
@@ -66,8 +66,9 @@ div.state-meter::before {
 	z-index: 100;
 	top: 0; left: 0; right: 0; bottom: 0;
 	box-sizing: border-box;
-	border: 2px solid var(--c-meter-bg);
-	border-radius: calc(.9em - 2px);
+	border: .15rem solid var(--c-over);
+	border-radius: calc(.9em - .2rem);
+	filter: drop-shadow(var(--sh-meter-shine));
 }
 
 div.state-meter div {

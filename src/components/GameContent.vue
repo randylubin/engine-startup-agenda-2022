@@ -1,5 +1,5 @@
 <template>
-  <div id="content-panel" :class="{ 'tutorial-active': tutorialActive }">
+  <div id="content-panel" :class="{ 'fade-active': fadeActive }">
     <transition name="title-switch" mode="out-in" v-if="currentChapterInfo.dilemmaTitle">
       <h2 v-if="currentChapterIndex % 2" key="odd-title">
         <span>
@@ -30,7 +30,7 @@
             :currentChapterInfo="currentChapterInfo"
             @select-option="selectOption"
             @next-prompt="nextPrompt"
-            @toggle-tutorial="toggleTutorial"
+            @toggle-tutorial="setFade"
           />
           <result-panel
             v-else
@@ -53,7 +53,7 @@
             :currentChapterInfo="currentChapterInfo"
             @select-option="selectOption"
             @next-prompt="nextPrompt"
-            @toggle-tutorial="toggleTutorial"
+            @toggle-tutorial="setFade"
           />
           <result-panel
             v-else
@@ -68,7 +68,7 @@
       </div>
     </transition>
 
-    <progress-timeline :currentChapterIndex="currentChapterIndex"></progress-timeline>
+    
   </div>
 
 </template>
@@ -76,14 +76,12 @@
 <script>
   import ContentDilemma from './ContentDilemma.vue'
   import ContentResult from './ContentResult.vue'
-  import ProgressTimeline from './ProgressTimeline.vue'
   
   export default {
     name: 'content-panel',
     components: {
       'dilemma-panel': ContentDilemma,
       'result-panel': ContentResult,
-      'progress-timeline': ProgressTimeline
     },
     props: {
       currentState: Object,
@@ -93,7 +91,7 @@
     },
     data () {
       return {
-        tutorialActive: false
+        fadeActive: false
       }
     },
     mounted () {
@@ -108,8 +106,8 @@
       updateState(newState){
         this.$emit('update-state', newState)
       },
-      toggleTutorial(val) {
-        this.tutorialActive = val;
+      setFade(val) {
+        this.fadeActive = val;
       },
       selectOption(option){
         this.$emit('choose-option', option)
@@ -120,17 +118,13 @@
 
 <style>
 
-.chapter-switch-enter-active { transition: opacity .75s; transition-delay: .5s;}
-.chapter-switch-leave-active { transition: opacity .5s; }
-.chapter-switch-enter, .chapter-switch-leave-to {
-  opacity: 0;
-}
+.chapter-switch-enter-active { transition: opacity .5s; transition-delay: .4s; pointer-events: none; }
+.chapter-switch-leave-active { transition: opacity .4s; pointer-events: none; }
+.chapter-switch-enter, .chapter-switch-leave-to { opacity: 0; pointer-events: none; }
 
-.panel-switch-enter-active { transition: opacity .75s; transition-delay: 0; }
-.panel-switch-leave-active { transition: opacity .5s; }
-.panel-switch-enter, .panel-switch-leave-to {
-  opacity: 0;
-}
+.panel-switch-enter-active { transition: opacity .5s; transition-delay: 0; pointer-events: none; }
+.panel-switch-leave-active { transition: opacity .4s; pointer-events: none; }
+.panel-switch-enter, .panel-switch-leave-to { opacity: 0; pointer-events: none; }
 
 .title-switch-enter-active { white-space: nowrap; transition: padding-left .75s,opacity .75s; }
 .title-switch-leave-active { transition: padding-left .5s,opacity .5s ease-out; }

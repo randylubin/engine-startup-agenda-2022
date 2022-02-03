@@ -11,14 +11,20 @@ var FlagIndex = {
 	"smallTown": {
 		trueText: "you are based in smallTown"
 	},
-	lowUserData: {
+	"lowUserData": {
 		trueText: "you've already minimized the amount of user data you retain."
 	},
 	"hiringFocus": {
 		flagTitle: "Focused on Hiring",
 		flagClass: "focus",
 		flagText: "You are focused on building the best team you can.",
-		trueText: "you are Focused on Hiring"
+		trueText: "you are focused on Hiring"
+	},
+	"investorFocus": {
+		flagTitle: "Networking with Investors",
+		flagClass: "focus",
+		flagText: "You are focused on meeting investors.",
+		trueText: "you are focused on meeting investors"
 	},
 	"fightTroll": {
 		flagTitle: "Fighting a Troll",

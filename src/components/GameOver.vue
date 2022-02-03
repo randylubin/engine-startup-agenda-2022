@@ -16,20 +16,17 @@
       :chosenOption="chosenOption"
       @undo-choice="undoChoice"
     />
-  <progress-timeline :currentChapterIndex="currentChapterIndex"></progress-timeline>
   </div>
 </template>
 
 <script>
 
   import ContentResult from './ContentResult.vue'
-  import ProgressTimeline from './ProgressTimeline.vue'
 
   export default {
     name: 'game-over',
     components: {
-      'result-panel': ContentResult,
-      'progress-timeline': ProgressTimeline
+      'result-panel': ContentResult
     },
     props: {
       currentState: Object,
