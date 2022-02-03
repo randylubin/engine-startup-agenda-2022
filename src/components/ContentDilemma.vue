@@ -3,7 +3,7 @@
 
     <!-- Tutorial Page -->
     <template v-if="currentChapterInfo.settings.chapterType == 'tutorial-page'">
-      <p><strong>You're about to embark on the Silicon Trail. Can your startup survive?</strong></p>
+      <p><strong>You're about to embark on a Founder's Quest. Can your startup survive?</strong></p>
       <p>In this game, you'll make choices to guide your company through a variety of dilemmas. You'll need to use your time and resources carefully, secure ongoing funding, and navigate the many challenges of succeeding as a tech startup.</p>
       <transition-group name="tutorial" mode="out-in">
         <template v-if="!tutorialActive && !tutorialFinished">  

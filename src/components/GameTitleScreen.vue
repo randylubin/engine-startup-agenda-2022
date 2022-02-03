@@ -1,7 +1,9 @@
 <template>
   <div id="title-screen" key="title-screen">
     <div>
-      <h1>Silicon Trail</h1>
+      <h1>
+        <img src="/assets/game-logo-stacked.svg" />
+      </h1>
       <h2>The Game of Startup Survival</h2>
       <button
         v-if="saveExists"
@@ -57,6 +59,10 @@
     color: var(--en-3l);
     text-align: center;
     margin-bottom: .25em;
+  }
+
+  h1 img {
+    width: 75%;
   }
 
   h2 {
