@@ -476,12 +476,9 @@ div#content-panel {
 	left: calc(200px + 19%);
   z-index: 30;
 	
-	min-height: calc(100% - 3.5rem);
-	
 	box-sizing: border-box;
 	overflow-y: scroll;
-	padding-top: 1.5em;
-	padding-right: 4rem;
+	padding: 1.5em 4rem 1.5em 0;
 
   transition: opacity .5s ease-out;
 }
