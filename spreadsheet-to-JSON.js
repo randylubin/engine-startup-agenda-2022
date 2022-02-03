@@ -51,7 +51,8 @@ for (const dataRow in sheetData) {
     stateChange: {
       capital: 0,
       users: 0,
-      capabilities: 0
+      capabilities: 0,
+      founderDilution: 0,
     },
     settings: {}
   }
@@ -72,7 +73,7 @@ for (const dataRow in sheetData) {
       let newProp = newReqObject[0]
       let newValue = newReqObject[1]
 
-      if (['capital', 'users', 'capabilities', 'focus'].includes(newProp)) {
+      if (['capital', 'users', 'capabilities', 'focus', 'founderDilution'].includes(newProp)) {
         newValue = parseInt(newValue)
       } else {
         if (newValue === 'true') {
@@ -84,7 +85,7 @@ for (const dataRow in sheetData) {
 
       newOption.optionRequirements[newProp] = newValue
     }  
-  } else {newOption.optionRequirements = null}
+  } else {newOption.optionRequirements = {}}
 
   // Option visibility
   if (row[visibilityCol]) {
@@ -94,7 +95,7 @@ for (const dataRow in sheetData) {
       let newProp = newVisObject[0]
       let newValue = newVisObject[1]
 
-      if (['capital', 'users', 'capabilities', 'focus'].includes(newProp)) {
+      if (['capital', 'users', 'capabilities', 'focus', 'founderDilution'].includes(newProp)) {
         newValue = parseInt(newValue)
       } else {
         if (newValue === 'true') {
@@ -106,7 +107,7 @@ for (const dataRow in sheetData) {
         
       newOption.optionVisibility[newProp] = newValue
     }  
-  } else {newOption.optionVisibility = null}
+  } else {newOption.optionVisibility = {}}
 
   // State Change
   newOption.stateChange['capital'] = row[capitalCol] ? parseInt(row[capitalCol]) : 0
@@ -118,7 +119,15 @@ for (const dataRow in sheetData) {
     let newStateSection = row[otherStateCol].split(',')
     for (const obj in newStateSection) {
       let newStateObj = newStateSection[obj].split(':')
-      newOption.stateChange[newStateObj[0]] = newStateObj[0] == "focus" ? parseInt(newStateObj[1]) : newStateObj[1] === 'true' ? true : false 
+      let newValue = 0
+
+      if (newStateObj[0] == "focus" || newStateObj[0] == "founderDilution"){
+        newValue = parseInt(newStateObj[1])
+      } else {
+        newValue = newStateObj[1] === 'true' ? true : false 
+      }
+      
+      newOption.stateChange[newStateObj[0]] = newValue
     }  
   }
 

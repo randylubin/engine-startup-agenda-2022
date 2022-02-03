@@ -95,10 +95,11 @@
     data () {
       return {
         initialState: [{
-          capital: 40,
-          users: 45,
-          capabilities: 15,
+          capital: 5,
+          users: 5,
+          capabilities: 5,
           focus: 3,
+					founderDilution: 0,
           pastEvents: []
         }],
         stateHistory: [],
@@ -152,6 +153,29 @@
     methods: {
       chooseOption(option, skipping = false){
         this.optionHistory.push(option)
+
+				// Update Game State
+        let newState = JSON.parse(JSON.stringify(this.stateHistory[this.stateHistory.length-1]))
+          
+        if(option.stateChange){          
+          for (const stateVariable in option.stateChange){
+            if (Number.isInteger(option.stateChange[stateVariable])){
+              newState[stateVariable] += option.stateChange[stateVariable]
+              /*if (newState[stateVariable] < 0){
+                newState[stateVariable] = 0
+              }*/
+              // TODO logic for ending the game if player runs out of cash
+            } else {
+              newState[stateVariable] = option.stateChange[stateVariable]
+            }
+          }
+					if (newState.focus > 3) {newState.focus = 3}          
+        }
+        if(option.addEvent){
+          newState.pastEvents.unshift(option.addEvent)
+        }
+        this.updateState(newState)
+
 				if (this.currentChapterInfo.settings.singleScreen && !skipping){
 					this.nextPrompt();
 				}

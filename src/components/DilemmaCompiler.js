@@ -8,8 +8,10 @@ var DilemmaCompiler = [
    () => DilemmaList['T-FOUNDER'], // Creating the object with "compile" and "flags" is not required - just a function still works (see handler at bottom)
    () => DilemmaList['T-LOCATION'],
    () => DilemmaList['T-FOCUS'],
-   (gameState) => gameState.techHub?DilemmaList['T-REC-TECH']:DilemmaList['T-REC-OTHER'],
+   () => DilemmaList['T-REC'],
+   () => DilemmaList['T-BETA'],
    () => DilemmaList['T-PRIVACY'],
+   (gameState) => gameState.focus>=2?DilemmaList['T-FOCUS-PAYOFF']:DilemmaList['T-COMPETITION'], // add T-BAD-SECURITY?
    {
       compile: () => DilemmaList['A-FUNDING'],
       flags: ['milestone']
@@ -17,23 +19,29 @@ var DilemmaCompiler = [
    () => DilemmaList['A-START'],
    () => DilemmaList['A-PATENT'],
    () => DilemmaList['A-NSL'],
+   (gameState) => gameState.whiteMaleFounder?DilemmaList['A-BURNING-MAN']:DilemmaList['A-MENTOR'],
    () => DilemmaList['A-COPYRIGHT'],
    () => DilemmaList['A-STATELAW'],
-   () => DilemmaList['A-DEFAME'],
-   () => DilemmaList['A-DISINFO'],
-   () => DilemmaList['A-BACKDOOR'],
-   () => DilemmaList['A-NETNEUTRALITY'],
-   () => DilemmaList['A-FAIRUSE'],
-   () => DilemmaList['A-TBD'],
+   () => DilemmaList['A-NEWS'],
+   {
+      compile: () => DilemmaList['B-FUNDING'],
+      flags: ['milestone']
+   },
+   () => DilemmaList['B-FAIRUSE'],
+   () => DilemmaList['B-DEFAME'],
+   () => DilemmaList['B-PRIORITIES'],
+   () => DilemmaList['B-DISINFO'],
+   () => DilemmaList['B-BACKDOOR'],
+   () => DilemmaList['B-TBD'],
+   () => DilemmaList['B-EUREG'],
    {
       compile: () => DilemmaList['C-FUNDING'],
       flags: ['milestone']
    },
    () => DilemmaList['C-START'],
-   () => DilemmaList['C-EUREG'],
    () => DilemmaList['C-BREACH'],
-   () => DilemmaList['C-DISINFO-2'],
-   () => DilemmaList['C-TROLLS'], // TODO add conditional for C-HOLLYWOOD, C-HEALTHCARE
+   () => DilemmaList['C-DISINFO-2'], // TODO ADD conditional for C-TROLLS C-HOLLYWOOD
+   () => DilemmaList['C-MID-ROUND-UPDATE'],
    () => DilemmaList['C-INDIA-DATA'], // TODO add conditional for C-BRAZIL-TAKEDOWN
    () => DilemmaList['C-TBD'],
    () => DilemmaList['E-END'],
