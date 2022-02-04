@@ -10,7 +10,7 @@
     </ul>
     <div id="consequences-nav-buttons">
       <button id="nav-continue" class="" v-if="!chosenOption.gameOver && !forceGameOver" v-on:click="nextPrompt()"><span>Continue</span></button>
-      <button id="nav-back" v-on:click="undoChoice()" v-if="!(currentChapterInfo.settings.singleScreen == 'singleScreen')"><span>Back</span></button>       
+      <button id="nav-back" v-on:click="undoChoice()" v-if="!(currentChapterInfo.specialChapterType == 'singleScreen')"><span>Back</span></button>       
     </div>
   </div>    
 </template>
