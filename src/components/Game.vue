@@ -14,6 +14,7 @@
         <menu-panel
 					v-if="gameStarted"
 					:currentChapterIndex="chapterHistory.length-1"
+					@restart-game="restartGame"
 				/>
       </transition>
       <transition appear name="side-bar"> 
@@ -77,6 +78,7 @@
   import GameOver from './GameOver.vue'
   import GameTitleScreen from './GameTitleScreen.vue'
 
+	const ReportURL = 'https://www.engine.is/news/category/engine-releases-2022-startup-agenda';
 
   export default {
     name: 'game',
@@ -89,8 +91,9 @@
 			'gameover-panel': GameOver,
     },
     provide: {
-      "dilemma-compiler": DilemmaCompiler,
-      "flag-index": FlagIndex
+			'report-url': ReportURL,
+      'dilemma-compiler': DilemmaCompiler,
+      'flag-index': FlagIndex
     },
     data () {
       return {
@@ -390,7 +393,9 @@
 
 /* General Settings */
 
-* { cursor: default; } /* Prevent text selection cursor for more gamelike feel */
+*:not(a) { cursor: default; } /* Prevent text selection cursor for more gamelike feel */
+a * { cursor: pointer; }
+
 html { font-size: calc(6px + 0.5vw);}
 body { 
 	font-family: aglet-slab, serif;
@@ -398,6 +403,15 @@ body {
 	font-weight: 400;
 	padding: 0;
 	margin: 0;
+}
+
+a,a:link,a:visited,a:active {
+	text-decoration: none;
+	color: var(--en-3m);
+}
+
+a:hover {
+	color: var(--en-3l);
 }
 
 h1,h2,h3,h4 {
@@ -1031,7 +1045,7 @@ div.tt-positioner {
 }
 
 div.tt-positioner.tt-option {
-	bottom: 112%;
+	bottom: calc(100% + .25em);
 	left: max(25%, calc(50% - 360px));
 	width: min(50%, 720px);
 	
@@ -1215,6 +1229,20 @@ ul.option-details li.note {
 	mask-repeat: no-repeat;
 }
 
+a.external::after {
+	content: url("/assets/icons/icon-sizer.svg");
+	position: relative;
+	top: -0.1em;
+	display: inline-block;
+	line-height: 1;
+	vertical-align: middle;
+	width: 1em;
+	margin-left: .2em;
+	background-color: currentColor;
+	mask-repeat: no-repeat;
+	mask-image: url("/assets/icons/icon-link.svg");
+}
+
 .ii.capital::before { mask-image: url("/assets/icons/icon-capital.svg"); }
 .ii.users::before { mask-image: url("/assets/icons/icon-users.svg"); }
 .ii.capabilities::before { mask-image: url("/assets/icons/icon-capabilities.svg"); }
@@ -1257,6 +1285,26 @@ ul.option-details li.note {
 .game-over-leave-active { transition: opacity .5s ease-out; }
 .game-over-enter, .game-over-leave-to {
   opacity: 0;
+}
+
+div#unsupported-device {
+	display: none;
+}
+
+@media (max-width: 1023px) {
+	div#unsupported-device {
+		position: fixed; top: 0; right: 0; bottom: 0; left: 0;
+		
+		display: flex !important;
+		justify-content: center;
+		align-items: center;
+		color: white;
+		background: var(--c-base);
+	}
+
+	div#game {
+		display: none !important;
+	}
 }
 
 </style>

@@ -77,6 +77,12 @@ div#progress-timeline > label {
   text-shadow: var(--sh-timeline-text);
 }
 
+@media (max-width: 1169px) {
+  div#progress-timeline > label {
+    display: none;
+  }
+}
+
 div#progress-timeline > div {
   display: inline-block;
   vertical-align: middle;
