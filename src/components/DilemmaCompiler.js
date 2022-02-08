@@ -22,6 +22,7 @@ var DilemmaCompiler = [
    (gameState) => gameState.whiteMaleFounder?DilemmaList['A-BURNING-MAN']:DilemmaList['A-MENTOR'],
    () => DilemmaList['A-COPYRIGHT'],
    () => DilemmaList['A-STATELAW'],
+   (gameState) => gameState.paidTroll?DilemmaList['A-PATENT-PAID']: gameState.foughtTroll?DilemmaList['A-PATENT-FOUGHT']:DilemmaList['A-PATENT-IGNORED'],
    () => DilemmaList['A-NEWS'],
    {
       compile: () => DilemmaList['B-FUNDING'],
