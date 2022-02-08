@@ -1017,10 +1017,8 @@ button#nav-back::before { transform: rotate(180deg); }
 
 /* Special Navigation */
 
-button#skip-tutorial { filter:grayscale(1) brightness(0.6); }
-button#start-tutorial::before {
-	mask-image: url("/assets/icons/icon-question.svg");
-}
+button#skip-tutorial { filter:grayscale(1); }
+button#start-tutorial::before {	mask-image: url("/assets/icons/icon-question.svg"); }
 
 /* Tooltips */
 

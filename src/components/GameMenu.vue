@@ -78,8 +78,9 @@
           </div>
         </div>
         <div class="info-frame">
-          Based on the policy issues explored<br>
-          in the <a :href="ReportURL" class="external" target="_blank">2022 Startup Agenda</a><br>
+          <p>A game exploring the policy issues<br>
+          that impact today&rsquo;s tech startups.</p>
+          <p>Learn more in the <a :href="ReportURL" class="external" target="_blank">2022 Startup Agenda</a></p>
         </div>
         <div class="info-frame credits">
           <p>Created by <a href="https://copia.is/gaming/" title="Copia Gaming" target="_blank"><strong>Copia Gaming</strong></a> and <a href="https://leveragedplay.com/" title="Leveraged Play" target="_blank"><strong>Leveraged Play</strong></a><br></p>
