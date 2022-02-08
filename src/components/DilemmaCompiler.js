@@ -29,6 +29,7 @@ var DilemmaCompiler = [
       flags: ['milestone']
    },
    () => DilemmaList['B-FAIRUSE'],
+   (gameState) => gameState.NSLHelp?DilemmaList['B-NSL-HELP']:DilemmaList['B-NSL-FIGHT'],
    () => DilemmaList['B-DEFAME'],
    () => DilemmaList['B-PRIORITIES'],
    () => DilemmaList['B-DISINFO'],
