@@ -1,6 +1,9 @@
 <template>
   <div id="app">
     <app-game class=""></app-game>
+    <div id="unsupported-device">
+      Screen too small. Minimum width 1024px.
+    </div>
   </div>
 </template>
 
