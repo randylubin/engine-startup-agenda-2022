@@ -105,7 +105,15 @@
       }
     },
 	watch: {
-		currentState: function () {
+		currentState: function() {
+			this.updateActivityFlags()
+		}
+	},
+  mounted() {
+		this.updateActivityFlags()
+  },
+  methods: {
+		updateActivityFlags() {
 			for (const state in this.currentState) {
 				if (this.FlagIndex[state]) {
 					if (this.currentState[state] && this.FlagIndex[state].flagTitle && this.activityFlags.indexOf(state) < 0) {
@@ -118,16 +126,12 @@
 					this.activityFlags.splice(i,1);
 				}
 			}
-		}
-	},
-    mounted () {
-    },
-    methods: {
+		},
 		nextTutorial() {
 			this.$emit("next-tutorial")
 		}
-    }
   }
+}
 </script>
 
 <style>
