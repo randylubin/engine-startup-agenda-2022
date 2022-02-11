@@ -1,6 +1,6 @@
 <template>
   <div class="issue-note" v-if="Note">
-    <a :href="ExternalLinks.Engine" class="engine-link"></a>
+    <a :href="ExternalLinks.Engine" class="engine-link" target="_blank"></a>
     <div class="note-content">
       <p v-html="Note.text"></p>
       <p class="cta">
