@@ -54,16 +54,16 @@
             <p>Choose a founder to lead your startup:</p>
             <div class="founder-options">
               <div id="founder-0" @click="founderAction('select',0)">
-                <img src="/assets/founders/founder-0.png" />
+                <img :src="'/assets/founders/' + Founders[0].Image" />
               </div>
               <div id="founder-1" @click="founderAction('select',1)">
-                <img src="/assets/founders/founder-1.png" />
+                <img :src="'/assets/founders/' + Founders[1].Image" />
               </div>
               <div id="founder-2" @click="founderAction('select',2)">
-                <img src="/assets/founders/founder-2.png" />
+                <img :src="'/assets/founders/' + Founders[2].Image" />
               </div>
               <div id="founder-3" @click="founderAction('select',3)">
-                <img src="/assets/founders/founder-3.png" />
+                <img :src="'/assets/founders/' + Founders[3].Image" />
               </div>
             </div>
             <button id="founder-cancel" key="founder-cancel" @click="founderAction('select',founderChoice)"><span>Cancel</span></button>
