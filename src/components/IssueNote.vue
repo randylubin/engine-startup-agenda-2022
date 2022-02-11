@@ -60,11 +60,15 @@ div.issue-note > a.engine-link {
 	background-position: center;
 
 	box-sizing: border-box;
-	width: 35%;
+	width: 20%;
 	min-width: 130px;
 	padding-right: 1.5em;
 	margin-right: 1.5em;
 	border-right: .2rem solid var(--c-over);
+}
+
+div.issue-note > div.note-content {
+  width: 80%;
 }
 
 div.founder-profile div.issue-note {
@@ -78,17 +82,18 @@ div.founder-profile div.issue-note div.note-content {
 
 div.founder-profile div.issue-note > a.engine-link {
 	order: 2;
-	width: 25%;
+	width: 20%;
 	padding-right: 0;
-	padding-left: 1.5em;
+	padding-left: 1.2em;
 	margin-right: 0;
-	margin-left: 1.5em;
+	margin-left: 1.2em;
 	border-right: none;
 	border-left: .2rem solid var(--c-over);
 }
 
 div.issue-note p { margin-top: 0; }
-div.issue-note p:last-child { margin-bottom: 0; }
+div.founder-profile div.issue-note p { margin-bottom: .75em; }
+div.founder-profile div.issue-note p:last-child, div.issue-note p:last-child { margin-bottom: 0; }
 div.issue-note p.cta { font-weight: bolder; }
 
 </style>
