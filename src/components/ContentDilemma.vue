@@ -75,10 +75,6 @@
     <!-- Regular Dilemma Display -->
     <template v-else>
       <p>{{currentChapterInfo.dilemmaPrompt}}</p>
-      <issue-note
-        v-if="currentChapterInfo.settings.issueNote"
-        :noteKey="currentChapterInfo.settings.issueNote"
-      />
       <div class="dilemma-options-list">
         <dilemma-option 
           v-for="(option,index) in currentChapterInfo.dilemmaOptions"
@@ -88,6 +84,10 @@
           @click-option = "selectOption"
         />
       </div>
+      <issue-note
+        v-if="currentChapterInfo.settings.issueNote"
+        :noteKey="currentChapterInfo.settings.issueNote"
+      />
     </template>
   </div>    
 </template>
