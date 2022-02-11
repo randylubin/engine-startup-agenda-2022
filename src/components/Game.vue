@@ -781,6 +781,7 @@ div#content-panel p {
 	font-size: 1.1em;
 	line-height: 1.5;
 	color: var(--c-content-text);
+	white-space:pre-line;
 }
 
 div#content-panel p.dilemma-note {
