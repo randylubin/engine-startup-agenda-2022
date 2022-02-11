@@ -253,8 +253,8 @@
 
 				// check for single screen with state change
 				if (newDilemma.settings.singleScreen){
-					if (Object.keys(newDilemma.dilemmaOptions[0].stateChange).length > 3 || newDilemma.dilemmaOptions[0].stateChange.capital || newDilemma.dilemmaOptions[0].stateChange.users || newDilemma.dilemmaOptions[0].stateChange.capabilities){
-						console.log('skipping')
+					if (Object.keys(newDilemma.dilemmaOptions[0].stateChange).length > 4 || newDilemma.dilemmaOptions[0].stateChange.capital || newDilemma.dilemmaOptions[0].stateChange.users || newDilemma.dilemmaOptions[0].stateChange.capabilities){
+						console.log('skipping because', newDilemma.dilemmaOptions[0].stateChange)
 						this.chooseOption(newDilemma.dilemmaOptions[0], 'skipping')
 					}
 				}

@@ -22,18 +22,21 @@ var DilemmaCompiler = [
    (gameState) => gameState.whiteMaleFounder?DilemmaList['A-BURNING-MAN']:DilemmaList['A-MENTOR'],
    () => DilemmaList['A-COPYRIGHT'],
    () => DilemmaList['A-STATELAW'],
+   (gameState) => gameState.paidTroll?DilemmaList['A-PATENT-PAID']: gameState.foughtTroll?DilemmaList['A-PATENT-FOUGHT']:DilemmaList['A-PATENT-IGNORED'],
    () => DilemmaList['A-NEWS'],
    {
       compile: () => DilemmaList['B-FUNDING'],
       flags: ['milestone']
    },
    () => DilemmaList['B-FAIRUSE'],
+   (gameState) => gameState.NSLHelp?DilemmaList['B-NSL-HELP']:DilemmaList['B-NSL-FIGHT'],
    () => DilemmaList['B-DEFAME'],
    () => DilemmaList['B-PRIORITIES'],
    () => DilemmaList['B-DISINFO'],
    () => DilemmaList['B-BACKDOOR'],
    () => DilemmaList['B-EUREG'],
    () => DilemmaList['B-TBD'],
+   (gameState) => gameState.focus>=1?DilemmaList['B-FOCUS-PAYOFF']:DilemmaList['B-NO-FOCUS'],
    {
       compile: () => DilemmaList['C-FUNDING'],
       flags: ['milestone']
@@ -44,6 +47,7 @@ var DilemmaCompiler = [
    () => DilemmaList['C-MID-ROUND-UPDATE'],
    () => Math.random()>0.5?DilemmaList['C-INDIA-DATA']:DilemmaList['C-BRAZIL-TAKEDOWN'], //TODO better approach than coinflip?
    () => DilemmaList['C-TBD'],
+   (gameState) => gameState.focus>=1?DilemmaList['C-FOCUS-PAYOFF']:DilemmaList['C-NO-FOCUS'],
    () => DilemmaList['E-END'],
    {
       compile: () => ({"dilemmaPrompt": "That's all for now..."}),
