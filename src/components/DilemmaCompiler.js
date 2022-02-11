@@ -6,6 +6,7 @@ var DilemmaCompiler = [
       flags: ['hidden']
    },
    () => DilemmaList['T-FOUNDER'], // Creating the object with "compile" and "flags" is not required - just a function still works (see handler at bottom)
+   () => DilemmaList['T-INCORPORATION'],
    () => DilemmaList['T-LOCATION'],
    () => DilemmaList['T-FOCUS'],
    () => DilemmaList['T-REC'],
