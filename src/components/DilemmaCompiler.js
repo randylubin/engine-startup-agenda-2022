@@ -6,6 +6,7 @@ var DilemmaCompiler = [
       flags: ['hidden']
    },
    () => DilemmaList['T-FOUNDER'], // Creating the object with "compile" and "flags" is not required - just a function still works (see handler at bottom)
+   () => DilemmaList['T-INCORPORATION'],
    () => DilemmaList['T-LOCATION'],
    () => DilemmaList['T-FOCUS'],
    () => DilemmaList['T-REC'],
@@ -36,6 +37,7 @@ var DilemmaCompiler = [
    () => DilemmaList['B-BACKDOOR'],
    () => DilemmaList['B-EUREG'],
    () => DilemmaList['B-TBD'],
+   (gameState) => gameState.focus>=1?DilemmaList['B-FOCUS-PAYOFF']:DilemmaList['B-NO-FOCUS'],
    {
       compile: () => DilemmaList['C-FUNDING'],
       flags: ['milestone']
@@ -46,6 +48,7 @@ var DilemmaCompiler = [
    () => DilemmaList['C-MID-ROUND-UPDATE'],
    () => Math.random()>0.5?DilemmaList['C-INDIA-DATA']:DilemmaList['C-BRAZIL-TAKEDOWN'], //TODO better approach than coinflip?
    () => DilemmaList['C-TBD'],
+   (gameState) => gameState.focus>=1?DilemmaList['C-FOCUS-PAYOFF']:DilemmaList['C-NO-FOCUS'],
    () => DilemmaList['E-END'],
    {
       compile: () => ({"dilemmaPrompt": "That's all for now..."}),

@@ -8,17 +8,23 @@
       <li class="focus replenish" v-if="chosenOption.stateChange.focus > 0">Your&ensp;<strong class="ii focus">Time &amp; Focus</strong> has been replenished.</li>
       <li class="focus deplete" v-if="chosenOption.stateChange.focus < 0">Some of your&ensp;<strong class="ii focus">Time &amp; Focus</strong> has been occupied.</li>
     </ul>
+    <issue-note
+      v-if="chosenOption.settings.issueNote"
+      :noteKey="chosenOption.settings.issueNote"
+    />
     <div id="consequences-nav-buttons">
       <button id="nav-continue" class="" v-if="!chosenOption.gameOver && !forceGameOver" v-on:click="nextPrompt()"><span>Continue</span></button>
-      <button id="nav-back" v-on:click="undoChoice()" v-if="!(currentChapterInfo.specialChapterType == 'singleScreen')"><span>Back</span></button>       
+      <button id="nav-back" v-on:click="undoChoice()" v-if="!(currentChapterInfo.settings.singleScreen)"><span>Back</span></button>       
     </div>
   </div>    
 </template>
 
 <script>
+import IssueNote from './IssueNote.vue';
   export default {
     name: 'result-panel',
     components: {
+        IssueNote
     },
     props: {
       chosenOption: Object,

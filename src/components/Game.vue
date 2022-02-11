@@ -22,6 +22,8 @@
           v-if="gameStarted"
           key="sidebar-panel"
           :currentState="stateHistory[this.stateHistory.length-1]"
+					:currentFounder="currentFounder"
+					:currentHeadquarters="currentHeadquarters"
           :chosenOption="optionHistory[this.optionHistory.length-1]"
           @next-tutorial="nextTutorial()"
         />
@@ -70,6 +72,7 @@
 
   import DilemmaCompiler from './DilemmaCompiler.js' 
   import FlagIndex from "./FlagIndex.js"
+	import NoteIndex from "./NoteIndex.js"
 
   import GameMenu from './GameMenu.vue'
   import GameSidebar from './GameSidebar.vue'
@@ -78,7 +81,38 @@
   import GameOver from './GameOver.vue'
   import GameTitleScreen from './GameTitleScreen.vue'
 
-	const ReportURL = 'https://www.engine.is/news/category/engine-releases-2022-startup-agenda';
+	const ExternalLinks = {
+		StartupAgenda: 'https://www.engine.is/news/category/engine-releases-2022-startup-agenda',
+		StartupEquity: 'https://www.engine.is/news/category/engine-releases-making-the-startup-ecosystem-more-equitable',
+		Engine: 'https://www.engine.is/'
+	}
+
+	const Founders = [
+		{
+			Name: "Founder 0 Name",
+			Asset: "Engineering Background",
+			Image: "founder-0.png",
+			Note: "founder-0"
+		},
+		{
+			Name: "Founder 1 Name",
+			Asset: "Social Media Following",
+			Image: "founder-1.png",
+			Note: "founder-1"
+		},
+		{
+			Name: "Founder 2 Name",
+			Asset: "Product Design Background",
+			Image: "founder-2.png",
+			Note: "founder-2"
+		},
+		{
+			Name: "Founder 3 Name",
+			Asset: "Wealthy Connections",
+			Image: "founder-3.png",
+			Note: "founder-3"
+		}
+	]
 
   export default {
     name: 'game',
@@ -91,9 +125,11 @@
 			'gameover-panel': GameOver,
     },
     provide: {
-			'report-url': ReportURL,
+			'external-links': ExternalLinks,
       'dilemma-compiler': DilemmaCompiler,
-      'flag-index': FlagIndex
+      'flag-index': FlagIndex,
+			'note-index': NoteIndex,
+			'founders': Founders
     },
     data () {
       return {
@@ -137,7 +173,23 @@
           localStorage.optionHistory &&
           this.chapterHistory.length > 1
           )?true:false;
-      }
+      },
+			currentFounder: function() {
+				const { founder0, founder1, founder2, founder3 } = this.stateHistory[this.stateHistory.length-1]
+				if (founder0) return Founders[0]
+				if (founder1) return Founders[1]
+				if (founder2) return Founders[2]
+				if (founder3) return Founders[3]
+				return {}
+			},
+			currentHeadquarters: function() {
+				const { techHub, otherCity, collegeTown, smallTown } = this.stateHistory[this.stateHistory.length-1]
+				if (techHub) return "Tech Hub"
+				if (otherCity) return "Other City"
+				if (collegeTown) return "College Town"
+				if (smallTown) return "Small Town"
+				return "..."
+			}
 		},
     mounted () {      
       this.stateHistory = localStorage.stateHistory ? JSON.parse(localStorage.stateHistory) : JSON.parse(JSON.stringify(this.initialState))
@@ -370,6 +422,10 @@
 	--bg-tooltip-lock: rgb(237,157,157);
 	--bg-tooltip-unlock: rgb(132,206,120);
 	--bg-tooltip-focus: rgb(154,178,232);
+
+	/* Issue Notes */
+
+	--c-issue-border: var(--en-3l);
 	
 	/* Meters */
 	
@@ -725,6 +781,7 @@ div#content-panel p {
 	font-size: 1.1em;
 	line-height: 1.5;
 	color: var(--c-content-text);
+	white-space:pre-line;
 }
 
 div#content-panel p.dilemma-note {
@@ -1017,10 +1074,9 @@ button#nav-back::before { transform: rotate(180deg); }
 
 /* Special Navigation */
 
-button#skip-tutorial { filter:grayscale(1) brightness(0.6); }
-button#start-tutorial::before {
-	mask-image: url("/assets/icons/icon-question.svg");
-}
+button#skip-tutorial, button#founder-change { filter:grayscale(1); }
+button#start-tutorial::before {	mask-image: url("/assets/icons/icon-question.svg"); }
+button#founder-cancel::before { transform: rotate(180deg); }
 
 /* Tooltips */
 

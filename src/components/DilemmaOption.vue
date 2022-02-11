@@ -12,15 +12,15 @@
 	>
 		<ul v-if="isLocked || lockIndex.primary.focus.required">
 			<li 
-				v-if="lockIndex.primary.capital.required"
+				v-if="lockIndex.primary.capital.required && isLocked"
 				:class="{capital: true, satisfied: lockIndex.primary.capital.unlockedBy}"
 			></li>
 			<li
-				v-if="lockIndex.primary.users.required"
+				v-if="lockIndex.primary.users.required && isLocked"
 				:class="{users: true, satisfied: lockIndex.primary.users.unlockedBy}"
 			></li>
 			<li 
-				v-if="lockIndex.primary.capabilities.required"
+				v-if="lockIndex.primary.capabilities.required && isLocked"
 				:class="{capabilities: true, satisfied: lockIndex.primary.capabilities.unlockedBy}"
 			></li>
 			<li class="focus" v-if="lockIndex.primary.focus.required"></li>
