@@ -2,8 +2,8 @@
   <div id="sidebar-panel" v-if="currentState">
     <h2>Company Name</h2>
 	<ul id="company-info">
-		<li><strong>Founder:</strong> Placeholder</li>
-		<li><strong>Headquarters:</strong> Placeholder</li>
+		<li><strong>Founder:</strong> {{currentFounder.Name?currentFounder.Name:'...'}}</li>
+		<li><strong>Headquarters:</strong> {{currentHeadquarters}}</li>
 	</ul>
 	<h3>Company Status</h3>
     <div id="game-state-meters">
@@ -90,8 +90,10 @@
   export default {
     name: 'sidebar-panel',
     props: {
-		currentState: Object,
-		chosenOption: Object
+			currentState: Object,
+      currentFounder: Object,
+      currentHeadquarters: String,
+			chosenOption: Object
     },
 	inject: {
 		FlagIndex: 'flag-index'
