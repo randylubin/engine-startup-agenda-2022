@@ -51,6 +51,10 @@ div.issue-note {
 	border-radius: 1rem;
 }
 
+div.dilemma-options-list + div.issue-note {
+  margin-top: 1.5em;
+}
+
 div.issue-note > a.engine-link {
 	display: block;
 	background-image: url("/assets/logo-engine.png");
