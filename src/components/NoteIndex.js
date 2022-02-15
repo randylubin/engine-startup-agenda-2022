@@ -41,12 +41,54 @@ const NoteIndex = {
     link: '2022 Startup Agenda',
     url: 'StartupAgenda'
   },
+  'capital-access': {
+    text: 'The average seed stage startup only has roughly $55,000 a month in resources, which, after payroll and expenses, leaves little room to cover extras. Only an estimated 1 percent of startups even receive venture capital.',
+    cta: 'Learn more about how access to capital impacts startups in the',
+    link: '2022 Startup Agenda',
+    url: 'StartupAgenda'
+  },
   'talent': {
-    text: 'Startups need to hire the best and brightest talent to compete, but the U.S. talent pool isn’t currently equipped to fill all of the gaps. Policymakers should take steps towards building a larger and representative high-skilled workforce through improved STEM education.',
+    text: "Startups need to hire the best and brightest talent to compete, but the U.S. talent pool isn't currently equipped to fill all of the gaps. Policymakers should take steps towards building a larger and representative high-skilled workforce through improved STEM education.",
     cta: 'Learn more about how policy can promote technology talent in the',
     link: '2022 Startup Agenda',
     url: 'StartupAgenda'
-  }
+  },
+  'user-privacy': {
+    text: "Startups can benefit from reasonable, commonsense privacy and data security rules that help restore consumers' faith in the Internet ecosystem and ensure access to markets around the world.",
+    cta: 'Learn more about policy approaches to user privacy in the',
+    link: '2022 Startup Agenda',
+    url: 'StartupAgenda'
+  },
+  'patents': {
+    text: "Startups need patent laws that protect truly new inventions and prevent the issuance of low-quality patents that stifle innovation.",
+    cta: 'Learn more about how patent policy affects startups in the',
+    link: '2022 Startup Agenda',
+    url: 'StartupAgenda'
+  },
+  'copyright-filter': {
+    text: "Filtering technology—which is very expensive and inherently errorprone—would create high costs and risks for startups without catching much (if any) more infringement.",
+    cta: 'Learn about how copyright and trademarks affect startups in the',
+    link: '2022 Startup Agenda',
+    url: 'StartupAgenda'
+  },
+  'privacy-policy': {
+    text: "As policymakers think through privacy and data security rules, it's crucial that they consider the impact on small and new companies.",
+    cta: 'Learn more about privacy policies in the',
+    link: '2022 Startup Agenda',
+    url: 'StartupAgenda'
+  },
+  'backdoor': {
+    text: 'Policymakers should defend the ability of technology companies to protect their users through encryption. The push for "backdoors"—or intentional vulnerabilities in hardware or software that can be exploited by law enforcement—will do more harm than good by opening up products and services and their users to malicious actors.',
+    cta: 'Learn more about backdoors and user privacy in the',
+    link: '2022 Startup Agenda',
+    url: 'StartupAgenda'
+  },
+  'policy-export': {
+    text: "Exporting U.S. legal and regulatory frameworks and promoting digital trade will increase innovation, competitiveness, and opportunities for U.S. startups",
+    cta: 'Learn more about digital trade issues in the',
+    link: '2022 Startup Agenda',
+    url: 'StartupAgenda'
+  },
 }
 
 export default NoteIndex
