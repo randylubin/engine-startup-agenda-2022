@@ -16,6 +16,17 @@
       :chosenOption="chosenOption"
       @undo-choice="undoChoice"
     />
+    <div v-if="!currentState.endstate">
+      <div v-if="currentState.capital <= 0">
+        In your rush to grow the company, you've burned through all your cash. Better luck next time!
+      </div>
+      <div v-else-if="currentState.users <= 0">
+        Despite early growth, your userbased has become stagnant. Your site is full of bots and dead accounts. Better luck next time!
+      </div>
+      <div v-else-if="currentState.capabilities <= 0">
+        The most capable members of your team have left and your tech stack is a massive libability. You're product is stuck decaying feature by feature... better luck next time!
+      </div>
+    </div>
     <div class="game-over-scoring" v-if="currentState.endState">
       <div class="ending-summary" v-html="endingSummary"></div>
       <div class="ending-score">
