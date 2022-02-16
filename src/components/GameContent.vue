@@ -36,6 +36,7 @@
             v-else
             key="result-panel"
             ref="result-panel"
+            :currentState="currentState"
             :currentChapterInfo="currentChapterInfo"
             :chosenOption="chosenOption"
             @next-prompt="nextPrompt"
@@ -59,6 +60,7 @@
             v-else
             key="result-panel"
             ref="result-panel"
+            :currentState="currentState"
             :currentChapterInfo="currentChapterInfo"
             :chosenOption="chosenOption"
             @next-prompt="nextPrompt"

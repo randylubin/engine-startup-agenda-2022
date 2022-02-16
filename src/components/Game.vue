@@ -147,7 +147,7 @@
         optionHistory: [null],
         gameStarted: false,
         devMode: false,
-        preventGameOver: true, // TODO change this after balancing
+        preventGameOver: false
       }
     },
 		computed: {
@@ -159,7 +159,7 @@
 					} else { // test if game over from resources
 						let { capital, users, capabilities } = this.stateHistory[this.stateHistory.length-1]
 						if (this.stateHistory.length && !(capital > 0 && users > 0 && capabilities > 0)){
-							if (!this.preventGameOver) showGameOverScreen = true 
+							if (!this.preventGameOver) showGameOverScreen = true
 						}
 					}
 				}
@@ -300,6 +300,36 @@
       },
 			shortcutKeys(e) {
 				if (e.key == 'D') this.devMode = !this.devMode
+			},
+			populateClipboard(text) {
+				if (navigator.clipboard) {
+					navigator.clipboard.writeText(text).then(function() {
+						console.log('Async: Copying to clipboard was successful!')
+					}, function(err) {
+						console.error('Async: Could not copy text: ', err)
+					})
+				} else {
+					var textArea = document.createElement("textarea")
+					textArea.value = text
+					
+					textArea.style.top = "0"
+					textArea.style.left = "0"
+					textArea.style.position = "fixed"
+
+					document.body.appendChild(textArea)
+					textArea.focus()
+					textArea.select()
+
+					try {
+						var successful = document.execCommand('copy')
+						var msg = successful ? 'successful' : 'unsuccessful'
+						console.log('Fallback: Copying text command was ' + msg)
+					} catch (err) {
+						console.error('Fallback: Oops, unable to copy', err)
+					}
+
+					document.body.removeChild(textArea);					
+				}					
 			}
     }
   }
@@ -323,6 +353,8 @@
 	--bg-capital: rgb(89,178,94) linear-gradient(to bottom, rgba(0,0,0,0) 10%, rgba(0,0,0,.2) 90%);
 	--bg-users: rgb(55,99,196) linear-gradient(to bottom, rgba(0,0,0,0) 10%, rgba(0,0,0,.2) 90%);
 	--bg-capabilities: rgb(153,95,214) linear-gradient(to bottom, rgba(0,0,0,0) 10%, rgba(0,0,0,.2) 90%);
+
+	--bg-state-zero: rgb(211, 64, 64) linear-gradient(to bottom, rgba(0,0,0,0) 10%, rgba(0,0,0,.2) 90%);
 
 	/* Dark Theme */
 	
@@ -394,6 +426,7 @@
 	
 	--bg-results-up: linear-gradient(to bottom,rgb(120,120,120) 20%,rgb(170,170,170) 40%,rgb(170,170,170) 60%,rgb(120,120,120) 80%);
 	--bg-results-down: linear-gradient(to bottom,rgb(120,120,120) 20%,rgb(170,170,170) 40%,rgb(170,170,170) 60%,rgb(120,120,120) 80%);
+	--bg-results-zero: rgb(120,120,120);
 	
 	--bg-timeline: var(--c-accent-1);
 	--c-timeline: var(--c-accent-4);
@@ -1038,7 +1071,12 @@ ul#consequences-status li.capabilities::before {
 	mask-image: url("/assets/icons/icon-capabilities.svg");
 }
 
-ul#consequences-status li.increase,ul#consequences-status li.decrease { opacity: 1; filter:none; }
+ul#consequences-status:not(.game-over) li.increase,ul#consequences-status:not(.game-over) li.decrease,
+ul#consequences-status.game-over li.zero { opacity: 1; filter:none; }
+
+ul#consequences-status.game-over li.zero::before {
+	background: var(--bg-state-zero);
+}
 
 ul#consequences-status li.increase::before,ul#consequences-status li.decrease::before {
 	animation: ani-pulse 2s ease-in-out infinite;
@@ -1063,6 +1101,12 @@ ul#consequences-status li.decrease::after {
 	mask-image: url("/assets/icons/icon-arrow-down.svg");
 	
 	animation: ani-status-result 1s linear infinite reverse;
+}
+
+ul#consequences-status.game-over li.zero::after {
+	background: var(--bg-results-zero);
+	animation: none;
+	mask-image: url("/assets/icons/icon-x.svg");
 }
 
 /* Result Navigation */

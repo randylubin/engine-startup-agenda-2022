@@ -11,22 +11,14 @@
     <result-panel
       key="result-panel"
       ref="result-panel"
-      :forceGameOver="true"
+      :gameOver="true"
+      :endingSummary="endingSummary"
+      :endingScore="endingScore"
+      :currentState="currentState"
       :currentChapterInfo="currentChapterInfo"
       :chosenOption="chosenOption"
       @undo-choice="undoChoice"
     />
-    <div class="game-over-scoring" v-if="currentState.endState">
-      <div class="ending-summary" v-html="endingSummary"></div>
-      <div class="ending-score">
-        <div class="total-score">
-          Your score: {{endingScore.total}}
-          <li v-for="scoreFactor in endingScore.factors" :key="scoreFactor.name">
-            {{scoreFactor.scoreName}}: {{scoreFactor.scoreValue}}
-          </li>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -60,9 +52,22 @@
         // endingIPO
         // endingFAANG
         // endingNewCEO
+
+        let summary = ""
+
+        for (const i in EndingScoringFactors){
+          if (this.currentState[EndingScoringFactors[i].endingProp]){
+            summary = EndingScoringFactors[i].summary
+            return summary
+          }
+        }
+
+        if (this.currentState.capital <= 0) summary = "In your rush to grow the company, you've burned through all your cash. "
+        if (this.currentState.users <= 0) summary += "Despite early growth, your userbased has become stagnant. Your site is full of bots and dead accounts. "
+        if (this.currentState.capabilities <=0) summary += "The most capable members of your team have left and your tech stack is a massive libability. You're product is stuck decaying feature by feature. "
+        summary += "Better luck next time!"
         
-        
-        return "End Game Summary TK"
+        return summary;
       },
       endingScore: function(){
         let scoringData = {
