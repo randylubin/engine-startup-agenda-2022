@@ -36,7 +36,7 @@ var DilemmaCompiler = [
    () => DilemmaList['B-DISINFO'],
    () => DilemmaList['B-BACKDOOR'],
    () => DilemmaList['B-EUREG'],
-   () => DilemmaList['B-TBD'],
+   (gameState) => (gameState.capital>=50&&gameState.EUViolation)?DilemmaList['B-EU-FINE']: gameState.capital>=50?DilemmaList['B-BURN-RATE']: gameState.angryCongress?DilemmaList['B-CONGRESS']: gameState.backdoor?DilemmaList['B-BACKDOOR-BLOWBACK']: DilemmaList['B-BAD-NEWS'], 
    (gameState) => gameState.focus>=1?DilemmaList['B-FOCUS-PAYOFF']:DilemmaList['B-NO-FOCUS'],
    {
       compile: () => DilemmaList['C-FUNDING'],
@@ -46,8 +46,8 @@ var DilemmaCompiler = [
    () => DilemmaList['C-BREACH'],
    (gameState) => gameState.banDisinfo?DilemmaList['C-DISINFO-2'] : gameState.piracy?DilemmaList['C-HOLLYWOOD'] : DilemmaList['C-TROLLS'],
    () => DilemmaList['C-MID-ROUND-UPDATE'],
-   () => Math.random()>0.5?DilemmaList['C-INDIA-DATA']:DilemmaList['C-BRAZIL-TAKEDOWN'], //TODO better approach than coinflip?
-   () => DilemmaList['C-TBD'],
+   () => DilemmaList['C-INDIA-DATA'],//Math.random()>0.5?DilemmaList['C-INDIA-DATA']:DilemmaList['C-BRAZIL-TAKEDOWN'],
+   () => DilemmaList['C-BRAZIL-TAKEDOWN'],
    (gameState) => gameState.focus>=1?DilemmaList['C-FOCUS-PAYOFF']:DilemmaList['C-NO-FOCUS'],
    () => DilemmaList['E-END'],
    {
