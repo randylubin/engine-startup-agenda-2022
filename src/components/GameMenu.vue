@@ -17,6 +17,11 @@
           :class="{'menu-button' : true, 'pressed' : aboutOpen}"
           id="open-about"
         />
+        <div
+          @click="$emit('share-status')"
+          :class="{'menu-button' : true}"
+          id="share-status"
+        />
       </menu>
     </div>
     <div id="timeline-container" class="container">
@@ -249,9 +254,15 @@ div#about-panel > button:active {
   transform: none;
 }
 
+div.menu-button#share-status {
+  background: var(--bg-button-share);
+  box-shadow: 0 .2rem 0 var(--c-button-share-shadow);
+}
+
 div.menu-button#open-about::before { mask-image: url("/assets/icons/icon-info.svg"); }
 div.menu-button#fullscreen::before { mask-image: url("/assets/icons/icon-fullscreen.svg"); }
 div.menu-button.exit#fullscreen::before { mask-image: url("/assets/icons/icon-fullscreen-exit.svg"); }
+div.menu-button#share-status::before { mask-image: url("/assets/icons/icon-share.svg"); }
 
 /* Mini Tooltips */
 
@@ -323,6 +334,7 @@ div#submenu-panel > button, div#about-panel > button {
 div#submenu-panel > button::before, div#about-panel > button::before { background: var(--bg-button-menu-accent); }
 div#submenu-panel > button.restart::before { mask-image: url("/assets/icons/icon-restart.svg"); }
 div#submenu-panel > button.about::before { mask-image: url("/assets/icons/icon-info.svg"); }
+
 
 div#restart-confirmation {
   margin-top: 0;

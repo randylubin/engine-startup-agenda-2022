@@ -1,11 +1,12 @@
 <template>
   <div key="result-panel">
     <p>{{chosenOption.resultsText}}</p>
-    <ul id="consequences-status" :class="{ 'game-over' : gameOver }" v-if="primaryStateChange || chosenOption.stateChange.focus">
+    <ul id="consequences-status" :class="{ 'game-over' : gameOver }" v-if="primaryStateChange || chosenOption.stateChange.focus || gameOver">
       <li
         v-if="primaryStateChange"
         :class="{
           capital: true,
+          state: true,
           increase: chosenOption.stateChange.capital > 0,
           decrease: chosenOption.stateChange.capital < 0,
           zero: currentState.capital <= 0
@@ -15,6 +16,7 @@
         v-if="primaryStateChange" 
         :class="{
           users: true,
+          state: true,
           increase: chosenOption.stateChange.users > 0, 
           decrease: chosenOption.stateChange.users < 0,
           zero: currentState.users <= 0
@@ -24,25 +26,26 @@
         v-if="primaryStateChange" 
         :class="{
           capabilities: true, 
+          state: true,
           increase: chosenOption.stateChange.capabilities > 0, 
           decrease: chosenOption.stateChange.capabilities < 0,
           zero: currentState.capabilities <= 0
         }"
       ></li>
-      <li class="focus replenish" v-if="chosenOption.stateChange.focus > 0">Your&ensp;<strong class="ii focus">Time &amp; Focus</strong> has been replenished.</li>
-      <li class="focus deplete" v-if="chosenOption.stateChange.focus < 0">Some of your&ensp;<strong class="ii focus">Time &amp; Focus</strong> has been occupied.</li>
-    </ul>
-    <div class="game-over-scoring" v-if="gameOver">
-      <div class="ending-summary" v-html="endingSummary"></div>
-      <div class="ending-score">
-        <div class="total-score">
-          Your score: {{endingScore.total}}
-          <li v-for="scoreFactor in endingScore.factors" :key="scoreFactor.name">
-            {{scoreFactor.scoreName}}: {{scoreFactor.scoreValue}}
-          </li>
+      <li class="focus replenish" v-if="chosenOption.stateChange.focus > 0 && !gameOver">Your&ensp;<strong class="ii focus">Time &amp; Focus</strong> has been replenished.</li>
+      <li class="focus deplete" v-if="chosenOption.stateChange.focus < 0 && !gameOver">Some of your&ensp;<strong class="ii focus">Time &amp; Focus</strong> has been occupied.</li>
+      <li class="game-over-summary" v-if="gameOver">
+        <div class="ending-summary" v-html="endingSummary"></div>
+        <div class="ending-score">
+          <div class="total-score">
+            Your score: {{endingScore.total}}
+            <div v-for="scoreFactor in endingScore.factors" :key="scoreFactor.name">
+              {{scoreFactor.scoreName}}: {{scoreFactor.scoreValue}}
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      </li>
+    </ul>
     <issue-note
       v-if="chosenOption.settings.issueNote"
       :noteKey="chosenOption.settings.issueNote"

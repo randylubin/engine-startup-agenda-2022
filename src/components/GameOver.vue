@@ -5,7 +5,7 @@
         <strong>
           Game Over:
         </strong> 
-        {{currentChapterInfo.dilemmaTitle}}
+        {{endingTitle?endingTitle:currentChapterInfo.dilemmaTitle}}
       </span>
     </h2>
     <result-panel
@@ -63,11 +63,27 @@
         }
 
         if (this.currentState.capital <= 0) summary = "In your rush to grow the company, you've burned through all your cash. "
-        if (this.currentState.users <= 0) summary += "Despite early growth, your userbased has become stagnant. Your site is full of bots and dead accounts. "
+        if (this.currentState.users <= 0) summary += "Despite early growth, your user base has become stagnant. Your site is full of bots and dead accounts. "
         if (this.currentState.capabilities <=0) summary += "The most capable members of your team have left and your tech stack is a massive libability. You're product is stuck decaying feature by feature. "
         summary += "Better luck next time!"
         
-        return summary;
+        return summary
+      },
+      endingTitle: function() {
+        let title = false
+
+        for (const i in EndingScoringFactors){
+          if (this.currentState[EndingScoringFactors[i].endingProp]){
+            title = EndingScoringFactors[i].scoreName
+            return title
+          }
+        }
+
+        if (this.currentState.capital <= 0) title = "Out of Money"
+        else if (this.currentState.users <= 0) title = "Stagnant User Base"
+        else if (this.currentState.capabilities <=0) title = "Decaying Product"
+
+        return title
       },
       endingScore: function(){
         let scoringData = {

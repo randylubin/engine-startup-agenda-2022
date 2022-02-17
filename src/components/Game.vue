@@ -14,6 +14,7 @@
         <menu-panel
 					v-if="gameStarted"
 					:currentChapterIndex="chapterHistory.length-1"
+					@share-status="shareStatus"
 					@restart-game="restartGame"
 				/>
       </transition>
@@ -48,6 +49,7 @@
       <gameover-panel
         v-if="gameOver && gameStarted"
         key="gameover-panel"
+				ref="gameover-panel"
         :currentState="stateHistory[this.stateHistory.length-1]"
         :currentChapterInfo="currentChapterInfo"
         :currentChapterIndex="chapterHistory.length-1"
@@ -84,7 +86,9 @@
 	const ExternalLinks = {
 		StartupAgenda: 'https://www.engine.is/news/category/engine-releases-2022-startup-agenda',
 		StartupEquity: 'https://www.engine.is/news/category/engine-releases-making-the-startup-ecosystem-more-equitable',
-		Engine: 'https://www.engine.is/'
+		Engine: 'https://www.engine.is/',
+		GameLanding: 'game landing page URL',
+		GamePlay: 'https://engine-report-2022.web.app/' // UPDATE WHEN LIVE
 	}
 
 	const Founders = [
@@ -330,6 +334,66 @@
 
 					document.body.removeChild(textArea);					
 				}					
+			},
+			shareStatus() {
+				const
+					labelCapital = '\u{1F4B5}',
+					labelUsers = '\u{1F465}',
+					labelCapabilities = '\u{1F527}',
+					meterCapital = '\u{1F7E9}',
+					meterUsers = '\u{1F7E6}',
+					meterCapabilities = '\u{1F7EA}',
+					meterBlank = '\u{2B1B}\u{FE0F}',
+					meterEmpty = '\u{274C}',
+					meterFocus = '\u{1F552}',
+					meterFocusBlank = '\u{26AB}\u{FE0F}',
+					newLine = '\n'
+
+				const
+					CurrentState = this.stateHistory[this.stateHistory.length-1],
+					ProgressMax = DilemmaCompiler.length - 1,
+					ProgressCurrent = Math.max(0,this.chapterHistory.length - 1) // Both these values are manually adjusted for the 1 timeline-hidden chapter - will need to change if we add more hidden
+
+				const
+					capital = Math.max(0,Math.min(10,Math.ceil(CurrentState.capital / 10))),
+					users = Math.max(0,Math.min(10,Math.ceil(CurrentState.users / 10))),
+					capabilities = Math.max(0,Math.min(10,Math.ceil(CurrentState.capabilities / 10))),
+					focus = Math.max(0,Math.min(3,CurrentState.focus))
+
+				let ShareText = `STARTUP TRAIL${newLine}`				
+				if (this.gameOver) ShareText += `${newLine}Game Over - ${this.$refs['gameover-panel'].endingTitle + newLine}`
+				ShareText += `Progress: ${ProgressCurrent.toString()}/${ProgressMax.toString() + newLine}`
+				if (ProgressCurrent < 2) ShareText += `${newLine}I'm about to embark on the Startup Trail${newLine.repeat(2)}`
+				else if (this.gameOver) ShareText += `Score: ${this.$refs['gameover-panel'].endingScore.total.toString() + newLine.repeat(2)}`
+				else ShareText += newLine
+
+				// Capital Meter
+				ShareText += labelCapital + ' '
+				if (capital <= 0) ShareText += meterEmpty + meterBlank.repeat(9)
+				else ShareText += meterCapital.repeat(capital) + meterBlank.repeat(10-capital)
+				ShareText += newLine
+
+				// Users Meter
+				ShareText += labelUsers + ' '
+				if (users <= 0) ShareText += meterEmpty + meterBlank.repeat(9)
+				else ShareText += meterUsers.repeat(users) + meterBlank.repeat(10-users)
+				ShareText += newLine
+
+				// Capital Meter
+				ShareText += labelCapabilities + ' '
+				if (capabilities <= 0) ShareText += meterEmpty + meterBlank.repeat(9)
+				else ShareText += meterCapabilities.repeat(capabilities) + meterBlank.repeat(10-capabilities)
+				ShareText += newLine.repeat(2)
+
+				// Focus Clocks
+
+				ShareText += meterFocus.repeat(focus) + meterFocusBlank.repeat(3-focus) + newLine.repeat(2)
+
+				// Call To Action
+
+				ShareText += `Play: ${ExternalLinks.GamePlay}`
+
+				this.populateClipboard(ShareText)
 			}
     }
   }
@@ -423,7 +487,10 @@
 	--bg-button-menu-hover: var(--c-accent-3);
 	--bg-button-menu-hover-accent: rgba(255,255,255,.25);
 	--c-button-menu-hover-shadow: rgba(255,255,255,.2);
-	
+
+	--bg-button-share: rgb(65, 133, 68);
+	--c-button-share-shadow: rgb(47, 95, 49);
+
 	--bg-results-up: linear-gradient(to bottom,rgb(120,120,120) 20%,rgb(170,170,170) 40%,rgb(170,170,170) 60%,rgb(120,120,120) 80%);
 	--bg-results-down: linear-gradient(to bottom,rgb(120,120,120) 20%,rgb(170,170,170) 40%,rgb(170,170,170) 60%,rgb(120,120,120) 80%);
 	--bg-results-zero: rgb(120,120,120);
@@ -993,7 +1060,7 @@ ul#consequences-status {
 	border-bottom-style: groove;
 }
 
-ul#consequences-status li:not(.focus) {
+ul#consequences-status li.state {
 	margin: 0;
 	width: 17%;
 	display: flex;
@@ -1004,7 +1071,7 @@ ul#consequences-status li:not(.focus) {
 	filter: grayscale(1) brightness(10);
 }
 
-ul#consequences-status li:not(.focus)::before {
+ul#consequences-status li.state::before {
 	content: url("/assets/icons/icon-sizer.svg");
 	display: block;
 	width: 55%;
@@ -1014,7 +1081,7 @@ ul#consequences-status li:not(.focus)::before {
 	mask-repeat: no-repeat;
 }
 
-ul#consequences-status li:not(.focus)::after {
+ul#consequences-status li.state::after {
 	flex-grow: 1;
 	content: url("/assets/icons/icon-sizer.svg");
 	display: block;
@@ -1108,6 +1175,12 @@ ul#consequences-status.game-over li.zero::after {
 	animation: none;
 	mask-image: url("/assets/icons/icon-x.svg");
 }
+
+/* Game Over Scoring Section */
+
+ul#consequences-status li.game-over-summary {
+	width: 100%;
+} 
 
 /* Result Navigation */
 
