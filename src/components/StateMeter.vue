@@ -1,8 +1,8 @@
 <template>
 	<div class="state-meter">
-		<div class="meter-value" v-bind:style="{ width: meterValue + '%' }"></div>
-		<div class="meter-decrease" v-bind:style="{ width: decreaseValue + '%' }"><span></span></div>
-		<div class="meter-increase" v-bind:style="{ width: increaseValue + '%' }"><span></span></div>
+		<div class="meter-value" :style="{ width: meterValue + '%' }"></div>
+		<div class="meter-decrease" :style="{ width: decreaseValue + '%' }"><span></span></div>
+		<div class="meter-increase" :style="{ width: increaseValue + '%' }"><span></span></div>
 	</div>
 </template>
 
@@ -22,39 +22,39 @@
       return {
 				UpdateChain: Promise.resolve(), // start Promise chain for async meter changes
 				meterValue: 0,
-				decreaseValue: 0,
-				increaseValue: 0
+				increaseValue: 0,
+				decreaseValue: 0
       }
     },
     mounted () {
-			this.UpdateChain = this.UpdateChain.then(() => this.setValues(this.stateValue,0,0))
+			this.UpdateChain = this.UpdateChain.then(() => this.setValues(this.stateValue))
     },
 		watch: {
 			stateChange: function(val) {
 				const trueValue = this.stateValue
 				if (!val) {
-					this.UpdateChain = this.UpdateChain.then(() => this.setValues(trueValue,0,0))
+					this.UpdateChain = this.UpdateChain.then(() => this.setValues(trueValue))
 				} else {
 					const
 						meter = val<0?Math.max(trueValue,0):Math.max(trueValue - val,0),
 						increase = Math.max(val,0),
-						decrease = val<0?trueValue<0?val*-1+trueValue:val*-1:0
+						decrease = val<0?Math.min(Math.abs(val)+trueValue,Math.abs(val)):0
 					
 					this.UpdateChain = this.UpdateChain
 						.then(() => this.setValues(meter,increase,decrease))
 						.then(() => wait(2000))
-						.then(() => this.setValues(trueValue,0,0))
+						.then(() => this.setValues(trueValue))
 						.then(() => wait(1001))
 				}
 			},
 			stateValue: function(val) {
-				if (this.meterValue != val) {
-					wait(30).then(() => this.UpdateChain = this.UpdateChain.then(() => this.setValues(val,0,0)))
+				if (this.meterValue != val && !this.stateChange) {
+					this.UpdateChain = this.UpdateChain.then(() => this.setValues(val))
 				}
 			}
 		},
     methods: {
-			setValues(meter,increase,decrease) {
+			setValues(meter,increase = 0,decrease = 0) {
 				this.meterValue = meter
 				this.increaseValue = increase
 				this.decreaseValue = decrease
