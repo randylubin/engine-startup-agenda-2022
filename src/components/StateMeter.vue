@@ -49,7 +49,7 @@
 			},
 			stateValue: function(val) {
 				if (this.meterValue != val) {
-					this.UpdateChain = this.UpdateChain.then(() => this.setValues(val,0,0))
+					wait(30).then(() => this.UpdateChain = this.UpdateChain.then(() => this.setValues(val,0,0)))
 				}
 			}
 		},
