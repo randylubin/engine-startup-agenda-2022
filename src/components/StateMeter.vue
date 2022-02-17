@@ -7,7 +7,9 @@
 </template>
 
 <script>
-
+ 
+	const wait = ms => new Promise(resolve => setTimeout(resolve, ms)) // wrap setTimeout as a Promise
+ 
   export default {
     name: 'state-meter',
     props: {
@@ -18,31 +20,46 @@
     },
     data () {
       return {
-      }
-    },
-    computed: {
-      meterValue: function() {
-        if (!this.stateChange || this.stateChange < 0) {
-          return Math.max(this.stateValue,0);
-        } else {
-          return Math.max(this.stateValue - this.stateChange,0);
-        }
-      },
-      decreaseValue: function () {
-        if (this.stateChange < 0) {
-          return this.stateValue<0?this.stateChange*-1+this.stateValue:this.stateChange*-1;
-        } else {
-          return 0;
-        }
-        
-      },
-      increaseValue: function () {
-        return this.stateChange>0?this.stateChange:0;
+				UpdateChain: Promise.resolve(), // start Promise chain for async meter changes
+				meterValue: 0,
+				decreaseValue: 0,
+				increaseValue: 0
       }
     },
     mounted () {
+			this.UpdateChain = this.UpdateChain.then(() => this.setValues(this.stateValue,0,0))
     },
+		watch: {
+			stateChange: function(val) {
+				const trueValue = this.stateValue
+				if (!val) {
+					this.UpdateChain = this.UpdateChain.then(() => this.setValues(trueValue,0,0))
+				} else {
+					const
+						meter = val<0?Math.max(trueValue,0):Math.max(trueValue - val,0),
+						increase = val>0?val:0,
+						decrease = val<0?trueValue<0?val*-1+trueValue:val*-1:0
+					
+					this.UpdateChain = this.UpdateChain
+						.then(() => this.setValues(meter,increase,decrease))
+						.then(() => wait(2000))
+						.then(() => this.setValues(trueValue,0,0))
+						.then(() => wait(1001))
+				}
+			},
+			stateValue: function(val) {
+				if (this.meterValue != val) {
+					this.UpdateChain = this.UpdateChain.then(() => this.setValues(val,0,0))
+				}
+			}
+		},
     methods: {
+			setValues(meter,increase,decrease) {
+				this.meterValue = meter
+				this.increaseValue = increase
+				this.decreaseValue = decrease
+				return true // required for Promise chain
+			}
     }
   }
 </script>
