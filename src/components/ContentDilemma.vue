@@ -74,7 +74,9 @@
 
     <!-- Regular Dilemma Display -->
     <template v-else>
-      <p>{{currentChapterInfo.dilemmaPrompt}}</p>
+      <span
+        v-html="'<p>' + currentChapterInfo.dilemmaPrompt.replaceAll('\n\n','</p><p>') + '</p>'"
+      />
       <div class="dilemma-options-list">
         <dilemma-option 
           v-for="(option,index) in currentChapterInfo.dilemmaOptions"

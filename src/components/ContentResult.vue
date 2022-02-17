@@ -1,6 +1,8 @@
 <template>
   <div key="result-panel">
-    <p>{{chosenOption.resultsText}}</p>
+    <span
+      v-html="'<p>' + chosenOption.resultsText.replaceAll('\n\n','</p><p>') + '</p>'"
+    />
     <ul id="consequences-status" :class="{ 'game-over' : gameOver }" v-if="primaryStateChange || chosenOption.stateChange.focus || gameOver">
       <li
         v-if="primaryStateChange"
