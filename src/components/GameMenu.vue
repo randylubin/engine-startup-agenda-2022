@@ -53,7 +53,7 @@
           <span>Start Over</span>
         </button>
         <div
-          :class="{'open': confirmingRestart}"
+          :class="{'hidden-item': true, 'open': confirmingRestart}"
           id="restart-confirmation"
         >
           Are you sure? <button @click="restartGame" class="dark" style="display:inline-flex;width:auto;">Confirm</button>
@@ -356,7 +356,7 @@ div#submenu-panel > button.restart::before { mask-image: url("/assets/icons/icon
 div#submenu-panel > button.about::before { mask-image: url("/assets/icons/icon-info.svg"); }
 
 
-div#restart-confirmation {
+div.hidden-item {
   margin-top: 0;
   margin-bottom: 0;
   text-align: right;
@@ -367,7 +367,7 @@ div#restart-confirmation {
   transition: max-height .2s ease-out, margin-top .2s ease-out, margin-bottom .2s ease-out;
 }
 
-div#restart-confirmation.open {
+div.hidden-item.open {
   margin-bottom: .5rem;
   max-height: 4rem;
 }

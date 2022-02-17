@@ -356,7 +356,7 @@
 					focus = Math.max(0,Math.min(3,CurrentState.focus))
 
 				let ShareText = `STARTUP TRAIL${newLine}`				
-				if (this.gameOver) ShareText += `${newLine}Game Over - ${this.$refs['gameover-panel'].endingTitle + newLine}`
+				if (this.gameOver) ShareText += `${newLine + this.$refs['gameover-panel'].endingTitle.tag} - ${this.$refs['gameover-panel'].endingTitle.title + newLine}`
 				ShareText += `Progress: ${ProgressCurrent.toString()}/${ProgressMax.toString() + newLine}`
 				if (ProgressCurrent < 2) ShareText += `${newLine}I'm about to embark on the Startup Trail${newLine.repeat(2)}`
 				else if (this.gameOver) ShareText += `Score: ${this.$refs['gameover-panel'].endingScore.total.toString() + newLine.repeat(2)}`

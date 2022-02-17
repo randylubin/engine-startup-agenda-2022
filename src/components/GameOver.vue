@@ -3,9 +3,9 @@
     <h2>
       <span>
         <strong>
-          Game Over:
+          {{endingTitle.tag?endingTitle.tag:'Game Over'}}:
         </strong> 
-        {{endingTitle?endingTitle:currentChapterInfo.dilemmaTitle}}
+        {{endingTitle.title?endingTitle.title:currentChapterInfo.dilemmaTitle}}
       </span>
     </h2>
     <result-panel
@@ -71,19 +71,23 @@
       },
       endingTitle: function() {
         let title = false
+        let tag = false
 
         for (const i in EndingScoringFactors){
           if (this.currentState[EndingScoringFactors[i].endingProp]){
             title = EndingScoringFactors[i].scoreName
-            return title
+            tag = EndingScoringFactors[i].tag
+            return { title, tag }
           }
         }
 
-        if (this.currentState.capital <= 0) title = "Out of Money"
-        else if (this.currentState.users <= 0) title = "Stagnant User Base"
-        else if (this.currentState.capabilities <=0) title = "Decaying Product"
+        tag = 'Game Over'
 
-        return title
+        if (this.currentState.capital <= 0) title = 'Out of Money'
+        else if (this.currentState.users <= 0) title = 'Stagnant User Base'
+        else if (this.currentState.capabilities <=0) title = 'Decaying Product'
+
+        return { title, tag }
       },
       endingScore: function(){
         let scoringData = {
