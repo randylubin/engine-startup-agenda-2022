@@ -379,18 +379,16 @@
 				else ShareText += meterUsers.repeat(users) + meterBlank.repeat(10-users)
 				ShareText += newLine
 
-				// Capital Meter
+				// Capabilities Meter
 				ShareText += labelCapabilities + ' '
 				if (capabilities <= 0) ShareText += meterEmpty + meterBlank.repeat(9)
 				else ShareText += meterCapabilities.repeat(capabilities) + meterBlank.repeat(10-capabilities)
 				ShareText += newLine.repeat(2)
 
 				// Focus Clocks
-
 				ShareText += meterFocus.repeat(focus) + meterFocusBlank.repeat(3-focus) + newLine.repeat(2)
 
 				// Call To Action
-
 				ShareText += `Play: ${ExternalLinks.GamePlay}`
 
 				this.populateClipboard(ShareText)
