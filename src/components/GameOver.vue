@@ -97,18 +97,21 @@
 
         // Quantitative factors
         scoringData.factors.push ({
-          scoreName: "Remaining capital",
-          scoreValue: this.currentState.capital * 100
+          scoreName: "Financial Health",
+          scoreClass: ["ii","capital"],
+          scoreValue: Math.max(0,this.currentState.capital * 100)
         })
 
         scoringData.factors.push ({
           scoreName: "Users",
-          scoreValue: this.currentState.users * 100
+          scoreClass: ["ii","users"],
+          scoreValue: Math.max(0,this.currentState.users * 100)
         })
 
         scoringData.factors.push ({
-          scoreName: "Tech and Talent",
-          scoreValue: this.currentState.capabilities * 100
+          scoreName: "Tech & Talent",
+          scoreClass: ["ii","capabilities"],
+          scoreValue: Math.max(0,this.currentState.capabilities * 100)
         })
 
         // Check EndingScoringFactors.js for all of the qualitiative factors

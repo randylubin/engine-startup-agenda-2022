@@ -40,7 +40,9 @@
           <div class="total-score">
             Your score: {{endingScore.total}}
             <div v-for="scoreFactor in endingScore.factors" :key="scoreFactor.name">
-              {{scoreFactor.scoreName}}: {{scoreFactor.scoreValue}}
+              <span :class="scoreFactor.scoreClass?scoreFactor.scoreClass:''">
+                {{scoreFactor.scoreName}}:
+              </span> {{scoreFactor.scoreValue}}
             </div>
           </div>
         </div>
