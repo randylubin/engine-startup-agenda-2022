@@ -37,7 +37,7 @@
 				} else {
 					const
 						meter = val<0?Math.max(trueValue,0):Math.max(trueValue - val,0),
-						increase = val>0?val:0,
+						increase = Math.max(val,0),
 						decrease = val<0?trueValue<0?val*-1+trueValue:val*-1:0
 					
 					this.UpdateChain = this.UpdateChain
