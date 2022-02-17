@@ -36,16 +36,16 @@
       <li class="focus deplete" v-if="chosenOption.stateChange.focus < 0 && !gameOver">Some of your&ensp;<strong class="ii focus">Time &amp; Focus</strong> has been occupied.</li>
       <li class="game-over-summary" v-if="gameOver">
         <div class="ending-summary" v-html="endingSummary"></div>
-        <div class="ending-score">
-          <div class="total-score">
-            Your score: {{endingScore.total}}
+          <div class="ending-score">
+            <div class="total-score">
+              <span>Your Score:</span> {{endingScore.total}}
+            </div>
             <div v-for="scoreFactor in endingScore.factors" :key="scoreFactor.name">
               <span :class="scoreFactor.scoreClass?scoreFactor.scoreClass:''">
                 {{scoreFactor.scoreName}}:
               </span> {{scoreFactor.scoreValue}}
             </div>
           </div>
-        </div>
       </li>
     </ul>
     <issue-note

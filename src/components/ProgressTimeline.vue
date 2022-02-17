@@ -62,7 +62,7 @@ div#progress-timeline {
   border-radius: .75rem;
   box-shadow: var(--sh-timeline);
 
-  --tick-width: .2em;
+  --tick-width: .15em;
 }
 
 div#progress-timeline > label {

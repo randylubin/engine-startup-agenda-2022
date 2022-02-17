@@ -1179,8 +1179,22 @@ ul#consequences-status.game-over li.zero::after {
 /* Game Over Scoring Section */
 
 ul#consequences-status li.game-over-summary {
-	width: 100%;
+	width: 70%;
+	text-align: center;
 } 
+
+ul#consequences-status li.state+li.game-over-summary {
+	margin-top: 1.5em;
+}
+
+div.ending-score > div {
+	margin-top: .5em;
+}
+
+div.ending-score > div span {
+	font-weight: bold;
+	margin-right: .25em;
+}
 
 /* Result Navigation */
 
