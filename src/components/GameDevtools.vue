@@ -40,7 +40,7 @@
         debugOpen: false,
         targetChapter: null,
         editedStateString: null, 
-        preventGameOver: true
+        preventGameOver: false
       }
     },
     mounted () {
