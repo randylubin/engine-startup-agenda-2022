@@ -64,7 +64,7 @@
 
         if (this.currentState.capital <= 0) summary = "In your rush to grow the company, you've burned through all your cash. "
         if (this.currentState.users <= 0) summary += "Despite early growth, your user base has become stagnant. Your site is full of bots and dead accounts. "
-        if (this.currentState.capabilities <=0) summary += "The most capable members of your team have left and your tech stack is a massive libability. You're product is stuck decaying feature by feature. "
+        if (this.currentState.capabilities <=0) summary += "The most capable members of your team have left and your tech stack is a massive libability. Your product is stuck decaying feature by feature. "
         summary += "Better luck next time!"
         
         return summary

@@ -306,13 +306,8 @@
 				if (e.key == 'D') this.devMode = !this.devMode
 			},
 			populateClipboard(text) {
-				if (navigator.clipboard) {
-					navigator.clipboard.writeText(text).then(function() {
-						console.log('Async: Copying to clipboard was successful!')
-					}, function(err) {
-						console.error('Async: Could not copy text: ', err)
-					})
-				} else {
+				if (navigator.clipboard) return navigator.clipboard.writeText(text) // for modern browsers
+				else return new Promise((resolve,reject) => { // legacy for older browsers
 					var textArea = document.createElement("textarea")
 					textArea.value = text
 					
@@ -326,16 +321,16 @@
 
 					try {
 						var successful = document.execCommand('copy')
-						var msg = successful ? 'successful' : 'unsuccessful'
-						console.log('Fallback: Copying text command was ' + msg)
 					} catch (err) {
-						console.error('Fallback: Oops, unable to copy', err)
+						document.body.removeChild(textArea)
+						reject()
 					}
-
-					document.body.removeChild(textArea);					
-				}					
+					document.body.removeChild(textArea)
+					if (successful) resolve()
+					else reject()				
+				})					
 			},
-			shareStatus() {
+			shareStatus(e) {
 				const
 					labelCapital = '\u{1F4B5}',
 					labelUsers = '\u{1F465}',
@@ -352,7 +347,7 @@
 				const
 					CurrentState = this.stateHistory[this.stateHistory.length-1],
 					ProgressMax = DilemmaCompiler.length - 1,
-					ProgressCurrent = Math.max(0,this.chapterHistory.length - 1) // Both these values are manually adjusted for the 1 timeline-hidden chapter - will need to change if we add more hidden
+					ProgressCurrent = Math.max(0,this.chapterHistory.length - 1) // Progress values are manually adjusted for the 1 timeline-hidden chapter - will need to change if we add more hidden
 
 				const
 					capital = Math.max(0,Math.min(10,Math.ceil(CurrentState.capital / 10))),
@@ -391,7 +386,11 @@
 				// Call To Action
 				ShareText += `Play: ${ExternalLinks.GamePlay}`
 
-				this.populateClipboard(ShareText)
+				this.populateClipboard(ShareText).then(
+					() => e.target.dispatchEvent(new Event('share-success')),
+					() => e.target.dispatchEvent(new Event('share-fail'))
+				)
+
 			}
     }
   }
@@ -520,6 +519,9 @@
 	--bg-tooltip-lock: rgb(237,157,157);
 	--bg-tooltip-unlock: rgb(132,206,120);
 	--bg-tooltip-focus: rgb(154,178,232);
+
+	--bg-message-success: rgb(132,206,120);
+	--bg-message-fail: rgb(237,157,157);
 
 	/* Issue Notes */
 

@@ -18,7 +18,9 @@
           id="open-about"
         />
         <div
-          @click="$emit('share-status')"
+          @click="$emit('share-status',$event)"
+          @share-success="shareResult(true,$event)"
+          @share-fail="shareResult(false,$event)"
           :class="{'menu-button' : true}"
           id="share-status"
         />
@@ -162,6 +164,11 @@
       restartGame() {
         this.toggleSubmenu(true)
         this.$emit('restart-game')
+      },
+      shareResult(success,e) {
+        const msgClass = success?'msg-success':'msg-fail'
+        e.target.classList.add(msgClass)
+        setTimeout(() => e.target.classList.remove(msgClass),2000)
       }
     }
   }
@@ -288,6 +295,19 @@ div.menu-button#open-submenu::after { content: 'Menu'; }
 div.menu-button#open-about::after { content: 'About'; }
 div.menu-button#fullscreen::after { content: 'Full Screen'; }
 div.menu-button.exit#fullscreen::after { content: 'Exit Full Screen'; }
+div.menu-button#share-status::after { content: 'Share Your Progress'; }
+
+div.menu-button#share-status.msg-success::after {
+  display: block;
+  content: "Current status copied to clipboard!";
+  background: var(--bg-message-success);
+}
+
+div.menu-button#share-status.msg-fail::after {
+  display: block;
+  content: "Oops! Something went wrong.";
+  background: var(--bg-message-fail);
+}
 
 /* Submenu and About */
 
