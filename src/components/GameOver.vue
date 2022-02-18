@@ -13,6 +13,7 @@
       ref="result-panel"
       :gameOver="true"
       :endingSummary="endingSummary"
+      :endingStars="endingStars"
       :endingScore="endingScore"
       :currentState="currentState"
       :currentChapterInfo="currentChapterInfo"
@@ -127,7 +128,20 @@
         }
 
         return scoringData
-      } 
+      },
+      endingStars: function(){
+        if (this.endingScore < 500){
+          return 1;
+        } else if (this.endingScore < 1000){
+          return 2;
+        } else if (this.endingScore < 1500){
+          return 3;
+        } else if (this.endingScore < 2000){
+          return 4;
+        } else {
+          return 5;
+        }
+      }
     },
     mounted () {
     },
