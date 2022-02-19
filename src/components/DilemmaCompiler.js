@@ -36,7 +36,7 @@ var DilemmaCompiler = [
    () => DilemmaList['B-DISINFO'],
    () => DilemmaList['B-BACKDOOR'],
    () => DilemmaList['B-EUREG'],
-   (gameState) => (gameState.capital>=50&&gameState.EUViolation)?DilemmaList['B-EU-FINE']: gameState.capital>=50?DilemmaList['B-BURN-RATE']: gameState.angryCongress?DilemmaList['B-CONGRESS']: gameState.backdoor?DilemmaList['B-BACKDOOR-BLOWBACK']: DilemmaList['B-BAD-NEWS'], 
+   (gameState) => (gameState.capital>=50&&gameState.EUViolation)?DilemmaList['B-EU-FINE']: (gameState.capital>=35&&gameState.badStateCompliance)?DilemmaList['B-STATE-FINE']: gameState.capital>=50?DilemmaList['B-BURN-RATE']: gameState.angryCongress?DilemmaList['B-CONGRESS']: gameState.backdoor?DilemmaList['B-BACKDOOR-BLOWBACK']: DilemmaList['B-BAD-NEWS'], 
    (gameState) => gameState.focus>=1?DilemmaList['B-FOCUS-PAYOFF']:DilemmaList['B-NO-FOCUS'],
    {
       compile: () => DilemmaList['C-FUNDING'],

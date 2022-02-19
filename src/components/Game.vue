@@ -188,10 +188,10 @@
 			},
 			currentHeadquarters: function() {
 				const { techHub, otherCity, collegeTown, smallTown } = this.stateHistory[this.stateHistory.length-1]
-				if (techHub) return "Tech Hub"
-				if (otherCity) return "Other City"
-				if (collegeTown) return "College Town"
-				if (smallTown) return "Small Town"
+				if (techHub) return "Big Tech Valley"
+				if (otherCity) return "Crypto Hills"
+				if (collegeTown) return "University Park"
+				if (smallTown) return "Rustic Hollow"
 				return "..."
 			}
 		},
