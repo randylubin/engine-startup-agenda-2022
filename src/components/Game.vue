@@ -187,7 +187,8 @@
 				return {}
 			},
 			currentHeadquarters: function() {
-				const { techHub, otherCity, collegeTown, smallTown } = this.stateHistory[this.stateHistory.length-1]
+				const {moveHQ, techHub, otherCity, collegeTown, smallTown,  } = this.stateHistory[this.stateHistory.length-1]
+				if (moveHQ) return "Metaverse Cove"
 				if (techHub) return "Big Tech Valley"
 				if (otherCity) return "Crypto Hills"
 				if (collegeTown) return "University Park"
