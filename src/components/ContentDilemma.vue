@@ -41,6 +41,7 @@
                 <ul>
                   <li><strong>Founder:</strong> {{Founders[founderChoice].Name}}</li>
                   <li><strong>Asset:</strong> {{Founders[founderChoice].Asset}}</li>
+                  <li><strong>Bio:</strong> {{Founders[founderChoice].Bio}}</li>
                 </ul>
                 <issue-note v-if="Founders[founderChoice].Note" :noteKey="Founders[founderChoice].Note" />
               </div>
@@ -237,6 +238,7 @@ div.founder-profile > .info {
   list-style: none;
   margin-top: .25em;
   padding-left: 0;
+  font-size: .9em;
 }
 
 .info ul li {
@@ -248,6 +250,7 @@ div.founder-profile > .info {
   text-transform: uppercase;
   color: var(--c-accent-4);
 }
+
 
 div.founder-options {
   display: flex;

@@ -93,27 +93,31 @@
 
 	const Founders = [
 		{
-			Name: "Founder 0 Name",
+			Name: "Jasmine",
 			Asset: "Engineering Background",
-			Image: "founder-0.png",
+			Bio: "Grew up in NYC. A recent graduate of a state college with a well-regarded computer engineering program.",
+			Image: "founder-0.svg",
 			Note: "founder-0"
 		},
 		{
-			Name: "Founder 1 Name",
+			Name: "Sarah",
 			Asset: "Social Media Following",
-			Image: "founder-1.png",
+			Bio: "Attended small liberal arts college where she started a popular fashion Instagram account.",
+			Image: "founder-1.svg",
 			Note: "founder-1"
 		},
 		{
-			Name: "Founder 2 Name",
+			Name: "Andre",
 			Asset: "Product Design Background",
-			Image: "founder-2.png",
+			Bio: "Mid-career, leaving a job at a big company in the tech industry to start out on his own.",
+			Image: "founder-2.svg",
 			Note: "founder-2"
 		},
 		{
-			Name: "Founder 3 Name",
+			Name: "Michael",
 			Asset: "Wealthy Connections",
-			Image: "founder-3.png",
+			Bio: "Recent grad from an elite school with a reputation for turning out startup founders. The child of a Fortune 500 vice president.",
+			Image: "founder-3.svg",
 			Note: "founder-3"
 		}
 	]
@@ -187,11 +191,12 @@
 				return {}
 			},
 			currentHeadquarters: function() {
-				const { techHub, otherCity, collegeTown, smallTown } = this.stateHistory[this.stateHistory.length-1]
-				if (techHub) return "Tech Hub"
-				if (otherCity) return "Other City"
-				if (collegeTown) return "College Town"
-				if (smallTown) return "Small Town"
+				const { moveHQ, techHub, otherCity, collegeTown, smallTown } = this.stateHistory[this.stateHistory.length-1]
+				if (moveHQ) return "Metaverse Cove"
+				if (techHub) return "Big Tech Valley"
+				if (otherCity) return "Crypto Hills"
+				if (collegeTown) return "University Park"
+				if (smallTown) return "Rustic Hollow"
 				return "..."
 			}
 		},
@@ -411,9 +416,9 @@
 	
 	/* States */
 	
-	--bg-capital: rgb(89,178,94) linear-gradient(to bottom, rgba(0,0,0,0) 10%, rgba(0,0,0,.2) 90%);
-	--bg-users: rgb(55,99,196) linear-gradient(to bottom, rgba(0,0,0,0) 10%, rgba(0,0,0,.2) 90%);
-	--bg-capabilities: rgb(153,95,214) linear-gradient(to bottom, rgba(0,0,0,0) 10%, rgba(0,0,0,.2) 90%);
+	--bg-capital: rgb(0,176,144) linear-gradient(to bottom, rgba(0,0,0,0) 10%, rgba(0,0,0,.2) 90%);
+	--bg-users: rgb(2,152,245) linear-gradient(to bottom, rgba(0,0,0,0) 10%, rgba(0,0,0,.2) 90%);
+	--bg-capabilities: rgb(204,122,177) linear-gradient(to bottom, rgba(0,0,0,0) 10%, rgba(0,0,0,.2) 90%);
 
 	--bg-state-zero: rgb(211, 64, 64) linear-gradient(to bottom, rgba(0,0,0,0) 10%, rgba(0,0,0,.2) 90%);
 
@@ -485,8 +490,8 @@
 	--bg-button-menu-hover-accent: rgba(255,255,255,.25);
 	--c-button-menu-hover-shadow: rgba(255,255,255,.2);
 
-	--bg-button-share: rgb(65, 133, 68);
-	--c-button-share-shadow: rgb(47, 95, 49);
+	--bg-button-share: rgb(1,134,110);
+	--c-button-share-shadow: rgb(0, 100, 82);
 
 	--bg-results-up: linear-gradient(to bottom,rgb(120,120,120) 20%,rgb(170,170,170) 40%,rgb(170,170,170) 60%,rgb(120,120,120) 80%);
 	--bg-results-down: linear-gradient(to bottom,rgb(120,120,120) 20%,rgb(170,170,170) 40%,rgb(170,170,170) 60%,rgb(120,120,120) 80%);

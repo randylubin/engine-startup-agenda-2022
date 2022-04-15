@@ -65,7 +65,7 @@ router.beforeEach((to, from, next) => {
   next();
 })
 
-var vm = new Vue({
+/*var vm =*/ new Vue({
   el: '#app',
   router,
   render: h => h(App),
@@ -76,4 +76,4 @@ var vm = new Vue({
   }
 })
 
-global.vm = vm;
+//global.vm = vm;
