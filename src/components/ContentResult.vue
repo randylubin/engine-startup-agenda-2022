@@ -38,18 +38,26 @@
       <li class="focus deplete" v-if="chosenOption.stateChange.focus < 0 && !gameOver">Some of your&ensp;<strong class="ii focus">Time &amp; Focus</strong> has been occupied.</li>
       <li class="game-over-summary" v-if="gameOver">
         <div class="ending-summary" v-html="endingSummary"></div>
-          <div class="score-totals">
-            <div class="score-total">
-              <span>Your Score:</span> {{endingScore.total}}
+        <div class="ending-score">
+          <div class="score-total">
+            <span>Startup Rank:</span>
+            <div class="score-rank">
+              <img :src="endingRank>0?'/assets/unicorn.svg':'/assets/unicorn-outline.svg'">
+              <img :src="endingRank>1?'/assets/unicorn.svg':'/assets/unicorn-outline.svg'">
+              <img :src="endingRank>2?'/assets/unicorn.svg':'/assets/unicorn-outline.svg'">
+              <img :src="endingRank>3?'/assets/unicorn.svg':'/assets/unicorn-outline.svg'">
+              <img :src="endingRank>4?'/assets/unicorn.svg':'/assets/unicorn-outline.svg'">
             </div>
-            <div class="score-factors">
-              <div v-for="scoreFactor in endingScore.factors" :key="scoreFactor.name">
-                <span :class="scoreFactor.scoreClass?scoreFactor.scoreClass:''">
-                  {{scoreFactor.scoreName}}:
-                </span> {{scoreFactor.scoreValue}}
-              </div>
+            <span>Score:</span> {{endingScore.total}}
+          </div>
+          <div class="score-factors">
+            <div v-for="scoreFactor in endingScore.factors" :key="scoreFactor.name">
+              <span :class="scoreFactor.scoreClass?scoreFactor.scoreClass:''">
+                {{scoreFactor.scoreName}}{{scoreFactor.showNumerical?':':''}}
+              </span> {{scoreFactor.showNumerical?parseScore(scoreFactor.scoreValue):''}}
             </div>
           </div>
+        </div>
       </li>
     </ul>
     <issue-note
@@ -76,7 +84,8 @@ import IssueNote from './IssueNote.vue';
       currentChapterInfo: Object,
       gameOver: Boolean,
       endingSummary: String,
-      endingScore: Object
+      endingScore: Object,
+      endingRank: Number
     },
     data () {
       return {
@@ -97,6 +106,19 @@ import IssueNote from './IssueNote.vue';
       },
       undoChoice(){
         this.$emit('undo-choice')
+      },
+      parseScore(score) {
+        if (score <= 20) {
+          return 'Poor'
+        } else if (score <= 50) {
+          return 'Okay'
+        } else if (score <= 75) {
+          return 'Good'
+        } else if (score <= 99) {
+          return 'Great'
+        } else {
+          return 'Excellent'
+        }
       }
     }
   }

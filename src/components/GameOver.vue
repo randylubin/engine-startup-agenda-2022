@@ -14,6 +14,7 @@
       :gameOver="true"
       :endingSummary="endingSummary"
       :endingScore="endingScore"
+      :endingRank="endingRank"
       :currentState="currentState"
       :currentChapterInfo="currentChapterInfo"
       :chosenOption="chosenOption"
@@ -99,19 +100,22 @@
         scoringData.factors.push ({
           scoreName: "Financial Health",
           scoreClass: ["ii","capital"],
-          scoreValue: Math.max(0,this.currentState.capital * 100)
+          scoreValue: Math.max(0,this.currentState.capital * 100),
+          showNumerical: true
         })
 
         scoringData.factors.push ({
           scoreName: "Users",
           scoreClass: ["ii","users"],
-          scoreValue: Math.max(0,this.currentState.users * 100)
+          scoreValue: Math.max(0,this.currentState.users * 100),
+          showNumerical: true
         })
 
         scoringData.factors.push ({
           scoreName: "Tech & Talent",
           scoreClass: ["ii","capabilities"],
-          scoreValue: Math.max(0,this.currentState.capabilities * 100)
+          scoreValue: Math.max(0,this.currentState.capabilities * 100),
+          showNumerical: true
         })
 
         // Check EndingScoringFactors.js for all of the qualitiative factors
@@ -127,7 +131,20 @@
         }
 
         return scoringData
-      } 
+      },
+      endingRank: function(){
+        if (this.endingScore.total < 500){
+          return 1;
+        } else if (this.endingScore.total < 1000){
+          return 2;
+        } else if (this.endingScore.total < 1500){
+          return 3;
+        } else if (this.endingScore.total < 2000){
+          return 4;
+        } else {
+          return 5;
+        }
+      }
     },
     mounted () {
     },

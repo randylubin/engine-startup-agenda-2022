@@ -1184,21 +1184,49 @@ ul#consequences-status.game-over li.zero::after {
 /* Game Over Scoring Section */
 
 ul#consequences-status li.game-over-summary {
-	width: 70%;
-	text-align: center;
+	width: 94%;
 } 
 
 ul#consequences-status li.state+li.game-over-summary {
 	margin-top: 1.5em;
 }
 
+div.ending-summary, div.score-total {
+	text-align: center;
+}
+
+div.ending-summary {
+	margin-bottom: 1em;
+}
+
+div.ending-score {
+	display: flex;
+	column-gap: 6%;
+}
+
 div.ending-score > div {
-	margin-top: .5em;
+	flex-grow: 1;
+	width: 47%;
 }
 
 div.ending-score > div span {
 	font-weight: bold;
 	margin-right: .25em;
+}
+
+div.score-rank {
+	display: flex;
+	column-gap: .25em;
+	margin: .6em 0;
+}
+
+div.score-rank > img {
+	flex-grow: 1;
+	transform: translateX(-15%);
+}
+
+div.score-factors > div {
+	margin-bottom: .5em;
 }
 
 /* Result Navigation */
@@ -1441,6 +1469,8 @@ a.external::after {
 .ii.focus::before { mask-image: url("/assets/icons/icon-focus-small.svg"); }
 .ii.lock::before { mask-image: url("/assets/icons/icon-lock.svg"); top: -0.1em; }
 .ii.unlock::before { mask-image: url("/assets/icons/icon-lock-open.svg"); }
+.ii.circle::before { mask-image: url("/assets/icons/icon-circle.svg"); }
+.ii.arrow::before { mask-image: url("/assets/icons/icon-triangle.svg"); }
 
 /* Vue Transitions */
 
