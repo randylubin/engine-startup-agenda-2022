@@ -19,6 +19,7 @@
       :currentChapterInfo="currentChapterInfo"
       :chosenOption="chosenOption"
       @undo-choice="undoChoice"
+      @share-status="$emit('share-status',$event)"
     />
   </div>
 </template>

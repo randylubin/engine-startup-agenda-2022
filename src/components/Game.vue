@@ -55,6 +55,7 @@
         :currentChapterIndex="chapterHistory.length-1"
         :chosenOption="optionHistory[this.optionHistory.length-1]"
         @undo-state-change="undoStateChange()"
+				@share-status="shareStatus"
       />
     </transition>
     <devtools-panel
@@ -1228,6 +1229,34 @@ div.score-rank > img {
 div.score-factors > div {
 	margin-bottom: .5em;
 }
+
+button#share-ending {
+	position: relative;
+	width: 50%;
+	margin: 1em auto 0;
+	color: rgba(255,255,255,.8);
+	background: var(--bg-button-share);
+  box-shadow: 0 .2rem 0 var(--c-button-share-shadow);
+}
+
+button#share-ending::before {
+	background: var(--bg-button-menu-accent);
+	mask-image: url("/assets/icons/icon-share.svg");
+}
+
+button#share-ending::after {
+	content: 'Share Your Score';
+	order: 2;
+}
+
+button#share-ending.msg-success::after {
+  content: "Score copied to clipboard!";
+}
+
+button#share-ending.msg-fail::after {
+  content: "Oops! Something went wrong.";
+}
+*/
 
 /* Result Navigation */
 

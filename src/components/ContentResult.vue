@@ -58,6 +58,12 @@
             </div>
           </div>
         </div>
+        <button
+          id="share-ending"
+          @click="$emit('share-status',$event)"
+          @share-success="shareResult(true,$event)"
+          @share-fail="shareResult(false,$event)"
+        ></button>
       </li>
     </ul>
     <issue-note
@@ -119,6 +125,11 @@ import IssueNote from './IssueNote.vue';
         } else {
           return 'Excellent'
         }
+      },
+      shareResult(success,e) {
+        const msgClass = success?'msg-success':'msg-fail'
+        e.target.classList.add(msgClass)
+        setTimeout(() => e.target.classList.remove(msgClass),2000)
       }
     }
   }
