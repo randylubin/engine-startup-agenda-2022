@@ -13,7 +13,6 @@
       ref="result-panel"
       :gameOver="true"
       :endingSummary="endingSummary"
-      :endingStars="endingStars"
       :endingScore="endingScore"
       :endingRank="endingRank"
       :currentState="currentState"

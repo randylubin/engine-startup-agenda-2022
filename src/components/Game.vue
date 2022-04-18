@@ -89,7 +89,8 @@
 		StartupEquity: 'https://www.engine.is/news/category/engine-releases-making-the-startup-ecosystem-more-equitable',
 		Engine: 'https://www.engine.is/',
 		GameLanding: 'game landing page URL',
-		GamePlay: 'https://engine-report-2022.web.app/' // UPDATE WHEN LIVE
+		GamePlay: 'https://engine-report-2022.web.app/', // UPDATE WHEN LIVE
+		Patent: 'https://www.engine.is/news/category/prioritizing-quality-and-balance-to-promote-innovation'
 	}
 
 	const Founders = [
