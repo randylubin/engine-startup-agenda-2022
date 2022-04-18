@@ -3,10 +3,9 @@
 
     <!-- Tutorial Page -->
     <template v-if="currentChapterInfo.settings.chapterType == 'tutorial-page'">
-      <p><strong>You're about to embark on the Startup Trail. Can your company survive?</strong></p>
-      <p>In this game, you'll make choices to guide your company through a variety of dilemmas. You'll need to use your time and resources carefully, secure ongoing funding, and navigate the many challenges of succeeding as a tech startup.</p>
       <transition-group name="subpanel" mode="out-in">
         <template v-if="!tutorialActive && !tutorialFinished">
+          <p key="game-intro-subtitle"><strong>You're about to embark on the Startup Trail. Can your company survive?</strong></p>
           <issue-note
             noteKey="game-intro"
             key="game-intro-note"
@@ -15,7 +14,8 @@
           <button id="skip-tutorial" key="skip-tutorial" @click="nextPrompt"><span>I've played before, let's get started!</span></button>   
         </template>
         <template v-else-if="tutorialFinished">
-          <p key="finish-tutorial-text">The game will track your decisions and their impact on things like <strong>your founder's stake in your company</strong>. This may impact the way your journey ends!</p>
+          <p key="finish-tutorial-text-a">In this game, you'll make choices to guide your company through a variety of dilemmas. You'll need to use your time and resources carefully, secure ongoing funding, and navigate the many challenges of succeeding as a tech startup.</p>
+          <p key="finish-tutorial-text-b">The game will track your decisions and their impact on things like <strong>your founder's stake in your company</strong>. This may impact the way your journey ends!</p>
           <button id="start-game" key="start-game" @click="nextPrompt"><span>I'm ready &mdash; let's get started!</span></button>   
         </template>
       </transition-group>
