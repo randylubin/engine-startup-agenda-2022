@@ -1,15 +1,15 @@
 var FlagIndex = { 
 	"techHub": {
-		trueText: "you are based in techHub"
+		trueText: "you are based in Big Tech Valley"
 	},
 	"otherCity": {
-		trueText: "you are based in otherCity"
+		trueText: "you are based in Crypto Hills"
 	},
 	"collegeTown": {
-		trueText: "you are based in collegeTown"
+		trueText: "you are based in University Park"
 	},
 	"smallTown": {
-		trueText: "you are based in smallTown"
+		trueText: "you are based in Rustic Hollow"
 	},
 	"lowUserData": {
 		trueText: "you've already minimized the amount of user data you retain."
