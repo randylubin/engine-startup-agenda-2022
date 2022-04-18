@@ -12,7 +12,7 @@ var FlagIndex = {
 		trueText: "you are based in Rustic Hollow (other locations have other options)"
 	},
 	"lowUserData": {
-		trueText: "you've already minimized the amount of user data you retain."
+		trueText: "you've already minimized the amount of user data you retain.",
 	},
 	"hiringFocus": {
 		flagTitle: "Focused on Hiring",
@@ -24,7 +24,8 @@ var FlagIndex = {
 		flagTitle: "Networking with Investors",
 		flagClass: "focus",
 		flagText: "You are focused on meeting investors.",
-		trueText: "you are focused on meeting investors"
+		trueText: "you are focused on meeting investors",
+		falseText: "you don't have a strong enough VC network"
 	},
 	"fightTroll": {
 		flagTitle: "Fighting a Troll",
@@ -36,7 +37,7 @@ var FlagIndex = {
 	"bespokeContentID": {
 		trueText: "you had previously built a bespoke content identificaiton system",
 		falseText: "you don't have a functioning content identificaiton system"
-	}
+	},
 };
 
 export default FlagIndex;
