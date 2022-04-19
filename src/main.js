@@ -17,10 +17,10 @@ Vue.use(IconsPlugin)
 
 import App from './App.vue'
 
-// import VueGtag from "vue-gtag";
-// Vue.use(VueGtag, {
-//   config: { id: "" }
-// });
+import VueGtag from "vue-gtag";
+Vue.use(VueGtag, {
+  config: { id: "G-DX7FZ4Z70E" }
+});
 
 // import VueMixpanel from 'vue-mixpanel'
 // Vue.use(VueMixpanel, {

@@ -48,6 +48,9 @@
       resumeGame(){
         this.$emit('resume-game')
       }
+    },
+    mounted(){
+      this.$gtag.event('View launch screen')
     }
   }
 </script>

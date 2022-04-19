@@ -106,6 +106,11 @@ import IssueNote from './IssueNote.vue';
         }
       }
     },
+    mounted(){
+      if (this.gameOver){
+        this.$gtag.event('Game Over', {endingScore: this.endingscore})
+      }
+    },
     methods: {
       nextPrompt(){
         this.$emit('next-prompt')

@@ -269,6 +269,9 @@
 						this.chooseOption(newDilemma.dilemmaOptions[0], 'skipping')
 					}
 				}
+
+				this.$gtag.event('View Dilemma', { dilemmaTitle: this.currentChapterInfo.dilemmaTitle })
+
       },
       restartGame(){
         console.log('restarting')
