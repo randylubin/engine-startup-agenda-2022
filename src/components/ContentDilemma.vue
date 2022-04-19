@@ -36,7 +36,7 @@
       <transition name="subpanel" mode="out-in">
         <template v-if="founderPage == 0">
           <span key="founder-page-0">
-            <p>The founder's vision and skills are critical when leading a startup to success. But within the startup ecosystem, underrepresented founders face challenging inequities.</p>
+            <p>The founder's vision, leadership, and skills are critical to startup success. But there are still persistent inequities in the startup ecosystem. Underrepresented founders in particular face unique challenges and unwarranted barriers when launching and growing their companies.</p>
             <issue-note noteKey="founder-intro" />
             <button id="founder-proceed" key="founder-proceed" @click="founderAction('proceed')"><span>Select a founder</span></button>
           </span>
