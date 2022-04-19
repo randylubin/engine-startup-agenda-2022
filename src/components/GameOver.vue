@@ -101,21 +101,21 @@
         scoringData.factors.push ({
           scoreName: "Financial Health",
           scoreClass: ["ii","capital"],
-          scoreValue: Math.max(0,this.currentState.capital * 100),
+          scoreValue: Math.max(0,this.currentState.capital),
           showNumerical: true
         })
 
         scoringData.factors.push ({
           scoreName: "Users",
           scoreClass: ["ii","users"],
-          scoreValue: Math.max(0,this.currentState.users * 100),
+          scoreValue: Math.max(0,this.currentState.users),
           showNumerical: true
         })
 
         scoringData.factors.push ({
           scoreName: "Tech & Talent",
           scoreClass: ["ii","capabilities"],
-          scoreValue: Math.max(0,this.currentState.capabilities * 100),
+          scoreValue: Math.max(0,this.currentState.capabilities),
           showNumerical: true
         })
 
