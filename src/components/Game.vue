@@ -43,6 +43,7 @@
         @next-prompt="nextPrompt()"
         @undo-state-change="undoStateChange()"
         @update-state="updateState($event)"
+				@restart-game="restartGame"
       />
     </transition>
     <transition appear name="game-over">
@@ -56,6 +57,7 @@
         :chosenOption="optionHistory[this.optionHistory.length-1]"
         @undo-state-change="undoStateChange()"
 				@share-status="shareStatus"
+				@restart-game="restartGame"
       />
     </transition>
     <devtools-panel
@@ -1266,8 +1268,9 @@ button#share-ending.msg-fail::after {
 
 /*button#nav-continue:hover {  }*/
 button#nav-continue { color: var(--en-2d);}
-button#nav-back { width: 20%; filter:grayscale(1);}
+button#nav-back, button#nav-restart { display: inline-flex; width: 20%; filter:grayscale(1); margin-right: 1em;}
 button#nav-back::before { transform: rotate(180deg); }
+button#nav-restart::before { mask-image: url("/assets/icons/icon-restart.svg")}
 
 /* Special Navigation */
 

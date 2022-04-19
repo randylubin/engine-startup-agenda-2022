@@ -72,7 +72,8 @@
     />
     <div id="consequences-nav-buttons">
       <button id="nav-continue" class="" v-if="!gameOver" v-on:click="nextPrompt()"><span>Continue</span></button>
-      <button id="nav-back" v-on:click="undoChoice()" v-if="!(currentChapterInfo.settings.singleScreen)"><span>Back</span></button>       
+      <button id="nav-back" v-on:click="undoChoice()" v-if="!(currentChapterInfo.settings.singleScreen)"><span>Back</span></button>
+      <button id="nav-restart" class="" v-if="gameOver" v-on:click="$emit('restart-game')"><span>Start Over</span></button>
     </div>
   </div>    
 </template>

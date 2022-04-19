@@ -41,6 +41,7 @@
             :chosenOption="chosenOption"
             @next-prompt="nextPrompt"
             @undo-choice="undoChoice"
+            @restart-game="$emit('restart-game')"
           />
         </transition>
       </div>
@@ -65,6 +66,7 @@
             :chosenOption="chosenOption"
             @next-prompt="nextPrompt"
             @undo-choice="undoChoice"
+            @restart-game="$emit('restart-game')"
           />
         </transition>
       </div>
