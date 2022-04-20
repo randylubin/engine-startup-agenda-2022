@@ -228,16 +228,18 @@
         if(option.stateChange){          
           for (const stateVariable in option.stateChange){
             if (Number.isInteger(option.stateChange[stateVariable])){
+							if ((newState[stateVariable] + option.stateChange[stateVariable]) > 100) {
+								option.stateChange[stateVariable] -= (newState[stateVariable] + option.stateChange[stateVariable] - 100)
+							}
               newState[stateVariable] += option.stateChange[stateVariable]
-              /*if (newState[stateVariable] < 0){
-                newState[stateVariable] = 0
-              }*/
-              // TODO logic for ending the game if player runs out of cash
             } else {
               newState[stateVariable] = option.stateChange[stateVariable]
             }
           }
-					if (newState.focus > 3) {newState.focus = 3}          
+					newState.focus = Math.min(newState.focus,3)
+					newState.capital = Math.min(newState.capital,100)
+					newState.users = Math.min(newState.users,100)
+					newState.capabilities = Math.min(newState.capabilities,100)          
         }
         if(option.addEvent){
           newState.pastEvents.unshift(option.addEvent)
