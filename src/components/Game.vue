@@ -1272,7 +1272,8 @@ button#share-ending.msg-fail::after {
 
 /*button#nav-continue:hover {  }*/
 button#nav-continue { color: var(--en-2d);}
-button#nav-back, button#nav-restart { display: inline-flex; width: 20%; filter:grayscale(1); margin-right: 1em;}
+button#nav-back { display: inline-flex; width: 24%; filter:grayscale(1); margin-right: 1em; white-space: nowrap;}
+button#nav-restart { display: inline-flex; width: 30%;  margin-right: 1em; white-space: nowrap;}
 button#nav-back::before { transform: rotate(180deg); }
 button#nav-restart::before { mask-image: url("/assets/icons/icon-restart.svg")}
 
