@@ -356,6 +356,7 @@
 					meterEmpty = '\u{274C}',
 					meterFocus = '\u{1F552}',
 					meterFocusBlank = '\u{26AB}\u{FE0F}',
+					scoreRank = '\u{1F984}',
 					newLine = '\n'
 
 				const
@@ -364,38 +365,38 @@
 					ProgressCurrent = Math.max(0,this.chapterHistory.length - 1) // Progress values are manually adjusted for the 1 timeline-hidden chapter - will need to change if we add more hidden
 
 				const
-					capital = Math.max(0,Math.min(10,Math.ceil(CurrentState.capital / 10))),
-					users = Math.max(0,Math.min(10,Math.ceil(CurrentState.users / 10))),
-					capabilities = Math.max(0,Math.min(10,Math.ceil(CurrentState.capabilities / 10))),
+					capital = Math.max(0,Math.min(5,Math.ceil(CurrentState.capital / 20))),
+					users = Math.max(0,Math.min(5,Math.ceil(CurrentState.users / 20))),
+					capabilities = Math.max(0,Math.min(5,Math.ceil(CurrentState.capabilities / 20))),
 					focus = Math.max(0,Math.min(3,CurrentState.focus))
 
 				let ShareText = `STARTUP TRAIL${newLine}`				
 				if (this.gameOver) ShareText += `${newLine + this.$refs['gameover-panel'].endingTitle.tag} - ${this.$refs['gameover-panel'].endingTitle.title + newLine}`
 				ShareText += `Progress: ${ProgressCurrent.toString()}/${ProgressMax.toString() + newLine}`
 				if (ProgressCurrent < 2) ShareText += `${newLine}I'm about to embark on the Startup Trail${newLine.repeat(2)}`
-				else if (this.gameOver) ShareText += `Score: ${this.$refs['gameover-panel'].endingScore.total.toString() + newLine.repeat(2)}`
+				else if (this.gameOver) ShareText += `Rank: ${scoreRank.repeat(this.$refs['gameover-panel'].endingRank) + newLine.repeat(2)}`
 				else ShareText += newLine
 
 				// Capital Meter
 				ShareText += labelCapital + ' '
-				if (capital <= 0) ShareText += meterEmpty + meterBlank.repeat(9)
-				else ShareText += meterCapital.repeat(capital) + meterBlank.repeat(10-capital)
+				if (capital <= 0) ShareText += meterEmpty + meterBlank.repeat(4)
+				else ShareText += meterCapital.repeat(capital) + meterBlank.repeat(5-capital)
 				ShareText += newLine
 
 				// Users Meter
 				ShareText += labelUsers + ' '
-				if (users <= 0) ShareText += meterEmpty + meterBlank.repeat(9)
-				else ShareText += meterUsers.repeat(users) + meterBlank.repeat(10-users)
+				if (users <= 0) ShareText += meterEmpty + meterBlank.repeat(4)
+				else ShareText += meterUsers.repeat(users) + meterBlank.repeat(5-users)
 				ShareText += newLine
 
 				// Capabilities Meter
 				ShareText += labelCapabilities + ' '
-				if (capabilities <= 0) ShareText += meterEmpty + meterBlank.repeat(9)
-				else ShareText += meterCapabilities.repeat(capabilities) + meterBlank.repeat(10-capabilities)
+				if (capabilities <= 0) ShareText += meterEmpty + meterBlank.repeat(4)
+				else ShareText += meterCapabilities.repeat(capabilities) + meterBlank.repeat(5-capabilities)
 				ShareText += newLine.repeat(2)
 
 				// Focus Clocks
-				ShareText += meterFocus.repeat(focus) + meterFocusBlank.repeat(3-focus) + newLine.repeat(2)
+				if (focus > 0) ShareText += meterFocus.repeat(focus) + meterFocusBlank.repeat(3-focus) + newLine.repeat(2)
 
 				// Call To Action
 				ShareText += `Play: ${ExternalLinks.GamePlay}`
