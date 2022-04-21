@@ -1126,7 +1126,8 @@ ul#consequences-status li.state::after {
 	}
 }
 
-ul#consequences-status li.focus {
+ul#consequences-status li.focus,
+ul#consequences-status li.dilution {
 	width: 100%;
 	font-size: .8em;
 	margin-top: 3em;

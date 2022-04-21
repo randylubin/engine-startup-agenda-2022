@@ -103,21 +103,32 @@
           scoreName: "Financial Health",
           scoreClass: ["ii","capital"],
           scoreValue: Math.max(0,this.currentState.capital),
-          showNumerical: true
+          showValue: true,
+          filterValue: true
         })
 
         scoringData.factors.push ({
           scoreName: "Users",
           scoreClass: ["ii","users"],
           scoreValue: Math.max(0,this.currentState.users),
-          showNumerical: true
+          showValue: true,
+          filterValue: true
         })
 
         scoringData.factors.push ({
           scoreName: "Tech & Talent",
           scoreClass: ["ii","capabilities"],
           scoreValue: Math.max(0,this.currentState.capabilities),
-          showNumerical: true
+          showValue: true,
+          filterValue: true
+        })
+
+        scoringData.factors.push ({
+          scoreName: "Ownership Stake",
+          scoreClass: ["ii","arrow"],
+          scoreValue: this.currentState.founderDilution?100-this.currentState.founderDilution:100,
+          showValue: true,
+          append: '%'
         })
 
         // Check EndingScoringFactors.js for all of the qualitiative factors

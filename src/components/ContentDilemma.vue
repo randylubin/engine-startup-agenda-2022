@@ -88,6 +88,9 @@
       <span
         v-html="'<p>' + currentChapterInfo.dilemmaPrompt.replaceAll('\n\n','</p><p>') + '</p>'"
       />
+      <p v-if="currentChapterInfo.settings.chapterType == 'funding'">
+        <em>Your current ownership stake in the company is <strong>{{currentState.founderDilution?100-currentState.founderDilution:100}}%</strong></em>
+      </p>
       <div class="dilemma-options-list">
         <dilemma-option 
           v-for="(option,index) in currentChapterInfo.dilemmaOptions"

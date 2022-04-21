@@ -34,6 +34,7 @@
           zero: currentState.capabilities <= 0
         }"
       ></li>
+      <li class="dilution" v-if="chosenOption.stateChange.founderDilution">Your ownership stake in the company is now <strong>{{currentState.founderDilution?100-currentState.founderDilution:100}}%</strong></li>
       <li class="focus replenish" v-if="chosenOption.stateChange.focus > 0 && !gameOver">Your&ensp;<strong class="ii focus">Time &amp; Focus</strong> has been replenished.</li>
       <li class="focus deplete" v-if="chosenOption.stateChange.focus < 0 && !gameOver">Some of your&ensp;<strong class="ii focus">Time &amp; Focus</strong> has been occupied.</li>
       <li class="game-over-summary" v-if="gameOver">
@@ -53,8 +54,8 @@
           <div class="score-factors">
             <div v-for="scoreFactor in endingScore.factors" :key="scoreFactor.name">
               <span :class="scoreFactor.scoreClass?scoreFactor.scoreClass:''">
-                {{scoreFactor.scoreName}}{{scoreFactor.showNumerical?':':''}}
-              </span> {{scoreFactor.showNumerical?parseScore(scoreFactor.scoreValue):''}}
+                {{scoreFactor.scoreName}}{{scoreFactor.showValue?':':''}}
+              </span> {{scoreFactor.showValue?scoreFactor.filterValue?parseScore(scoreFactor.scoreValue):scoreFactor.scoreValue:''}}{{scoreFactor.append?scoreFactor.append:''}}
             </div>
           </div>
         </div>
