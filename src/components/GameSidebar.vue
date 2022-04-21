@@ -1,6 +1,6 @@
 <template>
   <div id="sidebar-panel" v-if="currentState">
-    <h2>Company Name</h2>
+    <!--<h2>Company Name</h2>-->
 	<ul id="company-info">
 		<li><strong>Founder:</strong> {{currentFounder.Name?currentFounder.Name:'...'}}</li>
 		<li><strong>Headquarters:</strong> {{currentHeadquarters}}</li>

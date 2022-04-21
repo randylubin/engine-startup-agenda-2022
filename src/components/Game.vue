@@ -701,7 +701,7 @@ div#content-panel.fade-active {
 }
 
 #sidebar-panel ul#company-info li {
-	font-size: .9em;
+	font-size: .95em;
 	margin-bottom: .4em;
 	line-height: 1;
 }
