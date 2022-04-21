@@ -1,5 +1,5 @@
 <template>
-  <div id="content-panel" :class="{ 'fade-active': fadeActive }">
+  <div id="content-panel" :class="{ 'fade-active': fadeActive }" ref="scrollContainer">
     <transition name="title-switch" mode="out-in" v-if="currentChapterInfo.dilemmaTitle">
       <h2 v-if="currentChapterIndex % 2" key="odd-title">
         <span>
@@ -31,6 +31,7 @@
             @select-option="selectOption"
             @next-prompt="nextPrompt"
             @toggle-tutorial="setFade"
+            @unscroll="unScroll"
           />
           <result-panel
             v-else
@@ -42,6 +43,7 @@
             @next-prompt="nextPrompt"
             @undo-choice="undoChoice"
             @restart-game="$emit('restart-game')"
+            @unscroll="unScroll"
           />
         </transition>
       </div>
@@ -56,6 +58,7 @@
             @select-option="selectOption"
             @next-prompt="nextPrompt"
             @toggle-tutorial="setFade"
+            @unscroll="unScroll"
           />
           <result-panel
             v-else
@@ -67,6 +70,7 @@
             @next-prompt="nextPrompt"
             @undo-choice="undoChoice"
             @restart-game="$emit('restart-game')"
+            @unscroll="unScroll"
           />
         </transition>
       </div>
@@ -115,7 +119,10 @@
       },
       selectOption(option){
         this.$emit('choose-option', option)
-      } 
+      },
+      unScroll() {
+        this.$refs.scrollContainer.scrollTop = 0;
+      }
     }
   }
 </script>

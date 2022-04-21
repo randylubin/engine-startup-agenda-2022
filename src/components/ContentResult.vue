@@ -107,6 +107,9 @@ import IssueNote from './IssueNote.vue';
         }
       }
     },
+    beforeMount() {
+      this.$emit('unscroll')
+    },
     mounted(){
       if (this.gameOver){
         this.$gtag.event('Game Over', {endingScore: this.endingscore})

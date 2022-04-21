@@ -180,6 +180,9 @@
         founderChoice: 0
       }
     },
+    beforeMount() {
+      this.$emit('unscroll')
+    },
     watch: {
       tutorialActive(val) { this.$emit('toggle-tutorial',val) }
     },
