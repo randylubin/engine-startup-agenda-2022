@@ -121,7 +121,7 @@
         this.$emit('choose-option', option)
       },
       unScroll() {
-        this.$refs.scrollContainer.scrollTop = 0;
+        if(this.$refs.scrollContainer) this.$refs.scrollContainer.scrollTop = 0;
       }
     }
   }
