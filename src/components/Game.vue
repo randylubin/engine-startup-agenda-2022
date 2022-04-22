@@ -1519,11 +1519,11 @@ a.external::after {
 .title-screen-leave-active { transition: opacity 1.5s, filter 1.5s ease-in; }
 .title-screen-enter {
   opacity: 0;
-  filter: blur(0) grayscale(1);
+/*  filter: blur(0) grayscale(1); */
 }
 .title-screen-leave-to {
   opacity: 0;
-  filter: blur(2em) grayscale(1);
+/*  filter: blur(2em) grayscale(1); */
 }
 
 .menu-bar-enter-active { transition: transform .5s ease-out; transition-delay: .5s }
