@@ -12,7 +12,7 @@ var EndingScoringFactors = [
 		summary: "You and your team have been acquihired.",
 		tag: "The End",
 		scoreName: 'Acquihired',
-		scoreValue: 100,
+		scoreValue: 0,
 		scoreClass: ["ii","arrow"]
 	},
 	{
@@ -20,7 +20,7 @@ var EndingScoringFactors = [
 		summary: "The company has been acquired.",
 		tag: "The End",
 		scoreName: 'Acquisition',
-		scoreValue: 200,
+		scoreValue: 0,
 		scoreClass: ["ii","arrow"]
 	},
 	{
@@ -28,7 +28,7 @@ var EndingScoringFactors = [
 		summary: "The company has remained private.",
 		tag: "The End",
 		scoreName: 'Staying Private',
-		scoreValue: 300,
+		scoreValue: 0,
 		scoreClass: ["ii","arrow"]
 	},
 	{
@@ -36,7 +36,7 @@ var EndingScoringFactors = [
 		summary: "The company has gone public with an IPO",
 		tag: "The End",
 		scoreName: 'Going Public',
-		scoreValue: 300,
+		scoreValue: 0,
 		scoreClass: ["ii","arrow"]
 	},
 	{
@@ -44,7 +44,7 @@ var EndingScoringFactors = [
 		summary: "The company has been acquired by a massive player.",
 		tag: "The End",
 		scoreName: 'Massive Acquisition',
-		scoreValue: 300,
+		scoreValue: 0,
 		scoreClass: ["ii","arrow"]
 	},
 	{
@@ -52,7 +52,7 @@ var EndingScoringFactors = [
 		summary: "You've been replaced with a new CEO.",
 		tag: "The End",
 		scoreName: 'Replacement CEO',
-		scoreValue: 300,
+		scoreValue: 0,
 		scoreClass: ["ii","arrow"]
 	}
 ]
