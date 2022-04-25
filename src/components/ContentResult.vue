@@ -34,7 +34,7 @@
           zero: currentState.capabilities <= 0
         }"
       ></li>
-      <li class="dilution" v-if="chosenOption.stateChange.founderDilution">Your ownership stake in the company is now <strong>{{currentState.founderDilution?100-currentState.founderDilution:100}}%</strong></li>
+      <li class="dilution" v-if="chosenOption.stateChange.founderDilution">After factoring in investor and employee shares, your ownership stake in the company is now <strong>{{currentState.founderDilution?100-currentState.founderDilution:100}}%</strong></li>
       <li class="focus replenish" v-if="chosenOption.stateChange.focus > 0 && !gameOver">Your&ensp;<strong class="ii focus">Time &amp; Focus</strong> has been replenished.</li>
       <li class="focus deplete" v-if="chosenOption.stateChange.focus < 0 && !gameOver">Some of your&ensp;<strong class="ii focus">Time &amp; Focus</strong> has been occupied.</li>
       <li class="game-over-summary" v-if="gameOver">
