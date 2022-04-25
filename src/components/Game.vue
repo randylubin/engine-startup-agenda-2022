@@ -90,8 +90,8 @@
 		StartupAgenda: 'https://www.engine.is/news/category/engine-releases-2022-startup-agenda',
 		StartupEquity: 'https://www.engine.is/news/category/engine-releases-making-the-startup-ecosystem-more-equitable',
 		Engine: 'https://www.engine.is/',
-		GameLanding: 'game landing page URL',
-		GamePlay: 'https://engine-report-2022.web.app/', // UPDATE WHEN LIVE
+		GameLanding: 'game landing page URL',  // UPDATE WHEN LIVE
+		GamePlay: 'https://startuptrail.engine.is/',
 		Patent: 'https://www.engine.is/news/category/prioritizing-quality-and-balance-to-promote-innovation'
 	}
 
@@ -370,7 +370,7 @@
 					capabilities = Math.max(0,Math.min(5,Math.ceil(CurrentState.capabilities / 20))),
 					focus = Math.max(0,Math.min(3,CurrentState.focus))
 
-				let ShareText = `STARTUP TRAIL${newLine}`				
+				let ShareText = `#StartupTrail${newLine}`				
 				if (this.gameOver) ShareText += `${newLine + this.$refs['gameover-panel'].endingTitle.tag} - ${this.$refs['gameover-panel'].endingTitle.title + newLine}`
 				ShareText += `Progress: ${ProgressCurrent.toString()}/${ProgressMax.toString() + newLine}`
 				if (ProgressCurrent < 2) ShareText += `${newLine}I'm about to embark on the Startup Trail${newLine.repeat(2)}`
