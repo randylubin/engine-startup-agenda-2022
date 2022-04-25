@@ -49,9 +49,8 @@ var DilemmaCompiler = [
    () => DilemmaList['C-INDIA-DATA'],//Math.random()>0.5?DilemmaList['C-INDIA-DATA']:DilemmaList['C-BRAZIL-TAKEDOWN'],
    () => DilemmaList['C-BRAZIL-TAKEDOWN'],
    (gameState) => gameState.focus>=1?DilemmaList['C-FOCUS-PAYOFF']:DilemmaList['C-NO-FOCUS'],
-   () => DilemmaList['E-END'],
    {
-      compile: () => ({"dilemmaPrompt": "That's all for now..."}),
+      compile: () => DilemmaList['E-END'],
       flags: ['milestone']
    }
    // example dilemma
