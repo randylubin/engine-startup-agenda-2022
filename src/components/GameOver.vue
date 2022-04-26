@@ -47,15 +47,6 @@
     },
     computed: {
       endingSummary: function(){
-        // Ending types:
-        // endingWindDown
-        // endingAcquihire
-        // endingAcquisition
-        // endingPrivate
-        // endingIPO
-        // endingFAANG
-        // endingNewCEO
-
         let summary = ""
 
         for (const i in EndingScoringFactors){
@@ -145,18 +136,34 @@
 
         return scoringData
       },
-      endingRank: function(){
-        if (this.endingScore.total < 500){
-          return 1;
-        } else if (this.endingScore.total < 1000){
-          return 2;
-        } else if (this.endingScore.total < 1500){
-          return 3;
-        } else if (this.endingScore.total < 2000){
-          return 4;
-        } else {
-          return 5;
-        }
+      endingRank: function() {
+        const { capital, users, capabilities } = this.currentState
+        if (capital <= 0 || users <= 0 || capabilities <= 0) return 1
+
+        // Ending types:
+        // endingWindDown
+        // endingAcquihire
+        // endingAcquisitionB
+        // endingAcquisitionC
+        // endingPrivate
+        // endingIPO
+        // endingFAANG
+        // endingNewCEO
+
+        let breakpoints
+
+        if (this.currentState['endingWindDown'])            breakpoints = [999]
+        else if (this.currentState['endingAcquihire'])      breakpoints = [210,999]
+        else if (this.currentState['endingAcquisitionB'])   breakpoints = [175,225,999]
+        else if (this.currentState['endingAcquisitionC'])   breakpoints = [0,175,225,999]
+        else                                                breakpoints = [0,150,175,225,999]
+
+        if (this.endingScore.total < breakpoints[0]) return 1
+        else if (this.endingScore.total < breakpoints[1]) return 2
+        else if (this.endingScore.total < breakpoints[2]) return 3
+        else if (this.endingScore.total < breakpoints[3]) return 4
+        else return 5
+        
       }
     },
     mounted () {

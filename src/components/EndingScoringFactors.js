@@ -16,7 +16,15 @@ var EndingScoringFactors = [
 		scoreClass: ["ii","arrow"]
 	},
 	{
-		endingProp: 'endingAcquisition',
+		endingProp: 'endingAcquisitionB',
+		summary: "The company has been acquired.",
+		tag: "The End",
+		scoreName: 'Acquisition',
+		scoreValue: 0,
+		scoreClass: ["ii","arrow"]
+	},
+	{
+		endingProp: 'endingAcquisitionC',
 		summary: "The company has been acquired.",
 		tag: "The End",
 		scoreName: 'Acquisition',

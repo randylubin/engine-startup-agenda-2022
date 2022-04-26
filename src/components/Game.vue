@@ -1212,6 +1212,7 @@ div.ending-summary {
 
 div.ending-score {
 	display: flex;
+	align-items: center;
 	column-gap: 6%;
 }
 
@@ -1242,7 +1243,7 @@ div.score-factors > div {
 
 button#share-ending {
 	position: relative;
-	width: 50%;
+	width: 100%;
 	margin: 1em auto 0;
 	color: rgba(255,255,255,.8);
 	background: var(--bg-button-share);

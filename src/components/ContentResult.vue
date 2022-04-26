@@ -49,7 +49,13 @@
               <img :src="endingRank>3?'/assets/unicorn.svg':'/assets/unicorn-outline.svg'">
               <img :src="endingRank>4?'/assets/unicorn.svg':'/assets/unicorn-outline.svg'">
             </div>
-            <span>Score:</span> {{endingScore.total}}
+            <!--<span>Score:</span> {{endingScore.total}}-->
+            <button
+              id="share-ending"
+              @click="$emit('share-status',$event)"
+              @share-success="shareResult(true,$event)"
+              @share-fail="shareResult(false,$event)"
+            ></button>
           </div>
           <div class="score-factors">
             <div v-for="scoreFactor in endingScore.factors" :key="scoreFactor.name">
@@ -59,12 +65,6 @@
             </div>
           </div>
         </div>
-        <button
-          id="share-ending"
-          @click="$emit('share-status',$event)"
-          @share-success="shareResult(true,$event)"
-          @share-fail="shareResult(false,$event)"
-        ></button>
       </li>
     </ul>
     <issue-note
