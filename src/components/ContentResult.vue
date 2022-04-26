@@ -90,10 +90,12 @@ import IssueNote from './IssueNote.vue';
       currentState: Object,
       chosenOption: Object,
       currentChapterInfo: Object,
+      currentChapterIndex: Number,
       gameOver: Boolean,
       endingSummary: String,
       endingScore: Object,
-      endingRank: Number
+      endingRank: Number,
+      endingTitle: String
     },
     data () {
       return {
@@ -112,8 +114,11 @@ import IssueNote from './IssueNote.vue';
       this.$emit('unscroll')
     },
     mounted(){
-      if (this.gameOver){
-        this.$gtag.event('Game Over', {endingScore: this.endingscore})
+      if (this.gameOver) {
+        this.$gtag.event('Game Over', { 
+					'event_label' : this.endingTitle + ', Round: ' + this.currentChapterIndex + ', Score: ' + this.endingScore,
+					'event_category' : 'Game Progress'
+				})
       }
     },
     methods: {

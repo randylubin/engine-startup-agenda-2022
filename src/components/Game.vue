@@ -266,6 +266,11 @@
         this.stateHistory.push(JSON.parse(JSON.stringify(this.stateHistory[this.stateHistory.length-1])))
         this.currentChapterInfo = newDilemma
 
+				this.$gtag.event('View Dilemma', { 
+					'event_label' : this.chapterHistory.length-1 + ' - ' + this.currentChapterInfo.dilemmaTitle,
+					'event_category' : 'Game Progress'
+				})
+
 				// check for single screen with state change
 				if (newDilemma.settings.singleScreen){
 					if (Object.keys(newDilemma.dilemmaOptions[0].stateChange).length > 4 || newDilemma.dilemmaOptions[0].stateChange.capital || newDilemma.dilemmaOptions[0].stateChange.users || newDilemma.dilemmaOptions[0].stateChange.capabilities){
@@ -273,8 +278,6 @@
 						this.chooseOption(newDilemma.dilemmaOptions[0], 'skipping')
 					}
 				}
-
-				this.$gtag.event('View Dilemma', { dilemmaTitle: this.currentChapterInfo.dilemmaTitle })
 
       },
       restartGame(){
