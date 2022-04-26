@@ -91,9 +91,15 @@
     },
     methods: {
       newGame(){
+        this.$gtag.event('New Game', { 
+					'event_category' : 'Games Played'
+				})
         this.$emit('new-game')
       },
       resumeGame(){
+        this.$gtag.event('Resume Game', { 
+					'event_category' : 'Games Played'
+				})
         this.$emit('resume-game')
       },
       toggleAbout() {
@@ -101,7 +107,9 @@
       }
     },
     mounted(){
-      this.$gtag.event('View launch screen')
+      this.$gtag.event('View Launch Screen', { 
+					'event_category' : 'Games Played'
+				})
     }
   }
 </script>

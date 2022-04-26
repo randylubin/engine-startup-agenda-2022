@@ -266,8 +266,8 @@
         this.stateHistory.push(JSON.parse(JSON.stringify(this.stateHistory[this.stateHistory.length-1])))
         this.currentChapterInfo = newDilemma
 
-				this.$gtag.event('View Dilemma', { 
-					'event_label' : this.chapterHistory.length-1 + ' - ' + this.currentChapterInfo.dilemmaTitle,
+				this.$gtag.event('Chapter ' + this.chapterHistory.length-1, { 
+					'event_label' : this.currentChapterInfo.dilemmaTitle,
 					'event_category' : 'Game Progress'
 				})
 
@@ -282,6 +282,9 @@
       },
       restartGame(){
         console.log('restarting')
+				this.$gtag.event('Restart Game', { 
+					'event_category' : 'Games Played'
+				})
         this.stateHistory = JSON.parse(JSON.stringify(this.initialState))
         this.chapterHistory = [DilemmaCompiler[0].compile()]
         this.currentChapterInfo = DilemmaCompiler[0].compile()
@@ -348,6 +351,9 @@
 				})					
 			},
 			shareStatus(e) {
+				this.$gtag.event('Share Status', { 
+					'event_category' : 'Sharing'
+				})
 				const
 					labelCapital = '\u{1F4B5}',
 					labelUsers = '\u{1F465}',
