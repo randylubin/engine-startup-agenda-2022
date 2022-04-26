@@ -1198,6 +1198,16 @@ ul#consequences-status li.game-over-summary {
 	width: 94%;
 } 
 
+@media (max-width: 1230px) {
+	ul#consequences-status {
+		padding-left: 0;
+		padding-right: 0;
+	}
+	ul#consequences-status li.game-over-summary {
+		width: 100%;
+	} 	
+}
+
 ul#consequences-status li.state+li.game-over-summary {
 	margin-top: 1.5em;
 }
