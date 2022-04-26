@@ -116,7 +116,7 @@ import IssueNote from './IssueNote.vue';
     mounted(){
       if (this.gameOver) {
         this.$gtag.event('Game Over at ' + this.currentChapterIndex, { 
-					'event_label' : this.endingTitle + ', Score: ' + this.endingScore,
+					'event_label' : this.endingTitle + ', Score: ' + this.endingScore.total,
 					'event_category' : 'Game Progress'
 				})
       }
