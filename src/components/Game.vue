@@ -1550,24 +1550,4 @@ a.external::after {
   opacity: 0;
 }
 
-div#unsupported-device {
-	display: none;
-}
-
-@media (max-width: 1023px) {
-	div#unsupported-device {
-		position: fixed; top: 0; right: 0; bottom: 0; left: 0;
-		
-		display: flex !important;
-		justify-content: center;
-		align-items: center;
-		color: white;
-		background: var(--c-base);
-	}
-
-	div#game {
-		display: none !important;
-	}
-}
-
 </style>
