@@ -266,8 +266,7 @@
         this.stateHistory.push(JSON.parse(JSON.stringify(this.stateHistory[this.stateHistory.length-1])))
         this.currentChapterInfo = newDilemma
 
-				this.$gtag.event('Chapter ' + this.chapterHistory.length-1, { 
-					'event_label' : this.currentChapterInfo.dilemmaTitle,
+				this.$gtag.event('Chapter ' + this.chapterHistory.length-1, {
 					'event_category' : 'Game Progress'
 				})
 
