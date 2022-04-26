@@ -8,6 +8,14 @@ var EndingScoringFactors = [
 		scoreClass: ["ii","arrow"]
 	},
 	{
+		endingProp: 'endingDeadEnd',
+		summary: "The company has hit a dead end.",
+		tag: "Game Over",
+		scoreName: 'Dead End',
+		scoreValue: 0,
+		scoreClass: ["ii","arrow"]
+	},
+	{
 		endingProp: 'endingAcquihire',
 		summary: "You and your team have been acquihired.",
 		tag: "The End",

@@ -90,7 +90,7 @@
 		StartupAgenda: 'https://www.engine.is/news/category/engine-releases-2022-startup-agenda',
 		StartupEquity: 'https://www.engine.is/news/category/engine-releases-making-the-startup-ecosystem-more-equitable',
 		Engine: 'https://www.engine.is/',
-		GameLanding: 'game landing page URL',  // UPDATE WHEN LIVE
+		GameLanding: 'https://www.engine.is/startup-trail', 
 		GamePlay: 'https://startuptrail.engine.is/',
 		Patent: 'https://www.engine.is/news/category/prioritizing-quality-and-balance-to-promote-innovation'
 	}
@@ -1197,6 +1197,10 @@ ul#consequences-status.game-over li.zero::after {
 ul#consequences-status li.game-over-summary {
 	width: 94%;
 } 
+
+li.dilution + li.game-over-summary {
+	margin-top: 1em;
+}
 
 @media (max-width: 1230px) {
 	ul#consequences-status {
