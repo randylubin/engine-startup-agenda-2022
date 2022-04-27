@@ -155,6 +155,7 @@
         let breakpoints
 
         if (this.currentState['endingWindDown'])            breakpoints = [999]
+        else if (this.currentState['endingDeadEnd'])        breakpoints = [999]
         else if (this.currentState['endingAcquihire'])      breakpoints = [210,999]
         else if (this.currentState['endingAcquisitionB'])   breakpoints = [175,225,999]
         else if (this.currentState['endingAcquisitionC'])   breakpoints = [0,175,225,999]
