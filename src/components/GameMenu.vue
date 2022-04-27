@@ -81,7 +81,7 @@
             <img class="game-logo" src="/assets/game-logo-stacked.svg" />
           </div>
           <div class="engine">
-            <a href="ExternalLinks.Engine" title="Engine" target="_blank"><img src="/assets/logo-engine.png" alt="Engine" /></a>
+            <a :href="ExternalLinks.Engine" title="Engine" target="_blank"><img src="/assets/logo-engine.png" alt="Engine" /></a>
           </div>
         </div>
         <div class="info-frame">
