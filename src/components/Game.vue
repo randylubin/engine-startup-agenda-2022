@@ -326,7 +326,7 @@
       },
 			shortcutKeys(e) {
 				if (e.key == 'D') this.devMode = !this.devMode
-				if (e.key == 'S') this.showRawScore = !this.showRawScore
+				if (e.key == 'S' && this.gameOver) this.showRawScore = !this.showRawScore
 			},
 			populateClipboard(text) {
 				if (navigator.clipboard) return navigator.clipboard.writeText(text) // for modern browsers
