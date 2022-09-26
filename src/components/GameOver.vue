@@ -12,6 +12,7 @@
       key="result-panel"
       ref="result-panel"
       :gameOver="true"
+      :showRawScore="showRawScore"
       :endingSummary="endingSummary"
       :endingTitle="endingTitle.title"
       :endingScore="endingScore"
@@ -42,6 +43,7 @@
       currentChapterInfo: Object,
       currentChapterIndex: Number,
       chosenOption: Object,
+      showRawScore: Boolean
     },
     data () {
       return {

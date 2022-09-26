@@ -49,7 +49,7 @@
               <img :src="endingRank>3?'/assets/unicorn.svg':'/assets/unicorn-outline.svg'">
               <img :src="endingRank>4?'/assets/unicorn.svg':'/assets/unicorn-outline.svg'">
             </div>
-            <!--<span>Score:</span> {{endingScore.total}}-->
+            <template v-if="showRawScore"><span>Score:</span> {{endingScore.total}}</template>
             <button
               id="share-ending"
               @click="$emit('share-status',$event)"
@@ -92,6 +92,7 @@ import IssueNote from './IssueNote.vue';
       currentChapterInfo: Object,
       currentChapterIndex: Number,
       gameOver: Boolean,
+      showRawScore: Boolean,
       endingSummary: String,
       endingScore: Object,
       endingRank: Number,

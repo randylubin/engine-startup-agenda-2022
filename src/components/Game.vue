@@ -51,6 +51,7 @@
         v-if="gameOver && gameStarted"
         key="gameover-panel"
 				ref="gameover-panel"
+				:showRawScore="showRawScore"
         :currentState="stateHistory[this.stateHistory.length-1]"
         :currentChapterInfo="currentChapterInfo"
         :currentChapterIndex="chapterHistory.length-1"
@@ -159,6 +160,7 @@
         optionHistory: [null],
         gameStarted: false,
         devMode: false,
+				showRawScore: false,
         preventGameOver: false
       }
     },
@@ -324,6 +326,7 @@
       },
 			shortcutKeys(e) {
 				if (e.key == 'D') this.devMode = !this.devMode
+				if (e.key == 'S') this.showRawScore = !this.showRawScore
 			},
 			populateClipboard(text) {
 				if (navigator.clipboard) return navigator.clipboard.writeText(text) // for modern browsers
